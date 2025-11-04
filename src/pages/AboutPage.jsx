@@ -132,7 +132,7 @@ const AboutPage = () => {
           <div className={styles.ctaContent}>
             <h2 className={styles.ctaTitle}>Let's Collaborate 🤝</h2>
             <p className={styles.ctaText}>
-              Are you a college or organization interested in partnering with us?
+              Are you a college interested in partnering with us?
             </p>
             <div className={styles.ctaButtons}>
               <a 
@@ -160,3 +160,4 @@ const AboutPage = () => {
 };
 
 export default AboutPage;
+
