@@ -51,7 +51,6 @@
 }
 
 .featureCard:hover .iconWrapper {
-  background: var(--primary-yellow);
   transform: scale(1.1);
 }
 
