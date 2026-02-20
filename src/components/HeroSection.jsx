@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { Link } from 'react-router-dom';
 import styles from './HeroSection.module.css';
 
 const HeroSection = () => {
@@ -13,32 +14,40 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section 
-      className={styles.hero} 
+    <section
+      className={styles.hero}
       ref={ref}
       style={{ transform: `translateY(${scrollY * 0.3}px)` }}
     >
       <div className={`container ${styles.heroContainer}`}>
         <div className={`${styles.heroContent} ${inView ? styles.visible : ''}`}>
           <h1 className={styles.headline}>
-            Final Year Projects Made Easy 🚀
+            Empowering Schools & Colleges with AI, Automation & Industry-Ready Learning
           </h1>
           <p className={styles.subheadline}>
-            Affordable, ready-to-submit projects with Code, Report, and PPT!
+            We help educational institutions integrate AI-driven tools, streamline operations, and prepare students for the future workforce.
           </p>
-          
+
           <div className={styles.ctaButtons}>
-            <a href="/projects" className={styles.btnPrimary}>
-              Explore Projects
-            </a>
-            <a 
-              href="https://wa.link/majb9j" 
-              className={styles.btnSecondary}
+            <a
+              href="http://wa.me/+918886945890"
+              className={styles.btnPrimary}
               target="_blank"
               rel="noopener noreferrer"
             >
-              Get a Quote
+              Book Free Consultation
             </a>
+            <a
+              href="http://wa.me/+918886945890"
+              className={styles.btnPrimary}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Explore Institutional Solutions
+            </a>
+            <Link to="/for-students" className={styles.btnSecondary}>
+              Future-Ready Education
+            </Link>
           </div>
         </div>
       </div>

@@ -66,7 +66,8 @@
 
 .navLinks {
   display: flex;
-  gap: 2.5rem;
+  gap: 1.5rem;
+  /* Reduced from 2.5rem */
   align-items: center;
 }
 
@@ -74,9 +75,12 @@
   font-weight: 500;
   color: var(--charcoal);
   transition: all 0.3s ease;
-  font-size: 1rem;
+  font-size: 0.95rem;
+  /* Reduced from 1rem */
   position: relative;
   text-decoration: none;
+  white-space: nowrap;
+  /* Prevent wrapping of links */
 }
 
 .navLinks a::after {
@@ -99,13 +103,17 @@
 }
 
 .ctaBtn {
-  padding: 0.75rem 1.75rem;
+  padding: 0.6rem 1.25rem;
+  /* Reduced from 0.75rem 1.75rem */
   background: var(--primary-yellow);
   color: var(--primary-black);
   border-radius: 50px;
   font-weight: 600;
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(255, 214, 10, 0.3);
+  font-size: 0.9rem;
+  /* Added slightly smaller font for long text */
+  text-align: center;
 }
 
 .ctaBtn::after {

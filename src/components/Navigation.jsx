@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Navigation.module.css';
 
 const Navigation = () => {
@@ -16,15 +17,15 @@ const Navigation = () => {
   return (
     <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ''}`}>
       <div className={`container ${styles.navContainer}`}>
-        <a href="/" className={styles.logoLink}>
-          <img 
-            src="/assets/icons/new logo.png" 
-            alt="ProjectMinds Logo" 
+        <Link to="/" className={styles.logoLink}>
+          <img
+            src="/assets/icons/new logo.png"
+            alt="ProjectMinds Logo"
             className={styles.logo}
           />
-        </a>
-        
-        <button 
+        </Link>
+
+        <button
           className={styles.mobileMenuBtn}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle menu"
@@ -35,23 +36,20 @@ const Navigation = () => {
         </button>
 
         <div className={`${styles.navLinks} ${mobileMenuOpen ? styles.mobileMenuActive : ''}`}>
-          <a href="/">Home</a>
-          <a href="/projects">Projects</a>
-          <a href="/about">About</a>
-          <a 
-            href="http://wa.me/+918886945890" 
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Contact
-          </a>
-          <a 
-            href="http://wa.me/+918886945890" 
+          <Link to="/">Home</Link>
+          <Link to="/for-schools">For Schools</Link>
+          <Link to="/for-colleges">For Colleges</Link>
+          <Link to="/for-students">For Students</Link>
+          <Link to="/services">Services</Link>
+          <Link to="/about">About Us</Link>
+          <Link to="/contact">Contact</Link>
+          <a
+            href="http://wa.me/+918886945890"
             className={styles.ctaBtn}
             target="_blank"
             rel="noopener noreferrer"
           >
-            Get Started
+            Book Free Consultation
           </a>
         </div>
       </div>

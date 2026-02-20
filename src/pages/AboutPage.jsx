@@ -43,10 +43,10 @@ const AboutPage = () => {
       <section className={styles.hero}>
         <div className="container">
           <h1 className={styles.heroTitle}>
-            Connecting Students, Colleges, and Companies through Innovation 🚀
+            Strategic Institutional Enablement through AI & Innovation
           </h1>
           <p className={styles.heroSubtitle}>
-            ProjectMinds is a platform that empowers engineering students to share, discover, and collaborate on real-world projects — bridging the gap between academia and industry.
+            ProjectMinds is dedicated to bridging the gap between traditional education and the evolving AI-driven industry. We empower schools and colleges with the tools, training, and technology needed to thrive in a digital-first world.
           </p>
         </div>
       </section>
@@ -55,38 +55,13 @@ const AboutPage = () => {
       <section className={styles.missionSection} ref={missionRef}>
         <div className="container">
           <div className={`${styles.missionContent} ${missionInView ? styles.visible : ''}`}>
-            <h2 className={styles.sectionTitle}>Our Mission 🎯</h2>
+            <h2 className={styles.sectionTitle}>Our Mission</h2>
             <p className={styles.missionText}>
-              At ProjectMinds, our mission is to make student projects more than just academic requirements — we want them to become real solutions for real challenges.
+              To democratize advanced technology in academia by providing seamless AI integration, automated operational tools, and industry-standard innovation frameworks.
             </p>
             <p className={styles.missionText}>
-              We aim to connect students with meaningful projects, colleges with stronger industry ties, and companies with fresh ideas and emerging talent.
+              We believe that every educational institution deserves access to high-impact automation and specialized technical expertise.
             </p>
-          </div>
-        </div>
-      </section>
-
-      {/* What We Do */}
-      <section className={styles.whatWeDoSection} ref={whatWeDoRef}>
-        <div className="container">
-          <h2 className={styles.sectionTitle}>What We Do 💡</h2>
-          <div className={styles.servicesGrid}>
-            {services.map((service, index) => (
-              <div 
-                key={index} 
-                className={`${styles.serviceCard} ${whatWeDoInView ? styles.visible : ''}`}
-                style={{ animationDelay: `${index * 0.15}s` }}
-              >
-                <div className={styles.serviceIcon}>{service.icon}</div>
-                <h3 className={styles.serviceTitle}>{service.title}</h3>
-                <p className={styles.serviceDescription}>{service.description}</p>
-                <ul className={styles.benefitsList}>
-                  {service.benefits.map((benefit, i) => (
-                    <li key={i}>{benefit}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -99,15 +74,15 @@ const AboutPage = () => {
               <div className={styles.founderAvatar}>👨‍💻</div>
             </div>
             <div className={styles.founderText}>
-              <h2 className={styles.sectionTitle}>Founder's Note 📝</h2>
+              <h2 className={styles.sectionTitle}>Founder's Note</h2>
               <p className={styles.founderQuote}>
                 "I'm <strong>Prasad</strong>, founder of ProjectMinds."
               </p>
               <p className={styles.founderMessage}>
-                Having seen how students struggle to find industry-relevant project ideas, I wanted to create a space where academic knowledge meets practical innovation.
+                Education is the foundation of innovation, yet the gap between what is taught and what industry demands is wider than ever. I founded ProjectMinds to serve as a bridge.
               </p>
               <p className={styles.founderMessage}>
-                ProjectMinds is my way of giving students and colleges a platform to showcase their creativity and collaborate on impactful ideas.
+                Our focus is on Institutional Enablement — providing schools and colleges with the strategic technical support they need to deliver future-ready outcomes for their students.
               </p>
             </div>
           </div>
@@ -118,9 +93,9 @@ const AboutPage = () => {
       <section className={styles.visionSection} ref={visionRef}>
         <div className="container">
           <div className={`${styles.visionContent} ${visionInView ? styles.visible : ''}`}>
-            <h2 className={styles.sectionTitle}>Our Vision 🌟</h2>
+            <h2 className={styles.sectionTitle}>Our Vision</h2>
             <p className={styles.visionText}>
-              We envision a future where every student project contributes to solving real problems — building a smarter, more connected academic ecosystem.
+              To bridge the gap between traditional education systems and emerging AI-driven industries, creating a world where every institution is a hub of technological excellence.
             </p>
           </div>
         </div>
@@ -130,24 +105,18 @@ const AboutPage = () => {
       <section className={styles.ctaSection}>
         <div className="container">
           <div className={styles.ctaContent}>
-            <h2 className={styles.ctaTitle}>Let's Collaborate 🤝</h2>
+            <h2 className={styles.ctaTitle}>Start Your Institutional Transformation</h2>
             <p className={styles.ctaText}>
-              Would your college like to collaborate with us?
+              Partner with us to bring AI-driven innovation to your campus.
             </p>
             <div className={styles.ctaButtons}>
-              <a 
-                href="mailto:team.projectminds@gmail.com" 
-                className={styles.emailBtn}
-              >
-                📧 team.projectminds@gmail.com
-              </a>
-              <a 
-                href="http://wa.me/+918886945890" 
+              <a
+                href="http://wa.me/+918886945890"
                 className={styles.whatsappBtn}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                💬 WhatsApp Us
+                Book Free Consultation
               </a>
             </div>
           </div>
