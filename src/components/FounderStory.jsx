@@ -27,7 +27,7 @@ const FounderStory = () => {
                                 industry-ready from day one.
                             </p>
                             <footer className={styles.founderFoot}>
-                                <strong>Prasad</strong>
+                                <strong>NPrasad</strong>
                                 <span>Founder, ProjectMinds</span>
                             </footer>
                         </div>
