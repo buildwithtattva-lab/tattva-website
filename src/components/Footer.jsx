@@ -11,7 +11,7 @@ const Footer = () => {
           <div className={styles.footerColumn}>
             <h3 className={styles.footerLogo}>ProjectMinds</h3>
             <p className={styles.footerTagline}>
-              Making final year projects easy for students across India.
+              Empowering educational institutions and students with AI-driven innovation.
             </p>
           </div>
 
