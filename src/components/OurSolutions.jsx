@@ -4,8 +4,8 @@ import styles from './OurSolutions.module.css';
 
 const solutions = [
     {
-        title: 'School Automation Solutions',
-        desc: 'Streamlining academic and administrative workflows through structured automation systems.',
+        title: 'AI Integration for Schools',
+        desc: 'AI literacy programs, automation tools, and digital transformation for modern schools.',
         icon: (
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M3 21h18M3 7v1h18V7l-9-4-9 4zm2 1h14v13H5V8zm4 13h2v-4H9v4zm4 0h2v-4h-2v4z" />
@@ -14,19 +14,19 @@ const solutions = [
         link: '/for-schools'
     },
     {
-        title: 'College Project & Innovation Support',
-        desc: 'Delivering industry-aligned academic projects with structured mentorship and implementation guidance.',
+        title: 'Industry Projects for Colleges',
+        desc: 'Real-world AI and software projects seamlessly integrated into the college curriculum.',
         icon: (
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z" />
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
                 <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5" />
             </svg>
         ),
         link: '/for-colleges'
     },
     {
-        title: 'AI Skill Development Programs',
-        desc: 'Practical AI exposure for students and faculty, aligned with emerging industry standards.',
+        title: 'Hands-on AI Programs for Students',
+        desc: 'Build practical projects and gain real-world experience through our expert-led programs.',
         icon: (
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="4" y="4" width="16" height="16" rx="2" ry="2" />
@@ -44,7 +44,7 @@ const OurSolutions = () => {
     return (
         <section className={styles.solutions} ref={ref}>
             <div className="container">
-                <h2 className={styles.title}>Our Solutions</h2>
+                <h2 className={styles.title}>How Tattva Helps Institutions</h2>
                 <div className={styles.grid}>
                     {solutions.map((sol, index) => (
                         <div

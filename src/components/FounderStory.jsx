@@ -17,7 +17,9 @@ const FounderStory = () => {
                         </div>
                         <div className={styles.textSide}>
                             <p>
-                                ProjectMinds was born out of a simple observation: the gap between academic learning and industry requirements.
+                                Tattva was born out of a simple observation: the gap between academic learning and industry requirements.
+                            </p>
+                            <p>
                                 As a developer who started with a passion for building real-world solutions, I realized that many students
                                 lack the practical exposure needed to excel in today's fast-paced tech landscape.
                             </p>
@@ -28,7 +30,7 @@ const FounderStory = () => {
                             </p>
                             <footer className={styles.founderFoot}>
                                 <strong>Prasad</strong>
-                                <span>Founder, ProjectMinds</span>
+                                <span>Founder, Tattva</span>
                             </footer>
                         </div>
                     </div>

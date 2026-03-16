@@ -16,7 +16,8 @@
 
 .card {
     padding: 3rem;
-    background: var(--light-gray);
+    background: var(--white);
+    border: 1px solid var(--border-muted);
     border-radius: 24px;
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     opacity: 0;
@@ -31,15 +32,15 @@
 .card:hover {
     transform: translateY(-10px);
     box-shadow: var(--shadow-md);
-    background: var(--white);
-    border: 1px solid #eee;
+    background: var(--bg-light);
+    border-color: var(--primary-teal);
 }
 
 .iconWrapper {
     width: 36px;
     height: 36px;
     margin-bottom: 1.5rem;
-    color: var(--primary-yellow);
+    color: var(--primary-teal);
     transition: transform 0.3s ease;
 }
 
@@ -65,7 +66,7 @@
 
 .learnMore {
     font-weight: 700;
-    color: var(--primary-black);
+    color: var(--primary-teal);
     display: inline-block;
     transition: transform 0.3s ease;
 }

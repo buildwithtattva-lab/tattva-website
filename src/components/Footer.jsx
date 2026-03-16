@@ -9,7 +9,7 @@ const Footer = () => {
       <div className={`container ${styles.footerContainer}`}>
         <div className={styles.footerTop}>
           <div className={styles.footerColumn}>
-            <h3 className={styles.footerLogo}>ProjectMinds</h3>
+            <h3 className={styles.footerLogo}>Tattva</h3>
             <p className={styles.footerTagline}>
               Empowering educational institutions and students with AI-driven innovation.
             </p>
@@ -28,7 +28,7 @@ const Footer = () => {
           <div className={styles.footerColumn}>
             <h4 className={styles.footerTitle}>Contact Info</h4>
             <ul className={styles.contactInfo}>
-              <li>team.projectminds@gmail.com</li>
+              <li>team.tattva@gmail.com</li>
               <li>+91 9652796537</li>
               <li>Hyderabad, Telangana</li>
             </ul>
@@ -72,7 +72,7 @@ const Footer = () => {
         </div>
 
         <div className={styles.footerBottom}>
-          <p className={styles.copyright}>© {currentYear} ProjectMinds. All Rights Reserved.</p>
+          <p className={styles.copyright}>© {currentYear} Tattva. All Rights Reserved.</p>
         </div>
       </div>
     </footer>

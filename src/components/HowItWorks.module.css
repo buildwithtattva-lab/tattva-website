@@ -34,22 +34,22 @@
 .stepNumber {
   width: 80px;
   height: 80px;
-  background: var(--primary-yellow);
+  background: var(--primary-teal);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 2rem;
   font-weight: 800;
-  color: var(--primary-black);
+  color: var(--ivory);
   margin: 0 auto 1.5rem;
-  box-shadow: 0 4px 16px rgba(255, 214, 10, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 43, 43, 0.2);
   transition: all 0.3s ease;
 }
 
 .timelineStep:hover .stepNumber {
   transform: scale(1.15);
-  box-shadow: 0 8px 24px rgba(255, 214, 10, 0.6);
+  box-shadow: 0 8px 24px rgba(0, 43, 43, 0.3);
 }
 
 .stepContent {
@@ -71,10 +71,15 @@
   position: absolute;
   top: 40px;
   left: 60%;
-  width: 80%;
+  width: 0; /* Start at 0 width for drawing animation */
   height: 3px;
-  background: linear-gradient(90deg, var(--primary-yellow), #E5E5E5);
+  background: linear-gradient(90deg, var(--primary-teal), var(--border-muted));
   z-index: -1;
+  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timelineStep.visible .connector {
+  width: 80%; /* Draw when section is visible */
 }
 
 .ctaWrapper {
@@ -83,20 +88,20 @@
 
 .startBtn {
   padding: 1.125rem 3rem;
-  background: var(--primary-yellow);
-  color: var(--primary-black);
+  background: var(--primary-teal);
+  color: var(--ivory);
   font-size: 1.125rem;
   font-weight: 700;
   border-radius: 50px;
   display: inline-block;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 16px rgba(255, 214, 10, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 43, 43, 0.2);
 }
 
 .startBtn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(255, 214, 10, 0.6);
-  background: #FFC700;
+  box-shadow: 0 8px 24px rgba(0, 43, 43, 0.3);
+  background: var(--accent-teal);
 }
 
 @media (max-width: 968px) {

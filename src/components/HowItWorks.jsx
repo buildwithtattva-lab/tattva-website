@@ -31,14 +31,14 @@ const HowItWorks = () => {
   return (
     <section className={styles.howItWorks} ref={ref}>
       <div className={`container ${styles.howItWorksContainer}`}>
-        <h2 className={styles.sectionTitle}>Institutional Enablement Process</h2>
+        <h2 className={styles.sectionTitle}>How Institutions Work With Tattva</h2>
 
         <div className={styles.timeline}>
           {steps.map((step, index) => (
             <div
               key={index}
               className={`${styles.timelineStep} ${inView ? styles.visible : ''}`}
-              style={{ animationDelay: `${index * 0.2}s` }}
+              style={{ transitionDelay: `${index * 0.2}s` }}
             >
               <div className={styles.stepNumber}>{step.number}</div>
               <div className={styles.stepContent}>

@@ -1,6 +1,6 @@
 .footer {
-  background: var(--primary-black);
-  color: var(--white);
+  background: var(--primary-teal);
+  color: var(--bg-light);
   padding: 4rem 0 2rem;
 }
 
@@ -10,7 +10,7 @@
   gap: 3rem;
   margin-bottom: 3rem;
   padding-bottom: 3rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(251, 250, 243, 0.1);
 }
 
 .footerColumn {
@@ -21,12 +21,12 @@
 .footerLogo {
   font-size: 1.75rem;
   font-weight: 800;
-  color: var(--primary-yellow);
+  color: var(--bg-light);
   margin-bottom: 1rem;
 }
 
 .footerTagline {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(251, 250, 243, 0.7);
   font-size: 0.9375rem;
   line-height: 1.6;
 }
@@ -34,7 +34,7 @@
 .footerTitle {
   font-size: 1.125rem;
   font-weight: 600;
-  color: var(--primary-yellow);
+  color: var(--bg-light);
   margin-bottom: 1.25rem;
 }
 
@@ -47,13 +47,13 @@
 }
 
 .footerLinks a {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(251, 250, 243, 0.7);
   font-size: 0.9375rem;
   transition: all 0.3s ease;
 }
 
 .footerLinks a:hover {
-  color: var(--primary-yellow);
+  color: var(--bg-light);
   padding-left: 0.5rem;
 }
 
@@ -73,18 +73,18 @@
 .socialIcons a {
   width: 44px;
   height: 44px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(251, 250, 243, 0.1);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--white);
+  color: var(--bg-light);
   transition: all 0.3s ease;
 }
 
 .socialIcons a:hover {
-  background: var(--primary-yellow);
-  color: var(--primary-black);
+  background: var(--bg-light);
+  color: var(--primary-teal);
   transform: translateY(-3px);
 }
 
@@ -93,7 +93,7 @@
 }
 
 .copyright {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(251, 250, 243, 0.5);
   font-size: 0.875rem;
 }
 

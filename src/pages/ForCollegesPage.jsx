@@ -6,38 +6,69 @@ import styles from './ForCollegesPage.module.css';
 
 const ForCollegesPage = () => {
     const { ref: headerRef, inView: headerInView } = useInView({ threshold: 0.1, triggerOnce: true });
+    const { ref: propRef, inView: propInView } = useInView({ threshold: 0.1, triggerOnce: true });
+    const { ref: gridRef, inView: gridInView } = useInView({ threshold: 0.1, triggerOnce: true });
+
+    const propCards = [
+        {
+            title: 'The Industry Skills Gap',
+            desc: 'Traditional curricula move slower than modern technology. Students need real-world project experience to stay competitive.'
+        },
+        {
+            title: 'Lack of Hands-On Experience',
+            desc: 'Many students graduate without building real applications. Practical AI and software projects close this gap.'
+        },
+        {
+            title: "Tattva’s AI Project Ecosystem",
+            desc: 'We provide ready-to-deploy AI and software project frameworks integrated directly into your curriculum.'
+        }
+    ];
 
     const offerings = [
         {
-            title: 'End-to-End Final Year Project Support',
+            title: 'Industry-Grade Final Year Projects',
             items: ['Topic selection', 'Development', 'Documentation', 'Presentation training'],
             icon: (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '40px', height: '40px', color: 'var(--primary-yellow)' }}>
-                    <path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z" />
-                    <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5" />
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                    <path d="M6 12v5c3 3 9 3 12 0v-5" />
                 </svg>
             )
         },
         {
-            title: 'AI/ML Lab Enablement',
-            items: ['Project repository', 'Tech stack guidance', 'Deployment support'],
+            title: 'AI & Machine Learning Lab Setup',
+            items: ['Curated AI project repository', 'Modern tech stack guidance', 'Deployment & demo support'],
             icon: (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '40px', height: '40px', color: 'var(--primary-yellow)' }}>
-                    <path d="M12 2v8M12 14v8M4.93 4.93l5.66 5.66M13.41 13.41l5.66 5.66M2 12h8M14 12h8M4.93 19.07l5.66-5.66M13.41 10.59l5.66-5.66" />
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 2v8M12 14v8M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4" />
                 </svg>
             )
         },
         {
-            title: 'Faculty Development Workshops',
-            items: ['AI/ML sessions', 'Practical implementation training'],
+            title: 'AI Training for Faculty',
+            items: ['AI/ML sessions', 'Hands-on implementation', 'Teaching with AI tools'],
             icon: (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '40px', height: '40px', color: 'var(--primary-yellow)' }}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                     <circle cx="9" cy="7" r="4" />
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
                 </svg>
             )
         }
+    ];
+
+    const steps = [
+        { title: 'Assess Needs', desc: 'Evaluating curriculum alignment.' },
+        { title: 'Deploy Frameworks', desc: 'Secure project repository setup.' },
+        { title: 'Train Faculty', desc: 'Practical implementation workshops.' },
+        { title: 'Guide Students', desc: 'Expert-led project development.' }
+    ];
+
+    const impacts = [
+        { title: 'Portfolio Excellence', desc: 'Industry-ready student projects.' },
+        { title: 'Modern Infrastructure', desc: 'State-of-the-art AI labs.' },
+        { title: 'Placement Ready', desc: 'Students equipped for tech careers.' },
+        { title: 'Digital Upskilling', desc: 'Faculty experts in emerging AI.' }
     ];
 
     return (
@@ -45,39 +76,49 @@ const ForCollegesPage = () => {
             <Navigation />
 
             <header className={styles.header} ref={headerRef}>
+                <div className={styles.backgroundElements}>
+                    <div className={styles.shape1}></div>
+                    <div className={styles.shape2}></div>
+                    <div className={styles.shape3}></div>
+                </div>
                 <div className={`container ${styles.headerContent} ${headerInView ? styles.visible : ''}`}>
-                    <h1 className={styles.title}>Strategic Institutional Enablement & Innovation</h1>
+                    <h1 className={styles.title}>AI & Industry Projects for Future-Ready Colleges</h1>
                     <p className={styles.subtitle}>
-                        Bridging the academic-industry gap through technology integration and AI-driven curriculum support.
+                        Tattva helps colleges integrate AI, build real-world student projects, and equip faculty with modern technology skills aligned with industry needs.
                     </p>
                 </div>
             </header>
 
-            <section className={styles.valueProp}>
+            <section className={styles.valueProp} ref={propRef}>
                 <div className="container">
                     <div className={styles.propGrid}>
-                        <div className={styles.propCard}>
-                            <h3>Why Colleges Need Industry-Ready Projects</h3>
-                            <p>Modern industries evolve faster than traditional syllabi. We provide the missing link to keep your students ahead.</p>
-                        </div>
-                        <div className={styles.propCard}>
-                            <h3>The Practical Exposure Gap</h3>
-                            <p>Most students lack hands-on experience with modern tech stacks. Our projects focus on real-world deployment.</p>
-                        </div>
-                        <div className={styles.propCard}>
-                            <h3>How ProjectMinds Bridges the Gap</h3>
-                            <p>We provide ready-to-use, AI-powered project ecosystems that integrate seamlessly into your curriculum.</p>
-                        </div>
+                        {propCards.map((card, index) => (
+                            <div 
+                                key={index} 
+                                className={`${styles.propCard} ${propInView ? styles.visible : ''} card-hover`}
+                                style={{ transitionDelay: `${index * 0.15}s` }}
+                            >
+                                <h3>{card.title}</h3>
+                                <p>{card.desc}</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>
 
-            <section className={styles.offerings}>
+            <section className={styles.offerings} ref={gridRef}>
                 <div className="container">
-                    <h2 className={styles.sectionTitle}>What We Offer</h2>
+                    <div className={styles.sectionTitle}>
+                        <h2>What We Offer</h2>
+                        <p>Specialized institutional support for technical excellence</p>
+                    </div>
                     <div className={styles.offeringsGrid}>
                         {offerings.map((offering, index) => (
-                            <div key={index} className={styles.offeringCard}>
+                            <div 
+                                key={index} 
+                                className={`${styles.offeringCard} ${gridInView ? styles.visible : ''} card-hover`}
+                                style={{ transitionDelay: `${index * 0.2}s` }}
+                            >
                                 <div className={styles.offeringIcon}>{offering.icon}</div>
                                 <h3>{offering.title}</h3>
                                 <ul>
@@ -91,18 +132,66 @@ const ForCollegesPage = () => {
                 </div>
             </section>
 
+            <section className={styles.process}>
+                <div className="container" ref={useInView({ threshold: 0.1, triggerOnce: true }).ref}>
+                    <div className={styles.sectionTitle}>
+                        <h2>How Tattva Works with Colleges</h2>
+                        <p>A systematic roadmap for institutional innovation</p>
+                    </div>
+                    <div className={styles.processGrid}>
+                        {steps.map((step, index) => {
+                            const { ref: stepRef, inView: stepInView } = useInView({ threshold: 0.1, triggerOnce: true });
+                            return (
+                                <div 
+                                    key={index} 
+                                    ref={stepRef}
+                                    className={`${styles.processStep} ${stepInView ? styles.visible : ''}`}
+                                    style={{ transitionDelay: `${index * 0.2}s` }}
+                                >
+                                    <div className={styles.stepNumber}>{index + 1}</div>
+                                    <h4>{step.title}</h4>
+                                    <p>{step.desc}</p>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            </section>
+
+            <section className={styles.impact}>
+                <div className="container">
+                    <div className={styles.sectionTitle}>
+                        <h2>Impact for Colleges</h2>
+                        <p>The Tattva advantage for your institution</p>
+                    </div>
+                    <div className={styles.impactGrid}>
+                        {impacts.map((impact, index) => (
+                            <div key={index} className={styles.impactItem}>
+                                <div className={styles.impactIcon}>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                </div>
+                                <h4>{impact.title}</h4>
+                                <p>{impact.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
             <section className={styles.cta}>
                 <div className="container">
                     <div className={styles.ctaContent}>
-                        <h2>Ready to Transform Your Institution?</h2>
-                        <p>Join 10+ colleges already partnering with ProjectMinds for future-ready education.</p>
+                        <h2>Bring Industry-Ready AI Education to Your College</h2>
+                        <p>Tattva helps institutions prepare students for real-world technology careers.</p>
                         <a
-                            href="http://wa.me/+918886945890"
+                            href="https://wa.me/918886945890"
                             className={styles.primaryBtn}
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            Book Free Consultation
+                            Schedule a Consultation
                         </a>
                     </div>
                 </div>

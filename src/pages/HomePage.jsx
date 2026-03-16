@@ -32,13 +32,13 @@ const HomePage = () => {
       <HeroSection />
       <OurSolutions />
       <MetricsSection />
-      <VisionSection />
       <CollegeScroller />
       <WhyChoose />
       <Categories />
-      <HowItWorks />
       <PopularProjects />
+      <HowItWorks />
       <Testimonials />
+      <VisionSection />
       <FounderStory />
       <CTASection />
       <Footer />

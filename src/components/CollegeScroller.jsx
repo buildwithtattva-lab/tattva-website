@@ -16,10 +16,10 @@ const CollegeScroller = () => {
     <section className={styles.collegeSection}>
       <div className="container">
         <h2 className={styles.sectionHeading}>
-          Students from Various Colleges Trust Us 🎓
+          Students from Leading Institutions Work With Us 🎓
         </h2>
         <p className={styles.sectionSubheading}>
-          Trusted by students across India's top engineering colleges
+          Trusted by students across India's top engineering campuses
         </p>
       </div>
       

@@ -9,7 +9,7 @@ const CTASection = () => {
     <section className={styles.ctaSection} ref={ref}>
       <div className={`container ${styles.ctaContainer}`}>
         <div className={`${styles.ctaContent} ${inView ? styles.visible : ''}`}>
-          <h2 className={styles.ctaHeadline}>Build a Future-Ready Institution Today.</h2>
+          <h2 className={styles.ctaHeadline}>Bring AI & Real-World Learning to Your Institution</h2>
           <p className={styles.ctaSubtext}>
             Consult with our experts to integrate AI and automation into your academic workflow.
           </p>

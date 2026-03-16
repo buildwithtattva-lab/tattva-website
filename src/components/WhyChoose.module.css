@@ -1,6 +1,6 @@
 .whyChoose {
   padding: 6rem 0;
-  background: var(--white);
+  background: var(--bg-light);
 }
 
 .sectionTitle {
@@ -18,9 +18,10 @@
 }
 
 .featureCard {
-  background: var(--light-gray);
+  background: var(--white);
   padding: 2.5rem 2rem;
-  border-radius: 20px;
+  border-radius: 24px;
+  border: 1px solid var(--border-muted);
   text-align: center;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   opacity: 0;
@@ -36,6 +37,7 @@
   transform: translateY(-8px);
   box-shadow: var(--shadow-lg);
   background: var(--white);
+  border-color: var(--primary-teal);
 }
 
 .iconWrapper {
@@ -61,13 +63,13 @@
 .featureTitle {
   font-size: 1.375rem;
   margin-bottom: 0.75rem;
-  color: var(--primary-black);
+  color: var(--text-dark);
   font-weight: 600;
 }
 
 .featureDescription {
   font-size: 1rem;
-  color: var(--charcoal);
+  color: var(--text-muted);
   line-height: 1.6;
 }
 

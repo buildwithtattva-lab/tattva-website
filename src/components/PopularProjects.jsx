@@ -47,14 +47,19 @@ const PopularProjects = () => {
   return (
     <section className={styles.popularProjects} ref={ref}>
       <div className={`container ${styles.popularProjectsContainer}`}>
+        <div className={styles.backgroundLines}>
+            <div className={styles.line}></div>
+            <div className={styles.line}></div>
+            <div className={styles.line}></div>
+        </div>
         <h2 className={styles.sectionTitle}>Our Trending Projects 🔥</h2>
         
         <div className={styles.projectsGrid}>
           {projects.map((project, index) => (
             <div 
               key={index}
-              className={`${styles.projectCard} ${inView ? styles.visible : ''}`}
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className={`${styles.projectCard} ${inView ? styles.visible : ''} card-hover`}
+              style={{ transitionDelay: `${index * 0.15}s` }}
             >
               <div className={styles.projectIcon}>{project.icon}</div>
               <h3 className={styles.projectTitle}>{project.title}</h3>

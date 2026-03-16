@@ -1,7 +1,7 @@
 .vision {
     padding: 10rem 0;
-    background-color: var(--primary-black);
-    color: var(--white);
+    background-color: var(--primary-teal);
+    color: var(--bg-light);
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -14,7 +14,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at 70% 30%, rgba(255, 214, 10, 0.1) 0%, transparent 50%);
+    background: radial-gradient(circle at 70% 30%, rgba(251, 250, 243, 0.05) 0%, transparent 50%);
     pointer-events: none;
 }
 
@@ -32,7 +32,7 @@
 }
 
 .tagline {
-    color: var(--primary-yellow);
+    color: rgba(251, 250, 243, 0.7);
     text-transform: uppercase;
     letter-spacing: 0.2em;
     font-weight: 700;
@@ -42,17 +42,18 @@
 }
 
 .title {
-    color: var(--white);
+    color: var(--bg-light);
     margin-bottom: 3rem;
     font-size: 3.5rem;
     font-weight: 850;
+    letter-spacing: -0.02em;
 }
 
 .statement {
     font-size: 2.25rem;
     font-weight: 600;
     line-height: 1.4;
-    color: var(--white);
+    color: var(--bg-light);
     margin-bottom: 3rem;
     text-align: left;
     /* Align left for vertical accent */
@@ -69,7 +70,7 @@
 
 .description {
     font-size: 1.125rem;
-    color: #ccc;
+    color: rgba(251, 250, 243, 0.7);
     line-height: 1.8;
     max-width: 700px;
     margin: 0 auto;

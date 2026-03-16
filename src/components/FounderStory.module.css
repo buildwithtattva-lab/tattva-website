@@ -33,7 +33,7 @@
 .imagePlaceholder {
     width: 100%;
     aspect-ratio: 1;
-    background: var(--primary-yellow);
+    background: var(--ivory);
     border-radius: 20px;
     display: flex;
     align-items: center;

@@ -6,14 +6,15 @@
   z-index: 1000;
   background: transparent;
   transition: all 0.3s ease;
-  padding: 1.5rem 0;
+  padding: 1rem 0;
 }
 
 .nav.scrolled {
-  background: rgba(255, 255, 255, 0.98);
+  background: var(--ivory);
   backdrop-filter: blur(10px);
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
-  padding: 1rem 0;
+  box-shadow: var(--shadow-sm);
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border-muted);
 }
 
 .navContainer {
@@ -39,11 +40,13 @@
   transition: all 0.3s ease;
   object-fit: contain;
   background: transparent;
+  /* Seamlessly blends the logo's ivory background with the navbar */
   mix-blend-mode: multiply;
+  animation: floatSlow 6s ease-in-out infinite;
 }
 
 .nav.scrolled .logo {
-  height: 50px;
+  height: 45px;
 }
 
 .mobileMenuBtn {
@@ -73,7 +76,7 @@
 
 .navLinks a {
   font-weight: 500;
-  color: var(--charcoal);
+  color: var(--text-dark);
   transition: all 0.3s ease;
   font-size: 0.95rem;
   /* Reduced from 1rem */
@@ -90,7 +93,7 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: var(--primary-yellow);
+  background: var(--primary-teal);
   transition: width 0.3s ease;
 }
 
@@ -99,21 +102,20 @@
 }
 
 .navLinks a:hover {
-  color: var(--primary-black);
+  color: var(--primary-teal);
 }
 
-.ctaBtn {
-  padding: 0.6rem 1.25rem;
-  /* Reduced from 0.75rem 1.75rem */
-  background: var(--primary-yellow);
-  color: var(--primary-black);
+.navLinks a.ctaBtn {
+  padding: 0.6rem 1.4rem;
+  background: var(--primary-teal);
+  color: var(--white) !important;
   border-radius: 50px;
-  font-weight: 600;
+  font-weight: 700;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(255, 214, 10, 0.3);
+  box-shadow: var(--shadow-sm);
   font-size: 0.9rem;
-  /* Added slightly smaller font for long text */
   text-align: center;
+  text-decoration: none !important;
 }
 
 .ctaBtn::after {
@@ -121,9 +123,9 @@
 }
 
 .ctaBtn:hover {
-  background: #FFC700;
+  background: var(--accent-teal);
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(255, 214, 10, 0.5);
+  box-shadow: var(--shadow-md);
 }
 
 /* Mobile Styles */
@@ -160,7 +162,7 @@
     padding: 0.75rem 0;
   }
 
-  .ctaBtn {
+  .navLinks a.ctaBtn {
     width: 100%;
     text-align: center;
     padding: 1rem 2rem;
@@ -179,4 +181,4 @@
   .navLinks {
     width: 80%;
   }
-}
+}

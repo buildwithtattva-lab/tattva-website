@@ -1,11 +1,37 @@
 .popularProjects {
   padding: 6rem 0;
-  background: var(--light-gray);
+  background: var(--bg-light);
 }
 
 .sectionTitle {
   text-align: center;
   margin-bottom: 4rem;
+  position: relative;
+  z-index: 1;
+}
+
+.backgroundLines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.05;
+}
+
+.line {
+  position: absolute;
+  background: var(--primary-teal);
+  height: 1px;
+  width: 100%;
+}
+
+.line:nth-child(1) { top: 30%; transform: rotate(5deg); animation: lineFloat 10s infinite; }
+.line:nth-child(2) { top: 60%; transform: rotate(-8deg); animation: lineFloat 14s infinite alternate; }
+.line:nth-child(3) { top: 80%; transform: rotate(3deg); animation: lineFloat 12s infinite reverse; }
+
+@keyframes lineFloat {
+  0% { transform: scaleX(0.8) translate(-10%, 0); opacity: 0.2; }
+  100% { transform: scaleX(1.1) translate(10%, 20px); opacity: 0.6; }
 }
 
 .projectsGrid {
@@ -13,16 +39,18 @@
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
   margin-bottom: 3rem;
+  position: relative;
+  z-index: 1;
 }
 
 .projectCard {
   background: var(--white);
   padding: 2rem;
-  border-radius: 20px;
+  border-radius: 24px;
   transition: all 0.4s ease;
   opacity: 0;
   transform: translateY(30px);
-  border: 2px solid transparent;
+  border: 1px solid var(--border-muted);
 }
 
 .projectCard.visible {
@@ -31,9 +59,9 @@
 }
 
 .projectCard:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--primary-yellow);
+  transform: translateY(-12px);
+  box-shadow: 0 20px 40px rgba(0, 43, 43, 0.08);
+  border-color: var(--primary-teal);
 }
 
 .projectIcon {
@@ -49,7 +77,7 @@
 
 .projectDescription {
   font-size: 1rem;
-  color: var(--charcoal);
+  color: var(--text-muted);
   margin-bottom: 1.5rem;
   line-height: 1.6;
 }
@@ -62,11 +90,19 @@
 
 .tag {
   padding: 0.375rem 0.875rem;
-  background: var(--light-gray);
+  background: var(--bg-light);
   border-radius: 20px;
   font-size: 0.875rem;
-  color: var(--charcoal);
+  color: var(--primary-teal);
   font-weight: 500;
+  border: 1px solid var(--border-muted);
+  transition: all 0.3s ease;
+}
+
+.projectCard:hover .tag {
+  background: var(--primary-teal);
+  color: var(--white);
+  border-color: var(--primary-teal);
 }
 
 .viewAllWrapper {
@@ -75,8 +111,8 @@
 
 .viewAllBtn {
   padding: 1rem 2.5rem;
-  background: var(--primary-black);
-  color: var(--white);
+  background: var(--primary-teal);
+  color: var(--bg-light);
   font-size: 1.125rem;
   font-weight: 600;
   border-radius: 50px;
@@ -87,7 +123,7 @@
 .viewAllBtn:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-lg);
-  background: var(--charcoal);
+  background: var(--accent-teal);
 }
 
 @media (max-width: 768px) {

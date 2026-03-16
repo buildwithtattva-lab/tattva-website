@@ -11,7 +11,7 @@ const Testimonials = () => {
       course: 'B.Tech CSE',
       college: 'GITAM University',
       rating: 5,
-      text: 'ProjectMinds helped me complete my AI project in 5 days — got 94%! The documentation was perfect and they supported me till my viva.',
+      text: 'Tattva helped me complete my AI project in 5 days — got 94%! The documentation was perfect and they supported me till my viva.',
       avatar: '👩‍🎓'
     },
     {
@@ -35,11 +35,11 @@ const Testimonials = () => {
   return (
     <section className={styles.testimonials} ref={ref}>
       <div className={`container ${styles.testimonialsContainer}`}>
-        <h2 className={styles.sectionTitle}>Our Students Say It Best ⭐</h2>
-        
+        <h2 className={styles.sectionTitle}>What Students Say About Tattva ⭐</h2>
+
         <div className={styles.testimonialsGrid}>
           {testimonials.map((testimonial, index) => (
-            <div 
+            <div
               key={index}
               className={`${styles.testimonialCard} ${inView ? styles.visible : ''}`}
               style={{ animationDelay: `${index * 0.15}s` }}

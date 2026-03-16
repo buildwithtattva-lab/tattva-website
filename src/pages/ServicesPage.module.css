@@ -1,0 +1,223 @@
+.page {
+  background-color: var(--bg-light);
+  min-height: 100vh;
+}
+
+/* Header Section */
+.header {
+  padding: 12rem 0 6rem;
+  background: var(--bg-light);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.backgroundElements {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.05; /* 5% opacity as requested */
+}
+
+.circuitLine {
+  position: absolute;
+  background: var(--primary-teal);
+}
+
+.circuitLine:nth-child(1) {
+  width: 300px;
+  height: 2px;
+  top: 20%;
+  left: -100px;
+  transform: rotate(45deg);
+}
+
+.circuitLine:nth-child(2) {
+  width: 400px;
+  height: 2px;
+  bottom: 10%;
+  right: -50px;
+  transform: rotate(-30deg);
+}
+
+.chipNode {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background: var(--primary-teal);
+  border: 4px solid var(--white);
+  border-radius: 4px;
+}
+
+.chipNode:nth-child(3) { top: 35%; left: 15%; }
+.chipNode:nth-child(4) { bottom: 25%; right: 10%; }
+
+.headerContent {
+  max-width: 850px;
+  margin: 0 auto;
+  opacity: 0;
+  transform: translateY(30px);
+  position: relative;
+  z-index: 1;
+}
+
+.headerContent.visible {
+  animation: revealHero 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.title {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 850;
+  color: var(--primary-teal);
+  margin-bottom: 2rem;
+  line-height: 1.1;
+}
+
+.subtitle {
+  font-size: clamp(1.125rem, 2vw, 1.35rem);
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+/* Offerings Section */
+.offerings {
+  padding: 6rem 0;
+}
+
+.offeringsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.5rem;
+}
+
+.offeringCard {
+  background: var(--white);
+  padding: 3rem 2.5rem;
+  border-radius: 28px;
+  border: 1px solid var(--border-muted);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.offeringCard.visible {
+  animation: revealHero 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.offeringCard:hover {
+  transform: translateY(-12px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(0, 43, 43, 0.1);
+}
+
+.offeringIcon {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-soft);
+  border-radius: 18px;
+  margin-bottom: 2rem;
+  color: var(--primary-teal);
+  transition: all 0.5s ease;
+}
+
+.offeringCard:hover .offeringIcon {
+  transform: scale(1.1) rotate(5deg);
+  background: var(--primary-teal);
+  color: var(--white);
+}
+
+.offeringCard h3 {
+  font-size: 1.5rem;
+  font-weight: 750;
+  color: var(--primary-teal);
+  margin-bottom: 1.5rem;
+}
+
+.offeringCard ul {
+  list-style: none;
+  padding: 0;
+}
+
+.offeringCard li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.offeringCard li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--accent-teal);
+  font-weight: 800;
+}
+
+/* CTA Section */
+.cta {
+  padding: 10rem 0;
+}
+
+.ctaContent {
+  background: var(--primary-teal);
+  color: var(--white);
+  padding: 6rem 3rem;
+  border-radius: 40px;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+}
+
+.ctaContent h2 {
+  font-size: clamp(2.25rem, 4vw, 3rem);
+  color: var(--white);
+  margin-bottom: 1.5rem;
+  font-weight: 800;
+}
+
+.ctaContent p {
+  font-size: 1.25rem;
+  color: rgba(251, 250, 243, 0.82);
+  margin-bottom: 3.5rem;
+  max-width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.primaryBtn {
+  background: var(--white);
+  color: var(--primary-teal);
+  padding: 1.25rem 3.5rem;
+  border-radius: 50px;
+  font-weight: 750;
+  font-size: 1.125rem;
+  display: inline-block;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.primaryBtn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+  background: var(--accent-soft);
+}
+
+@keyframes revealHero {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .header { padding: 8rem 0 4rem; }
+  .offeringsGrid { grid-template-columns: 1fr; }
+  .ctaContent { padding: 4rem 1.5rem; }
+}
