@@ -8,37 +8,37 @@ const HowItWorks = () => {
   const steps = [
     {
       number: '1',
-      title: 'Strategy Consultation',
-      description: 'We analyze your current education ecosystem and goals.'
+      title: 'Engage',
+      description: 'We connect directly with your institution to understand your vision.'
     },
     {
       number: '2',
-      title: 'Technology Integration',
-      description: 'Customizing AI and automation tools for your institution.'
+      title: 'Understand',
+      description: 'Identifying specific challenges and gaps in your current system.'
     },
     {
       number: '3',
-      title: 'Institutional Enablement',
-      description: 'Training faculty and setting up project repositories.'
+      title: 'Identify',
+      description: 'Pinpointing high-impact areas where AI can create real value.'
     },
     {
       number: '4',
-      title: 'Future-Ready Outcomes',
-      description: 'Sustained support for placement-oriented excellence.'
+      title: 'Design',
+      description: 'Implementing custom AI solutions and outcome-driven learning systems.'
     }
   ];
 
   return (
     <section className={styles.howItWorks} ref={ref}>
       <div className={`container ${styles.howItWorksContainer}`}>
-        <h2 className={styles.sectionTitle}>How Institutions Work With Tattva</h2>
+        <h2 className={styles.sectionTitle}>Our Consultative & Problem-First Approach</h2>
 
         <div className={styles.timeline}>
           {steps.map((step, index) => (
             <div
               key={index}
               className={`${styles.timelineStep} ${inView ? styles.visible : ''}`}
-              style={{ transitionDelay: `${index * 0.2}s` }}
+              style={{ transitionDelay: `${index * 0.25}s` }}
             >
               <div className={styles.stepNumber}>{step.number}</div>
               <div className={styles.stepContent}>

@@ -70,11 +70,11 @@ const ContactPage = () => {
                             <h3 style={{ marginBottom: '1rem' }}>Email Us</h3>
                             <p style={{ marginBottom: '1.5rem', color: 'var(--charcoal)' }}>For formal proposals and institutional collaborations.</p>
                             <a
-                                href="mailto:team.tattva@gmail.com"
+                                href="mailto:bulidwithtattva@gmail.com"
                                 className={styles.primaryBtn}
                                 style={{ display: 'inline-block' }}
                             >
-                                team.tattva@gmail.com
+                                bulidwithtattva@gmail.com
                             </a>
                         </div>
                     </div>

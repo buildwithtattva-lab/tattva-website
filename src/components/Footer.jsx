@@ -11,7 +11,7 @@ const Footer = () => {
           <div className={styles.footerColumn}>
             <h3 className={styles.footerLogo}>Tattva</h3>
             <p className={styles.footerTagline}>
-              Empowering educational institutions and students with AI-driven innovation.
+              Empowering educational institutions with AI-driven transformation.
             </p>
           </div>
 
@@ -19,7 +19,6 @@ const Footer = () => {
             <h4 className={styles.footerTitle}>Quick Links</h4>
             <ul className={styles.footerLinks}>
               <li><a href="/">Home</a></li>
-              <li><a href="/projects">Projects</a></li>
               <li><a href="/about">About</a></li>
               <li><a href="/contact">Contact</a></li>
             </ul>
@@ -28,7 +27,7 @@ const Footer = () => {
           <div className={styles.footerColumn}>
             <h4 className={styles.footerTitle}>Contact Info</h4>
             <ul className={styles.contactInfo}>
-              <li>team.tattva@gmail.com</li>
+              <li>bulidwithtattva@gmail.com</li>
               <li>+91 9652796537</li>
               <li>Hyderabad, Telangana</li>
             </ul>
@@ -38,7 +37,7 @@ const Footer = () => {
             <h4 className={styles.footerTitle}>Follow Us</h4>
             <div className={styles.socialIcons}>
               <a
-                href="https://www.instagram.com/projectminds_7/"
+                href="https://www.instagram.com/tattvahq/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"

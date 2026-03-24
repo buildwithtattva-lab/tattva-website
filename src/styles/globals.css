@@ -1,6 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&display=swap');
+
 :root {
   --primary-teal: #002B2B;        /* Deep brand teal from logo */
-  --accent-teal: #004D4D;         /* Lighter teal for accents */
+  --accent-teal: #008080;         /* Brighter teal for high-impact accents */
+  --font-serif: 'Instrument Serif', serif;
+  --font-sans: 'Instrument Sans', sans-serif;
   --bg-light: #FBFAF3;            /* Warm ivory from logo background */
   --text-dark: #1A1A1A;           /* Near black for readability */
   --text-muted: #4F5E5E;          /* Muted teal-gray for body */
@@ -40,8 +44,8 @@ html {
 }
 
 body {
-  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
-  color: var(--charcoal);
+  font-family: var(--font-sans);
+  color: var(--text-dark);
   background-color: var(--white);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -96,16 +100,25 @@ body {
   animation: reveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  color: var(--text-dark);
+  line-height: 1.1;
+}
+
 h1 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  letter-spacing: -0.02em;
 }
 
 h2 {
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(2.25rem, 6vw, 4rem);
+  letter-spacing: -0.01em;
 }
 
 h3 {
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
 }
 
 p {
@@ -215,12 +228,17 @@ img {
 }
 
 .btn-hover {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 9999px !important; /* Force pill shape */
 }
 
 .btn-hover:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0, 43, 43, 0.2);
+  transform: scale(1.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.btn-hover:active {
+  transform: scale(0.95);
 }
 
 .animate-fadeInUp {

@@ -13,13 +13,11 @@ const VisionSection = () => {
                     <h2 className={styles.title}>Our Vision</h2>
                     <div className="vertical-accent">
                         <p className={styles.statement}>
-                            To bridge the gap between traditional education systems and emerging AI-driven industries.
+                            Tattva aims to bridge the gap between traditional education and modern technological advancements by making AI accessible, practical, and impactful for institutions.
                         </p>
                     </div>
                     <p className={styles.description}>
-                        We believe that every educational institution, whether a school or a college, deserves access
-                        to the same cutting-edge technology that drives industry giants. Our mission is to democratize
-                        AI and automation in academia.
+                        We don’t just teach AI — we help institutions adopt, integrate, and evolve with it.
                     </p>
                 </div>
             </div>

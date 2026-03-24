@@ -3,13 +3,8 @@ import Navigation from '../components/Navigation';
 import HeroSection from '../components/HeroSection';
 import OurSolutions from '../components/OurSolutions';
 import VisionSection from '../components/VisionSection';
-import MetricsSection from '../components/MetricsSection';
-import CollegeScroller from '../components/CollegeScroller';
 import WhyChoose from '../components/WhyChoose';
-import Categories from '../components/Categories';
 import HowItWorks from '../components/HowItWorks';
-import PopularProjects from '../components/PopularProjects';
-import Testimonials from '../components/Testimonials';
 import FounderStory from '../components/FounderStory';
 import CTASection from '../components/CTASection';
 import Footer from '../components/Footer';
@@ -31,13 +26,8 @@ const HomePage = () => {
       <Navigation />
       <HeroSection />
       <OurSolutions />
-      <MetricsSection />
-      <CollegeScroller />
       <WhyChoose />
-      <Categories />
-      <PopularProjects />
       <HowItWorks />
-      <Testimonials />
       <VisionSection />
       <FounderStory />
       <CTASection />

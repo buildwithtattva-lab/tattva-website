@@ -36,18 +36,18 @@ const Navigation = () => {
         </button>
 
         <div className={`${styles.navLinks} ${mobileMenuOpen ? styles.mobileMenuActive : ''}`}>
-          <Link to="/">Home</Link>
-          <Link to="/for-schools">For Schools</Link>
-          <Link to="/for-colleges">For Colleges</Link>
-          <Link to="/for-students">For Students</Link>
-          <Link to="/services">Services</Link>
-          <Link to="/about">About Us</Link>
-          <Link to="/contact">Contact</Link>
+          <Link to="/" onClick={() => setMobileMenuOpen(false)}>Home</Link>
+          <Link to="/for-schools" onClick={() => setMobileMenuOpen(false)}>For Schools</Link>
+          <Link to="/for-colleges" onClick={() => setMobileMenuOpen(false)}>For Colleges</Link>
+          <Link to="/services" onClick={() => setMobileMenuOpen(false)}>Services</Link>
+          <Link to="/about" onClick={() => setMobileMenuOpen(false)}>About Us</Link>
+          <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
           <a
             href="http://wa.me/+918886945890"
             className={styles.ctaBtn}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => setMobileMenuOpen(false)}
           >
             Book Free Consultation
           </a>
