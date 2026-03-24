@@ -27,7 +27,7 @@ const Footer = () => {
           <div className={styles.footerColumn}>
             <h4 className={styles.footerTitle}>Contact Info</h4>
             <ul className={styles.contactInfo}>
-              <li>bulidwithtattva@gmail.com</li>
+              <li>buildwithtattva@gmail.com</li>
               <li>+91 9652796537</li>
               <li>Hyderabad, Telangana</li>
             </ul>
