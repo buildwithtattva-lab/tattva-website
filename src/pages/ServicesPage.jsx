@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import { useInView } from 'react-intersection-observer';
@@ -77,8 +78,47 @@ const ServicesPage = () => {
                     <line x1="12" y1="17" x2="12" y2="21" />
                 </svg>
             )
+        },
+        {
+            title: 'School Faculty Recruitment',
+            items: [
+                'Teacher hiring solutions',
+                'Subject specialist placement',
+                'Management & Admin staffing'
+            ],
+            icon: (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <polyline points="16 11 18 13 22 9" />
+                </svg>
+            ),
+            link: '/hiring'
         }
     ];
+
+    const ServiceCard = ({ service, index, gridInView }) => {
+        const CardContent = (
+            <div 
+                className={`${styles.offeringCard} ${gridInView ? styles.visible : ''}`}
+                style={{ transitionDelay: `${index * 0.1}s` }}
+            >
+                <div className={styles.offeringIcon}>{service.icon}</div>
+                <h3>{service.title}</h3>
+                <ul>
+                    {service.items.map((item, i) => (
+                        <li key={i}>{item}</li>
+                    ))}
+                </ul>
+            </div>
+        );
+
+        if (service.link) {
+            return <Link to={service.link} className={styles.cardLink}>{CardContent}</Link>;
+        }
+
+        return CardContent;
+    };
 
     return (
         <div className={styles.page}>
@@ -103,19 +143,12 @@ const ServicesPage = () => {
                 <div className="container">
                     <div className={styles.offeringsGrid}>
                         {serviceCategories.map((service, index) => (
-                            <div 
+                            <ServiceCard 
                                 key={index} 
-                                className={`${styles.offeringCard} ${gridInView ? styles.visible : ''}`}
-                                style={{ transitionDelay: `${index * 0.1}s` }}
-                            >
-                                <div className={styles.offeringIcon}>{service.icon}</div>
-                                <h3>{service.title}</h3>
-                                <ul>
-                                    {service.items.map((item, i) => (
-                                        <li key={i}>{item}</li>
-                                    ))}
-                                </ul>
-                            </div>
+                                service={service} 
+                                index={index} 
+                                gridInView={gridInView} 
+                            />
                         ))}
                     </div>
                 </div>

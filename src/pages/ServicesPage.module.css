@@ -221,3 +221,14 @@
   .offeringsGrid { grid-template-columns: 1fr; }
   .ctaContent { padding: 4rem 1.5rem; }
 }
+
+.cardLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.cardLink:hover {
+    transform: translateY(-10px);
+}

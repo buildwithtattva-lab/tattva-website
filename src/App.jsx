@@ -8,6 +8,7 @@ import ServicesPage from './pages/ServicesPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import ProjectsPage from './pages/ProjectsPage';
+import HiringPage from './pages/HiringPage';
 import './styles/globals.css';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/projects" element={<ProjectsPage />} />
+        <Route path="/hiring" element={<HiringPage />} />
       </Routes>
     </Router>
   );
