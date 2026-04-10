@@ -31,7 +31,7 @@ serve(async (req) => {
           
           <div style="background-color: #f7fafc; padding: 20px; border-radius: 8px; margin: 25px 0;">
             <p style="color: #4a5568; margin: 0; font-size: 15px;"><strong>Your Interview Target Slot:</strong><br/>
-            ${new Date(record.interview_date).toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute:'2-digit' })}</p>
+            ${new Date(record.interview_date).toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
           </div>
 
           <p style="color: #4a5568; line-height: 1.6; font-size: 16px;">
@@ -60,7 +60,7 @@ serve(async (req) => {
     },
     body: JSON.stringify({
       from: 'Tattva System <hiring@tattva-ai.in>',
-      to: ['sudhavamgi@gmail.com'],
+      to: ['sudha.vamsi1965@gmail.com'],
       cc: ['buildwithtattva@gmail.com'],
       subject: `New Application: ${record.full_name} - ${record.role}`,
       html: `
