@@ -19,7 +19,7 @@ const Navigation = () => {
       <div className={`container ${styles.navContainer}`}>
         <Link to="/" className={styles.logoLink}>
           <img
-            src="/assets/icons/updated logoo (1) .png"
+            src="/assets/icons/updated logoo (1).png"
             alt="Tattva Logo"
             className={styles.logo}
           />

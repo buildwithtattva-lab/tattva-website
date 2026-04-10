@@ -1,7 +1,7 @@
 .page {
     min-height: 100vh;
-    background-color: #030409;
-    color: #ffffff;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
 }
 
 .hero {
@@ -18,7 +18,7 @@
     transform: translateX(-50%);
     width: 60%;
     height: 400px;
-    background: radial-gradient(circle, rgba(0, 242, 255, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+    background: radial-gradient(circle, rgba(0, 128, 128, 0.05) 0%, rgba(251, 250, 243, 0) 70%);
     filter: blur(60px);
     z-index: 0;
 }
@@ -30,19 +30,19 @@
 
 .title {
     font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 700;
+    font-weight: 400;
+    font-family: var(--font-serif);
     margin-bottom: 20px;
-    background: linear-gradient(135deg, #ffffff 0%, #00f2ff 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--primary-teal);
 }
 
 .subtitle {
     font-size: 1.2rem;
-    color: #a0aec0;
+    color: var(--text-muted);
     max-width: 700px;
     margin: 0 auto;
     line-height: 1.6;
+    font-family: var(--font-sans);
 }
 
 .formSection {
@@ -55,19 +55,20 @@
 }
 
 .formGlass {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(10px);
-    border: 1px rgba(255, 255, 255, 0.1) solid;
+    background: var(--white);
+    border: 1px solid var(--border-muted);
     border-radius: 24px;
     padding: 40px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-lg);
 }
 
 .formTitle {
     font-size: 2rem;
     margin-bottom: 30px;
     text-align: center;
-    color: #ffffff;
+    color: var(--primary-teal);
+    font-family: var(--font-serif);
+    font-weight: 400;
 }
 
 .form {
@@ -95,42 +96,45 @@
 }
 
 .inputGroup label {
-    font-size: 0.9rem;
-    color: #cbd5e0;
+    font-size: 0.95rem;
+    color: var(--primary-teal);
     font-weight: 500;
+    font-family: var(--font-sans);
 }
 
 .inputGroup input, 
 .inputGroup select {
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px rgba(255, 255, 255, 0.1) solid;
+    background: var(--white);
+    border: 1px solid var(--border-muted);
     padding: 14px 18px;
     border-radius: 12px;
-    color: #ffffff;
+    color: var(--text-dark);
     font-size: 1rem;
-    transition: all 0.3s ease;
+    font-family: var(--font-sans);
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
 }
 
 .inputGroup input:focus, 
 .inputGroup select:focus {
     outline: none;
-    border-color: #00f2ff;
-    background: rgba(0, 242, 255, 0.05);
-    box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
+    border-color: var(--accent-teal);
+    box-shadow: 0 0 0 3px rgba(0, 128, 128, 0.1);
 }
 
 .fileUpload {
     position: relative;
-    border: 2px dashed rgba(255, 255, 255, 0.1);
+    border: 2px dashed rgba(0, 43, 43, 0.2);
     border-radius: 12px;
     padding: 10px;
     text-align: center;
-    transition: all 0.3s ease;
+    transition: var(--transition);
+    background: var(--bg-light);
 }
 
 .fileUpload:hover {
-    border-color: #00f2ff;
-    background: rgba(255, 255, 255, 0.02);
+    border-color: var(--accent-teal);
+    background: var(--white);
 }
 
 .fileUpload input {
@@ -146,26 +150,29 @@
 .fileLabel {
     display: block;
     padding: 20px;
-    color: #a0aec0;
+    color: var(--text-muted);
     font-size: 0.95rem;
+    font-family: var(--font-sans);
 }
 
 .submitBtn {
     margin-top: 10px;
     padding: 16px;
-    border-radius: 12px;
+    border-radius: 9999px;
     border: none;
-    background: linear-gradient(135deg, #00f2ff 0%, #0072ff 100%);
-    color: #ffffff;
+    background: var(--primary-teal);
+    color: var(--white);
     font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--transition);
+    font-family: var(--font-sans);
 }
 
 .submitBtn:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(0, 114, 255, 0.4);
+    box-shadow: var(--shadow-md);
+    background: var(--accent-teal);
 }
 
 .submitBtn:disabled {
@@ -178,16 +185,17 @@
     border-radius: 12px;
     font-size: 0.95rem;
     text-align: center;
+    font-family: var(--font-sans);
 }
 
 .success {
-    background: rgba(72, 187, 120, 0.15);
-    color: #68d391;
-    border: 1px rgba(72, 187, 120, 0.3) solid;
+    background: rgba(72, 187, 120, 0.1);
+    color: #2F855A;
+    border: 1px solid rgba(72, 187, 120, 0.2);
 }
 
 .error {
-    background: rgba(245, 101, 101, 0.15);
-    color: #fc8181;
-    border: 1px rgba(245, 101, 101, 0.3) solid;
+    background: rgba(245, 101, 101, 0.1);
+    color: #C53030;
+    border: 1px solid rgba(245, 101, 101, 0.2);
 }
