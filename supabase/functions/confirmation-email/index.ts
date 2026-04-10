@@ -60,8 +60,8 @@ serve(async (req) => {
     },
     body: JSON.stringify({
       from: 'Tattva System <hiring@tattva-ai.in>',
-      to: ['sudha.vamsi1965@gmail.com'],
-      cc: ['buildwithtattva@gmail.com'],
+      to: ['buildwithtattva@gmail.com'],
+      cc: ['sudha.vamsi1965@gmail.com'],
       subject: `New Application: ${record.full_name} - ${record.role}`,
       html: `
         <div style="font-family: sans-serif; max-width: 600px; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
