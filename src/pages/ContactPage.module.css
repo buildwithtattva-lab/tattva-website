@@ -1,0 +1,142 @@
+.page {
+    background-color: var(--ivory);
+    min-height: 100vh;
+    color: var(--primary-teal);
+    overflow-x: hidden;
+    font-family: var(--font-sans);
+}
+
+.header {
+    position: relative;
+    padding: 160px 0 60px; /* High padding for navbar */
+    text-align: center;
+    background-color: var(--ivory);
+    overflow: hidden;
+}
+
+/* Faded Watermark Brand Effect */
+.header::before {
+    content: "Get in Touch";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(5rem, 15vw, 15rem);
+    font-weight: 800;
+    color: rgba(0, 43, 43, 0.03); /* Extremely subtle */
+    white-space: nowrap;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.headerContent {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.headerContent.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.title {
+    font-family: var(--font-serif);
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 500;
+    margin-bottom: 24px;
+    color: var(--primary-teal);
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: rgba(0, 43, 43, 0.7); /* Improved contrast from reference but kept stylish */
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contactGridSection {
+    padding: 80px 0 140px;
+}
+
+.contactGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.contactCard {
+    padding: 60px 40px;
+    background: var(--white);
+    border-radius: 32px;
+    box-shadow: 0 40px 100px rgba(0, 43, 43, 0.05);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(0, 43, 43, 0.05);
+}
+
+.contactCard:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 50px 120px rgba(0, 43, 43, 0.08);
+}
+
+.iconWrapper {
+    width: 80px;
+    height: 80px;
+    background: var(--ivory);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 32px;
+    color: var(--primary-teal);
+}
+
+.cardTitle {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 16px;
+    color: var(--primary-teal);
+}
+
+.cardDesc {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 32px;
+}
+
+.primaryBtn {
+    background: var(--primary-teal);
+    color: var(--white);
+    padding: 16px 36px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+    font-family: var(--font-sans);
+}
+
+.primaryBtn:hover {
+    background: #001a1a;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 43, 43, 0.1);
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 120px 0 40px;
+    }
+    .contactCard {
+        padding: 40px 24px;
+    }
+}

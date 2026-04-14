@@ -2,84 +2,106 @@ import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import styles from './OurSolutions.module.css';
 
-const solutions = [
-    {
-        title: 'AI Awareness & Education',
-        desc: 'Introducing students, teachers, and institutions to AI beyond basic tools. Understanding real-world applications and global trends.',
-        icon: (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10" />
-                <path d="M12 16v-4M12 8h.01" />
-            </svg>
-        )
-    },
-    {
-        title: 'Student Training & Skill Development',
-        desc: 'Training students to use AI effectively in learning and problem solving with industry-relevant skill development.',
-        icon: (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-                <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5" />
-            </svg>
-        )
-    },
-    {
-        title: 'Faculty & Teacher Enablement',
-        desc: 'Empowering educators to integrate AI into teaching, lesson planning, and automated content creation.',
-        icon: (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                <circle cx="9" cy="7" r="4" />
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-            </svg>
-        )
-    },
-    {
-        title: 'Institutional Solutions & Automation',
-        desc: 'Helping institutions streamline operations, smart attendance, and data-driven decision making using AI.',
-        icon: (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-                <line x1="8" y1="21" x2="16" y2="21" />
-                <line x1="12" y1="17" x2="12" y2="21" />
-            </svg>
-        )
-    },
-    {
-        title: 'AI Workshops & Programs',
-        desc: 'Structured programs for practical learning, ethical use of AI, and responsible AI practices.',
-        icon: (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-            </svg>
-        )
-    }
-];
+// Importing assets
+import missionImg from '../assets/bento/mission.png';
+import landscapeImg from '../assets/bento/landscape.png';
+import robot1Img from '../assets/bento/robot1.png';
+import robot2Img from '../assets/bento/robot2.png';
 
 const OurSolutions = () => {
     const { ref, inView } = useInView({ 
         threshold: 0.1,
-        triggerOnce: true,
-        rootMargin: '-50px'
+        triggerOnce: true
     });
 
     return (
         <section className={styles.solutions} ref={ref}>
             <div className="container">
-                <h2 className={styles.title}>What Tattva Enables</h2>
-                <div className={styles.grid}>
-                    {solutions.map((sol, index) => (
-                        <div
-                            key={index}
-                            className={`${styles.card} ${inView ? styles.visible : ''}`}
-                            style={{ transitionDelay: `${index * 0.1}s` }}
-                        >
-                            <div className={styles.iconWrapper}>{sol.icon}</div>
-                            <h3>{sol.title}</h3>
-                            <p>{sol.desc}</p>
+                <div className={styles.sectionHeader}>
+                    <span className={styles.tag}>OUR STORY</span>
+                    <h2 className={styles.title}>Empowering Learning and <br/> Transforming Futures</h2>
+                </div>
+
+                <div className={`${styles.bentoGrid} ${inView ? styles.visible : ''}`}>
+                    
+                    {/* Mission Card */}
+                    <div className={`${styles.card} ${styles.missionCard}`}>
+                        <div className={styles.cardInfo}>
+                            <h3>Mission</h3>
+                            <p>To make AI learning simple and practical so everyone can gain real skills.</p>
                         </div>
-                    ))}
+                        <div className={styles.missionVisual}>
+                            <img src={missionImg} alt="Mission" />
+                            <div className={styles.pillOverlay}>
+                                <span>LEARNING</span>
+                                <span>DIGITAL MINDS</span>
+                                <span>TECH EDUCATION</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Teamwork Card */}
+                    <div className={`${styles.card} ${styles.teamworkCard}`}>
+                        <div className={styles.cardInfo}>
+                            <h3>Teamwork</h3>
+                            <p>Collaborating to design AI courses that help learners succeed fast.</p>
+                        </div>
+                        <div className={styles.teamworkVisual}>
+                            <div className={styles.centerNode}>
+                                <div className={styles.tattvaIcon}>
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                    </svg>
+                                </div>
+                                {/* Branching lines */}
+                                <svg className={styles.branches} viewBox="0 0 200 200">
+                                    <line x1="100" y1="100" x2="40" y2="40" className={styles.branchLine} />
+                                    <line x1="100" y1="100" x2="160" y2="40" className={styles.branchLine} />
+                                    <line x1="100" y1="100" x2="30" y2="120" className={styles.branchLine} />
+                                    <line x1="100" y1="100" x2="100" y2="170" className={styles.branchLine} />
+                                    <line x1="100" y1="100" x2="170" y2="130" className={styles.branchLine} />
+                                </svg>
+                                {/* Avatars */}
+                                <div className={`${styles.avatar} ${styles.a1}`}>A</div>
+                                <div className={`${styles.avatar} ${styles.a2}`}>K</div>
+                                <div className={`${styles.avatar} ${styles.a3}`}>S</div>
+                                <div className={`${styles.avatar} ${styles.a4}`}>P</div>
+                                <div className={`${styles.avatar} ${styles.a5}`}>M</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Study Route Card (Tall) */}
+                    <div className={`${styles.card} ${styles.routeCard}`}>
+                        <div className={styles.cardInfo}>
+                            <h3>Study Route</h3>
+                            <p>A clear study path guides learners step by step to master AI skills quickly.</p>
+                        </div>
+                        <div className={styles.searchVisual}>
+                            <div className={styles.searchBar}>
+                                <span>Discover what to learn...</span>
+                                <div className={styles.searchIcon}>🔍</div>
+                            </div>
+                        </div>
+                        <img src={landscapeImg} alt="Route Landscape" className={styles.bgLandscape} />
+                    </div>
+
+                    {/* Smarter Education Banner (Wide) */}
+                    <div className={`${styles.card} ${styles.bannerCard}`}>
+                        <div className={styles.bannerContent}>
+                            <h3>Smarter Education With AI Made Simple</h3>
+                            <p>Providing easy AI learning that helps to build real skills fast and smart.</p>
+
+                        </div>
+                        <div className={styles.bannerVisual}>
+                            <img src={robot1Img} alt="AI 1" className={styles.robot1} />
+                            <img src={robot2Img} alt="AI 2" className={styles.robot2} />
+                            <div className={styles.floatingTag}>
+                                <div className={styles.tattvaIconSmall}>★</div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>

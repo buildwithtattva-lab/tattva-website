@@ -1,76 +1,82 @@
 .aboutPage {
+  background-color: var(--white);
   min-height: 100vh;
-  background: var(--white);
+  color: var(--primary-teal);
+  overflow-x: hidden;
+  font-family: var(--font-sans);
 }
 
-/* Hero Section */
+/* ----------------------------------
+   GEOMETRIC HERO
+---------------------------------- */
 .hero {
-  padding: 12rem 0 6rem;
-  background: var(--bg-light);
-  text-align: center;
+  background-color: var(--primary-teal);
+  background-image: url('../assets/about/hero_pattern.png');
+  background-size: cover;
+  background-position: center;
+  padding: 160px 0 100px;
   position: relative;
+  text-align: center;
+  color: var(--white);
   overflow: hidden;
 }
 
-.backgroundElements {
+/* Optional overlay for better text readability if pattern is busy */
+.hero::after {
+  content: '';
   position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 43, 43, 0.4);
+  z-index: 1;
 }
 
-.glowDot {
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  background: var(--primary-teal);
-  border-radius: 50%;
-  box-shadow: 0 0 20px var(--primary-teal);
-  opacity: 0.1;
-  animation: pulseGlow 5s infinite alternate ease-in-out;
+.heroContent {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: 0 auto;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.glowDot:nth-child(1) { top: 20%; left: 30%; animation-delay: 0s; }
-.glowDot:nth-child(2) { top: 50%; left: 70%; animation-delay: -2.5s; }
-.glowDot:nth-child(3) { top: 80%; left: 40%; animation-delay: -4s; }
-
-@keyframes pulseGlow {
-  0% { transform: scale(1); opacity: 0.05; }
-  100% { transform: scale(1.5); opacity: 0.15; }
+.heroContent.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .heroTitle {
-  font-size: clamp(2.5rem, 5vw, 3.75rem);
-  font-weight: 850;
-  color: var(--primary-teal);
-  margin-bottom: 2rem;
-  line-height: 1.1;
-  z-index: 1;
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 1;
+  font-weight: 400;
+  margin-bottom: 24px;
+  color: var(--white);
 }
 
 .heroSubtitle {
-  font-size: clamp(1.125rem, 2.5vw, 1.4rem);
-  color: var(--text-muted);
-  max-width: 800px;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 700px;
   margin: 0 auto;
-  line-height: 1.7;
-  position: relative;
-  z-index: 1;
 }
 
-/* Mission Section */
+/* ----------------------------------
+   MISSION & VISION section
+---------------------------------- */
 .missionSection {
-  padding: 8rem 0;
-  background: var(--white);
+  padding: 120px 0;
+  background: var(--ivory);
+  text-align: center;
 }
 
 .missionContent {
-  max-width: 900px;
+  max-width: 850px;
   margin: 0 auto;
-  text-align: center;
   opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s ease;
+  transform: translateY(20px);
+  transition: all 0.7s ease-out;
 }
 
 .missionContent.visible {
@@ -79,338 +85,94 @@
 }
 
 .sectionTitle {
-  font-size: clamp(2rem, 4vw, 2.75rem);
-  font-weight: 850;
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: 32px;
   color: var(--primary-teal);
-  margin-bottom: 2.5rem;
-  text-align: center;
 }
 
 .missionText {
-  font-size: clamp(1.125rem, 2vw, 1.375rem);
-  color: var(--text-muted);
-  line-height: 1.8;
-  margin-bottom: 1.5rem;
-}
-
-/* What We Do Section */
-.whatWeDoSection {
-  padding: 8rem 0;
-  background: var(--bg-light);
-}
-
-.servicesGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-  gap: 2.5rem;
-  margin-top: 3rem;
-}
-
-.serviceCard {
-  background: var(--white);
-  padding: 3rem 2.5rem;
-  border-radius: 24px;
-  border: 1px solid var(--border-muted);
-  box-shadow: var(--shadow-sm);
-  transition: all 0.4s ease;
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-.serviceCard.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.serviceCard:hover {
-  transform: translateY(-10px);
-  box-shadow: var(--shadow-lg);
-  border-color: rgba(0, 43, 43, 0.1);
-}
-
-.infoIcon {
-  width: 64px;
-  height: 64px;
-  background: var(--bg-light);
-  border: 1px solid var(--border-muted);
-  color: var(--primary-teal);
-  border-radius: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1.5rem;
-  transition: all 0.5s ease;
-}
-
-.card:hover .infoIcon {
-  transform: scale(1.1) rotate(5deg);
-  background: var(--primary-teal);
-  color: var(--white);
-}
-
-.serviceTitle {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: var(--primary-teal);
-  margin-bottom: 1rem;
-}
-
-.serviceDescription {
-  font-size: 1.125rem;
-  color: var(--text-muted);
-  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
   line-height: 1.6;
+  color: rgba(0, 43, 43, 0.8);
 }
 
-.benefitsList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.benefitsList li {
-  font-size: 1rem;
-  color: var(--charcoal);
-  padding: 0.75rem 0;
-  padding-left: 2rem;
+/* ----------------------------------
+   IMPACT IN NUMBERS section
+---------------------------------- */
+.impactSection {
+  padding: 120px 0;
+  background-color: var(--primary-teal);
+  background-image: url('../assets/about/impact_pattern.png');
+  background-size: cover;
+  background-position: center;
+  color: var(--white);
+  text-align: center;
   position: relative;
-  line-height: 1.6;
 }
 
-.benefitsList li::before {
-  content: '✓';
-  position: absolute;
-  left: 0;
-  color: var(--primary-yellow);
-  font-weight: 700;
-  font-size: 1.25rem;
+.impactSection::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 43, 43, 0.65);
+    z-index: 1;
 }
 
-/* Founder Section */
-.founderSection {
-  padding: 8rem 0;
-  background: var(--white);
+.impactContainer {
+    position: relative;
+    z-index: 2;
 }
 
-.founderContent {
+.impactGrid {
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 4rem;
-  align-items: center;
-  max-width: 1100px;
-  margin: 0 auto;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s ease;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-top: 60px;
 }
 
-.founderContent.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.founderImage {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.founderAvatar {
-  width: 240px;
-  height: 240px;
-  background: var(--bg-light);
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 6rem;
-  border: 1px solid var(--border-muted);
-  box-shadow: var(--shadow-sm);
-  animation: floatSlow 6s ease-in-out infinite;
-  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.founderAvatar:hover {
-  transform: scale(1.05) rotate(2deg);
-  box-shadow: var(--shadow-lg);
-}
-
-.founderText {
-  text-align: left;
-}
-
-.founderQuote {
-  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-  color: var(--primary-teal);
-  margin-bottom: 1.5rem;
+.impactItem h2 {
+  font-size: clamp(3rem, 6vw, 5rem);
+  color: #d4ff3f; /* Lime Green */
+  margin-bottom: 12px;
+  font-family: var(--font-sans);
   font-weight: 700;
 }
 
-.founderMessage {
-  font-size: clamp(1rem, 2vw, 1.25rem);
-  color: var(--text-muted);
-  line-height: 1.8;
-  margin-bottom: 1.5rem;
-}
-
-/* Vision Section */
-.visionSection {
-  padding: 10rem 0;
-  background: var(--primary-teal);
+.impactItem p {
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 500;
   color: var(--white);
 }
 
-.visionContent .sectionTitle {
-  color: var(--white);
-}
+/* ----------------------------------
+   FUTURE CTA section (Matching reference)
+---------------------------------- */
+/* We keep the established CTA design from the shared Footer usually,
+   but we'll ensure the styling matches the blocky feel here or use custom one */
 
-/* Grid Sections for Values/Focus */
-.gridSection {
-  padding: 8rem 0;
-  background: var(--white);
-}
-
-.gridSection.alt {
-  background: var(--bg-light);
-}
-
-.principlesGrid, .focusGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-  gap: 2.5rem;
-}
-
-.card {
-  background: var(--white);
-  padding: 3rem 2rem;
-  border-radius: 24px;
-  border: 1px solid var(--border-muted);
-  box-shadow: var(--shadow-sm);
-  text-align: center;
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-.card.visible {
-  animation: revealHero 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.card:hover {
-  transform: translateY(-10px);
-  box-shadow: var(--shadow-lg);
-  border-color: rgba(0, 43, 43, 0.1);
-}
-
-.card h3 {
-  color: var(--primary-teal);
-  font-size: 1.4rem;
-  margin-bottom: 1rem;
-}
-
-/* CTA Section */
-.ctaSection {
-  padding: 10rem 0;
-  background: var(--white);
-}
-
-.ctaContent {
-  background: var(--primary-teal);
-  color: var(--white);
-  padding: 6rem 3rem;
-  border-radius: 40px;
-  text-align: center;
-  box-shadow: var(--shadow-lg);
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.ctaTitle {
-  font-size: clamp(2.25rem, 4vw, 3rem);
-  font-weight: 850;
-  color: var(--white);
-  margin-bottom: 1.5rem;
-}
-
-.ctaText {
-  font-size: 1.25rem;
-  color: rgba(251, 250, 243, 0.8);
-  margin-bottom: 3.5rem;
-}
-
-.whatsappBtn {
-  padding: 1.25rem 3.5rem;
-  font-size: 1.125rem;
-  font-weight: 750;
-  border-radius: 50px;
-  text-decoration: none;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: var(--white);
-  color: var(--primary-teal);
-  box-shadow: var(--shadow-sm);
-}
-
-.whatsappBtn:hover {
-  background: var(--accent-soft);
-  transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
-}
-
-@keyframes revealHero {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Mobile Responsive */
+/* ----------------------------------
+   RESPONSIVE
+---------------------------------- */
 @media (max-width: 968px) {
-  .founderContent {
+  .impactGrid {
     grid-template-columns: 1fr;
-    gap: 3rem;
-    text-align: center;
-  }
-
-  .founderText {
-    text-align: center;
-  }
-
-  .founderAvatar {
-    width: 150px;
-    height: 150px;
-    font-size: 4rem;
+    gap: 60px;
   }
 }
 
 @media (max-width: 768px) {
   .hero {
-    padding: 8rem 0 3rem;
+    padding: 120px 0 80px;
+  }
+  
+  .heroTitle {
+    font-size: 3.5rem;
   }
 
-  .missionSection,
-  .whatWeDoSection,
-  .founderSection,
-  .visionSection,
-  .ctaSection {
-    padding: 4rem 0;
-  }
-
-  .servicesGrid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  .ctaButtons {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .emailBtn,
-  .whatsappBtn {
-    width: 100%;
-    max-width: 320px;
+  .sectionTitle {
+      font-size: 2.5rem;
   }
 }

@@ -4,68 +4,247 @@
     color: var(--text-dark);
 }
 
+/* ----------------------------------
+   IVORY HERO SECTION (Matching Home)
+---------------------------------- */
 .hero {
     position: relative;
-    padding: 120px 0 60px;
+    padding: 180px 0 120px;
+    background-color: var(--ivory);
+    color: var(--primary-teal);
     overflow: hidden;
     text-align: center;
 }
 
-.heroGlow {
+.verticalBeams {
     position: absolute;
-    top: -10%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60%;
-    height: 400px;
-    background: radial-gradient(circle, rgba(0, 128, 128, 0.05) 0%, rgba(251, 250, 243, 0) 70%);
-    filter: blur(60px);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: space-around;
+    opacity: 0.5; /* Increased container visibility */
     z-index: 0;
+}
+
+.beam {
+    width: 80px; /* Slightly wider for better presence */
+    height: 100%;
+    background: rgba(0, 43, 43, 0.08); /* More visible strips */
 }
 
 .heroContent {
     position: relative;
-    z-index: 1;
-}
-
-.title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 400;
-    font-family: var(--font-serif);
-    margin-bottom: 20px;
-    color: var(--primary-teal);
-}
-
-.subtitle {
-    font-size: 1.2rem;
-    color: var(--text-muted);
-    max-width: 700px;
+    z-index: 2;
+    max-width: 950px;
     margin: 0 auto;
+}
+
+.heroTitle {
+    font-size: clamp(2.5rem, 6vw, 4.2rem);
+    font-weight: 700;
+    font-family: var(--font-sans);
+    margin-bottom: 32px;
+    line-height: 1.1;
+    color: var(--primary-teal);
+    letter-spacing: -0.01em;
+}
+
+.heroSubtitle {
+    font-size: 1.25rem;
+    color: rgba(0, 43, 43, 0.7);
+    max-width: 700px;
+    margin: 0 auto 48px;
     line-height: 1.6;
     font-family: var(--font-sans);
 }
 
-.formSection {
-    padding: 60px 0 100px;
+.applyBtnHero {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 36px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 43, 43, 0.1);
+    background: var(--primary-teal);
+    color: var(--white);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-sans);
 }
 
-.formContainer {
-    max-width: 800px;
-    margin: 0 auto;
+.applyBtnHero:hover {
+    background: #001a1a;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 43, 43, 0.1);
 }
 
+.trustedBySection {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.trustedGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.trustedLabel {
+    font-size: 0.85rem;
+    color: var(--primary-teal);
+    opacity: 0.6;
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.logoRow {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.logoBox {
+    padding: 10px 20px;
+    border: 1px solid rgba(0, 43, 43, 0.1);
+    border-radius: 8px;
+    color: var(--primary-teal);
+    font-size: 0.9rem;
+    font-family: var(--font-sans);
+    background: var(--white);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+}
+
+
+/* ----------------------------------
+   MAIN SPLIT SECTION
+---------------------------------- */
+.mainSection {
+    padding: 100px 0;
+    background-color: var(--white);
+}
+
+.splitLayout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+@media (max-width: 1024px) {
+    .splitLayout {
+        gap: 40px;
+    }
+}
+
+@media (max-width: 968px) {
+    .splitLayout {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 60px;
+    }
+    
+    .hero {
+        padding: 100px 0 60px;
+    }
+}
+
+/* Left Side: Info & Pillars */
+.infoSide {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sectionTitle {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    font-family: var(--font-sans);
+    color: var(--primary-teal);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+.sectionDesc {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-family: var(--font-sans);
+    max-width: 400px;
+}
+
+@media (max-width: 968px) {
+    .sectionDesc {
+        margin: 0 auto;
+    }
+}
+
+.pillarsGraphic {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: 15px;
+    margin-top: 40px;
+    height: 200px;
+}
+
+@media (max-width: 968px) {
+    .pillarsGraphic {
+        justify-content: center;
+    }
+}
+
+.pillarWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pillarIcon {
+    background: var(--accent-teal);
+    color: var(--white);
+    width: 40px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    margin-bottom: -10px;
+    z-index: 2;
+    padding: 10px;
+}
+
+.pillar {
+    width: 30px;
+    background: linear-gradient(180deg, var(--accent-teal) 0%, rgba(0, 128, 128, 0) 100%);
+    opacity: 0.6;
+}
+
+/* Right Side: Form */
 .formGlass {
     background: var(--white);
     border: 1px solid var(--border-muted);
-    border-radius: 24px;
+    border-radius: 20px;
     padding: 40px;
     box-shadow: var(--shadow-lg);
 }
 
 .formTitle {
-    font-size: 2rem;
-    margin-bottom: 30px;
-    text-align: center;
+    font-size: 1.75rem;
+    margin-bottom: 25px;
     color: var(--primary-teal);
     font-family: var(--font-serif);
     font-weight: 400;
@@ -74,29 +253,34 @@
 .form {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 20px;
 }
 
 .row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 15px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .row {
         grid-template-columns: 1fr;
+    }
+    
+    .formGlass {
+        padding: 30px 20px;
     }
 }
 
 .inputGroup {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
+    text-align: left;
 }
 
 .inputGroup label {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: var(--primary-teal);
     font-weight: 500;
     font-family: var(--font-sans);
@@ -106,13 +290,12 @@
 .inputGroup select {
     background: var(--white);
     border: 1px solid var(--border-muted);
-    padding: 14px 18px;
-    border-radius: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
     color: var(--text-dark);
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-family: var(--font-sans);
     transition: var(--transition);
-    box-shadow: var(--shadow-sm);
 }
 
 .inputGroup input:focus, 
@@ -125,7 +308,7 @@
 .fileUpload {
     position: relative;
     border: 2px dashed rgba(0, 43, 43, 0.2);
-    border-radius: 12px;
+    border-radius: 8px;
     padding: 10px;
     text-align: center;
     transition: var(--transition);
@@ -149,20 +332,20 @@
 
 .fileLabel {
     display: block;
-    padding: 20px;
+    padding: 15px;
     color: var(--text-muted);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-family: var(--font-sans);
 }
 
 .submitBtn {
     margin-top: 10px;
-    padding: 16px;
+    padding: 14px;
     border-radius: 9999px;
     border: none;
     background: var(--primary-teal);
     color: var(--white);
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
@@ -170,9 +353,9 @@
 }
 
 .submitBtn:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-    background: var(--accent-teal);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 43, 43, 0.1);
+    background: #001a1a;
 }
 
 .submitBtn:disabled {
@@ -182,8 +365,8 @@
 
 .status {
     padding: 15px;
-    border-radius: 12px;
-    font-size: 0.95rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
     text-align: center;
     font-family: var(--font-sans);
 }
@@ -198,4 +381,14 @@
     background: rgba(245, 101, 101, 0.1);
     color: #C53030;
     border: 1px solid rgba(245, 101, 101, 0.2);
+}
+@media (max-width: 480px) {
+    .heroTitle {
+        font-size: 2.5rem;
+    }
+    
+    .logoBox {
+        padding: 8px 15px;
+        font-size: 0.8rem;
+    }
 }

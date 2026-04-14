@@ -9,7 +9,8 @@
   padding: 1rem 0;
 }
 
-.nav.scrolled {
+.nav.scrolled,
+.nav.solid {
   background: var(--ivory);
   backdrop-filter: blur(10px);
   box-shadow: var(--shadow-sm);
@@ -34,19 +35,32 @@
   transform: scale(1.05);
 }
 
-.logo {
-  height: 60px;
+.logoSymbol {
+  height: 50px;
   width: auto;
   transition: all 0.3s ease;
   object-fit: contain;
-  background: transparent;
   /* Seamlessly blends the logo's ivory background with the navbar */
   mix-blend-mode: multiply;
-  animation: floatSlow 6s ease-in-out infinite;
+  margin-right: 0.8rem;
 }
 
-.nav.scrolled .logo {
-  height: 45px;
+.logoText {
+  font-family: var(--font-sans);
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--primary-teal);
+  letter-spacing: -0.01em;
+  line-height: 1;
+  transition: all 0.3s ease;
+}
+
+.nav.scrolled .logoSymbol {
+  height: 40px;
+}
+
+.nav.scrolled .logoText {
+  font-size: 1.6rem;
 }
 
 .mobileMenuBtn {
@@ -139,16 +153,17 @@
     position: fixed;
     top: 0;
     right: -100%;
-    width: 70%;
+    width: 80%;
     max-width: 350px;
     height: 100vh;
-    background: var(--white);
+    background: var(--ivory);
     flex-direction: column;
     justify-content: center;
-    gap: 2rem;
-    padding: 2rem;
-    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
-    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: 1.5rem;
+    padding: 3rem 2rem;
+    box-shadow: -10px 0 30px rgba(0, 43, 43, 0.1);
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    border-left: 1px solid var(--border-muted);
   }
 
   .navLinks.mobileMenuActive {
@@ -156,29 +171,42 @@
   }
 
   .navLinks a {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     width: 100%;
-    text-align: center;
-    padding: 0.75rem 0;
+    text-align: left;
+    padding: 0.5rem 0;
   }
 
   .navLinks a.ctaBtn {
     width: 100%;
     text-align: center;
-    padding: 1rem 2rem;
+    padding: 1.25rem 2rem;
+    margin-top: 1rem;
+    font-size: 1rem;
   }
 }
 
 @media (max-width: 768px) {
-  .logo {
-    height: 50px;
+  .logoSymbol {
+    height: 40px;
   }
 
-  .nav.scrolled .logo {
-    height: 45px;
+  .nav.scrolled .logoSymbol,
+  .nav.solid .logoSymbol {
+    height: 36px;
   }
 
+  .logoText {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
   .navLinks {
-    width: 80%;
+    width: 90%;
+  }
+  
+  .logoText {
+    font-size: 1.2rem;
   }
 }

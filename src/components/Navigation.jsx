@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Navigation.module.css';
 
-const Navigation = () => {
+const Navigation = ({ isSolid = false }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -15,14 +15,15 @@ const Navigation = () => {
   }, []);
 
   return (
-    <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ''}`}>
+    <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ''} ${isSolid ? styles.solid : ''}`}>
       <div className={`container ${styles.navContainer}`}>
         <Link to="/" className={styles.logoLink}>
           <img
             src="/assets/icons/updated logoo (1).png"
             alt="Tattva Logo"
-            className={styles.logo}
+            className={styles.logoSymbol}
           />
+          <span className={styles.logoText}>tattva.ai</span>
         </Link>
 
         <button

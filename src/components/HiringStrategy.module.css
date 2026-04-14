@@ -1,0 +1,144 @@
+.hiringSection {
+    padding: 8rem 0;
+    background: #020f0c; /* Very dark base */
+    background-image: 
+        linear-gradient(to right, transparent, rgba(37, 162, 148, 0.05) 50%, transparent),
+        radial-gradient(circle at 50% -20%, #0d3d33 0%, transparent 70%);
+    position: relative;
+    overflow: hidden;
+    color: var(--white);
+}
+
+/* Vertical light streaks like in reference */
+.hiringSection::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        linear-gradient(90deg, 
+            transparent 20%, 
+            rgba(37, 162, 148, 0.03) 25%, 
+            transparent 30%,
+            transparent 70%,
+            rgba(37, 162, 148, 0.03) 75%,
+            transparent 80%
+        );
+    pointer-events: none;
+}
+
+.content {
+    position: relative;
+    z-index: 2;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.badge {
+    color: var(--white);
+    opacity: 0.8;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    margin-bottom: 1.5rem;
+    font-family: var(--font-sans);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-transform: uppercase;
+}
+
+.badge::before {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 8px;
+    background: #f4a261; /* Orange square from ref */
+}
+
+.title {
+    font-family: var(--font-sans);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 500;
+    color: var(--white);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+.stepsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+@media (max-width: 968px) {
+    .stepsGrid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+}
+
+.stepCard {
+    background: #0a241e; /* Specific dark green from ref */
+    padding: 48px 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0;
+    transform: translateY(20px);
+    display: flex;
+    flex-direction: column;
+}
+
+.visible .stepCard {
+    animation: revealCard 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.stepCard:hover {
+    transform: translateY(-8px);
+    background: #0d2e26;
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+}
+
+.numberPill {
+    width: 48px;
+    height: 36px;
+    background: var(--white);
+    color: #000;
+    font-size: 1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px; /* Slightly rounded corners like ref */
+    margin-bottom: 4rem;
+    font-family: var(--font-sans);
+}
+
+.stepTitle {
+    font-family: var(--font-sans);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #fff;
+}
+
+.stepDesc {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #fff;
+}
+
+@keyframes revealCard {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

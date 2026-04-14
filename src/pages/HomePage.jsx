@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Navigation from '../components/Navigation';
 import HeroSection from '../components/HeroSection';
 import OurSolutions from '../components/OurSolutions';
-import VisionSection from '../components/VisionSection';
 import WhyChoose from '../components/WhyChoose';
-import HowItWorks from '../components/HowItWorks';
-import FounderStory from '../components/FounderStory';
-import CTASection from '../components/CTASection';
+import HiringStrategy from '../components/HiringStrategy';
+import MentorsSection from '../components/MentorsSection';
 import Footer from '../components/Footer';
 import styles from './HomePage.module.css';
 
@@ -27,10 +25,8 @@ const HomePage = () => {
       <HeroSection />
       <OurSolutions />
       <WhyChoose />
-      <HowItWorks />
-      <VisionSection />
-      <FounderStory />
-      <CTASection />
+      <HiringStrategy />
+      <MentorsSection />
       <Footer />
 
       {showWhatsApp && (

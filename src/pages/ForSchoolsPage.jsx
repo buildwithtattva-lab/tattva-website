@@ -4,137 +4,99 @@ import Footer from '../components/Footer';
 import { useInView } from 'react-intersection-observer';
 import styles from './ForSchoolsPage.module.css';
 
+// Import local assets
+import heroBg from '../assets/education/school_hero.png';
+import detailImg from '../assets/education/school_detail.png';
+
 const ForSchoolsPage = () => {
-    const { ref: headerRef, inView: headerInView } = useInView({ threshold: 0.1, triggerOnce: true });
-    
-    // For staggered card entrance
+    const { ref: heroRef, inView: heroInView } = useInView({ threshold: 0.1, triggerOnce: true });
+    const { ref: section1Ref, inView: section1InView } = useInView({ threshold: 0.2, triggerOnce: true });
     const { ref: gridRef, inView: gridInView } = useInView({ threshold: 0.1, triggerOnce: true });
 
     const offerings = [
         {
-            title: 'AI-Powered School Operations',
-            items: [
-                'Attendance automation',
-                'Smart timetable generation',
-                'AI-based admin reporting',
-                'Smart student queries'
-            ],
-            icon: (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                    <line x1="16" y1="2" x2="16" y2="6" />
-                    <line x1="8" y1="2" x2="8" y2="6" />
-                    <line x1="3" y1="10" x2="21" y2="10" />
-                </svg>
-            )
+            title: 'AI Operations',
+            desc: 'Automate attendance, timetable generation, and administrative reporting with intelligent workflows.'
         },
         {
-            title: 'AI Literacy for Students',
-            items: [
-                'Introduction to AI concepts',
-                'Hands-on beginner AI projects',
-                'Responsible AI awareness',
-                'Future-tech career paths'
-            ],
-            icon: (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-                    <path d="M6 12v5c3 3 9 3 12 0v-5" />
-                </svg>
-            )
+            title: 'AI Literacy',
+            desc: 'Equip students with hands-on AI project skills and ethical AI awareness for the future.'
         },
         {
-            title: 'AI for Modern Teaching',
-            items: [
-                'AI lesson planning tools',
-                'AI-assisted assessment',
-                'Teacher productivity tools',
-                'Automated grading support'
-            ],
-            icon: (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-                </svg>
-            )
-        },
-        {
-            title: 'AI Innovation Labs',
-            items: [
-                'School AI clubs',
-                'Student innovation projects',
-                'Real-world problem solving',
-                'Inter-school AI challenges'
-            ],
-            icon: (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
-                </svg>
-            )
+            title: 'Teacher Tools',
+            desc: 'Empower faculty with AI-driven lesson planning and automated assessment support.'
         }
-    ];
-
-    const steps = [
-        { title: 'Assess Readiness', desc: 'We evaluate your current digital maturity.' },
-        { title: 'Implement Tools', desc: 'Secure deployment of AI operations tools.' },
-        { title: 'Train Teachers', desc: 'Practical workshops for faculty adoption.' },
-        { title: 'Enable Projects', desc: 'Launching student AI innovation labs.' }
     ];
 
     return (
         <div className={styles.page}>
-            <Navigation />
+            <Navigation isSolid={true} />
 
-            <header className={styles.header} ref={headerRef}>
-                <div className={styles.backgroundElements}>
-                    <div className={styles.grid}></div>
-                    <div className={styles.nodes}>
-                        <div className={styles.node}></div>
-                        <div className={styles.node}></div>
-                        <div className={styles.node}></div>
-                    </div>
+            {/* Hero Section - Vistario Inspired */}
+            <header className={styles.hero} ref={heroRef}>
+                <div className={styles.heroBgWrapper}>
+                    <img src={heroBg} alt="Modern Classroom" className={styles.heroBg} />
+                    <div className={styles.overlay}></div>
                 </div>
-                <div className={`container ${styles.headerContent} ${headerInView ? styles.visible : ''}`}>
-                    <h1 className={styles.title}>AI-Powered Schools for the Future</h1>
+                <div className={`container ${styles.heroContent} ${heroInView ? styles.visible : ''}`}>
+
+                    <h1 className={styles.title}>AI-Powered Schools <br/> for the Future</h1>
                     <p className={styles.subtitle}>
-                        Tattva helps schools integrate AI into classrooms, automate administrative workflows, and equip students with essential AI literacy for the future.
+                        Transforming traditional K-12 environments into future-ready innovation hubs with seamless AI integration.
                     </p>
+                    <div className={styles.heroActions}>
+                        <a href="https://wa.me/918886945890" className={styles.primaryBtn}>Initialize Integration</a>
+                        <a href="#offerings" className={styles.secondaryBtn}>Explore Features</a>
+                    </div>
                 </div>
             </header>
 
-            <section className={styles.offerings} ref={gridRef}>
-                <div className="container">
-                    <div className={styles.offeringsGrid}>
-                        {offerings.map((offering, index) => (
-                            <div 
-                                key={index} 
-                                className={`${styles.offeringCard} ${gridInView ? styles.visible : ''} card-hover ${index % 2 === 0 ? styles.slideLeft : styles.slideRight}`}
-                                style={{ transitionDelay: `${index * 0.15}s` }}
-                            >
-                                <div className={styles.offeringIcon}>{offering.icon}</div>
-                                <h3>{offering.title}</h3>
-                                <ul>
-                                    {offering.items.map((item, i) => (
-                                        <li key={i}>{item}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        ))}
+            {/* Content Section - Two Column Styling */}
+            <section className={styles.detailSection} ref={section1Ref} id="offerings">
+                <div className={`container ${styles.detailContainer}`}>
+                    <div className={`${styles.imageCol} ${section1InView ? styles.visible : ''}`}>
+                        <div className={styles.imageCard}>
+                            <img src={detailImg} alt="Students using AI" />
+                            <div className={styles.imageDecoration}></div>
+                        </div>
+                    </div>
+                    <div className={`${styles.textCol} ${section1InView ? styles.visible : ''}`}>
+                        <span className={styles.sectionBadge}>Essence of Growth</span>
+                        <h2 className={styles.sectionTitle}>Experience infinite learning and endless growth</h2>
+                        <p className={styles.sectionDesc}>
+                            Tattva helps schools move beyond basic digital tools. we actually integrate AI into learning, teaching, and operations to create a truly intelligent ecosystem.
+                        </p>
+                        
+                        <div className={styles.miniFeatures}>
+                            {offerings.map((item, i) => (
+                                <div key={i} className={styles.miniItem}>
+                                    <h4>{item.title}</h4>
+                                    <p>{item.desc}</p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <section className={styles.process}>
+            {/* Modern Process Section */}
+            <section className={styles.processSection} ref={gridRef}>
                 <div className="container">
-                    <div className={styles.sectionTitle}>
-                        <h2>How Tattva Works with Schools</h2>
-                        <p>Our systematic approach to AI integration</p>
+                    <div className={styles.centeredHeader}>
+                        <h2 className={styles.titleLarge}>Your Path to AI-Readiness</h2>
+                        <p>A simple, structured plan to modernize your institution</p>
                     </div>
-                    <div className={styles.processGrid}>
-                        {steps.map((step, index) => (
-                            <div key={index} className={styles.processStep}>
-                                <div className={styles.stepNumber}>{index + 1}</div>
-                                <h4>{step.title}</h4>
+
+                    <div className={`${styles.processGrid} ${gridInView ? styles.visible : ''}`}>
+                        {[
+                            { step: '01', title: 'Readiness Audit', desc: 'Detailed evaluation of your current infrastructure.' },
+                            { step: '02', title: 'Seamless Setup', desc: 'Secure deployment of operational AI tools.' },
+                            { step: '03', title: 'Faculty Mastery', desc: 'Hands-on training for teacher adoption.' },
+                            { step: '04', title: 'Innovation Launch', desc: 'Activating student-led AI innovation labs.' }
+                        ].map((step, i) => (
+                            <div key={i} className={styles.stepCard} style={{ transitionDelay: `${i * 0.1}s` }}>
+                                <div className={styles.stepNum}>{step.step}</div>
+                                <h3>{step.title}</h3>
                                 <p>{step.desc}</p>
                             </div>
                         ))}
@@ -142,22 +104,7 @@ const ForSchoolsPage = () => {
                 </div>
             </section>
 
-            <section className={styles.cta}>
-                <div className="container">
-                    <div className={styles.ctaContent}>
-                        <h2>Bring AI to Your School</h2>
-                        <p>Partner with Tattva to prepare your students for an AI-driven future.</p>
-                        <a
-                            href="https://wa.me/918886945890"
-                            className={styles.primaryBtn}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            Book a Consultation
-                        </a>
-                    </div>
-                </div>
-            </section>
+
 
             <Footer />
         </div>
