@@ -1,14 +1,14 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import styles from './AboutPage.module.css';
 
 const CountUp = ({ end, duration = 2000, suffix = "" }) => {
-    const [count, setCount] = React.useState(0);
+    const [count, setCount] = useState(0);
     const { ref, inView } = useInView({ threshold: 0.5, triggerOnce: true });
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (inView) {
             let start = 0;
             const increment = end / (duration / 16);

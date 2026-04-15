@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
@@ -84,7 +83,7 @@ const ServicesPage = () => {
             <header className={styles.hero}>
                 <div
                     className={styles.heroBg}
-                    style={{ backgroundImage: `url(${heroBg})` }}
+                    style={{ backgroundImage: `url(${heroPattern})` }}
                 ></div>
                 <div className={styles.heroOverlay}></div>
                 <div className={`${styles.heroContent} ${headerInView ? styles.visible : ''}`} ref={headerRef}>

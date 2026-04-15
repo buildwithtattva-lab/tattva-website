@@ -1,4 +1,4 @@
-import React from 'react';
+
 import styles from './MentorsSection.module.css';
 import mentorImg from '../assets/mentors/Screenshot 2026-04-11 at 9.55.32 PM.png';
 
