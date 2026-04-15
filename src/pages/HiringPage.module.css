@@ -16,6 +16,21 @@
     text-align: center;
 }
 
+.heroContent {
+    position: relative;
+    z-index: 2;
+    max-width: 950px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.heroContent.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .verticalBeams {
     position: absolute;
     top: 0;
@@ -382,6 +397,73 @@
     color: #C53030;
     border: 1px solid rgba(245, 101, 101, 0.2);
 }
+/* ----------------------------------
+   ANIMATIONS
+---------------------------------- */
+
+.fadeInUp {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.visible .fadeInUp,
+.visible.fadeInUp {
+    animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.pillarWrapper {
+    opacity: 0;
+}
+
+.visible .pillarWrapper {
+    animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.pillar {
+    width: 30px;
+    background: linear-gradient(180deg, var(--accent-teal) 0%, rgba(0, 128, 128, 0) 100%);
+    opacity: 0.6;
+    transition: height 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.pillarIcon {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.trustedBySection {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease 0.4s;
+}
+
+.visible .trustedBySection {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.formGlass {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s;
+}
+
+.visible .formGlass {
+    opacity: 1;
+    transform: translateX(0);
+}
+
 @media (max-width: 480px) {
     .heroTitle {
         font-size: 2.5rem;

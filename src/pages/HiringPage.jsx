@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
+import { useInView } from 'react-intersection-observer';
 import { supabase } from '../lib/supabaseClient';
 import styles from './HiringPage.module.css';
 
@@ -17,6 +18,11 @@ const HiringPage = () => {
     const [resume, setResume] = useState(null);
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState({ type: '', message: '' });
+    
+    // Animation hooks
+    const { ref: heroRef, inView: heroInView } = useInView({ threshold: 0.1, triggerOnce: true });
+    const { ref: infoRef, inView: infoInView } = useInView({ threshold: 0.2, triggerOnce: true });
+    const { ref: mainRef, inView: mainInView } = useInView({ threshold: 0.1, triggerOnce: true });
 
     const roles = [
         'Teacher',
@@ -117,7 +123,7 @@ const HiringPage = () => {
                 </div>
                 
                 <div className="container" style={{ position: 'relative', zIndex: 2 }}>
-                    <div className={styles.heroContent}>
+                    <div className={`${styles.heroContent} ${heroInView ? styles.visible : ''}`} ref={heroRef}>
                         <h1 className={styles.heroTitle}>Join the Top 1% Global <br/> Experts Shaping <br/> Tomorrow's Education</h1>
                         <p className={styles.heroSubtitle}>
                             A global network of visionary faculty, principals, and leaders training the next generation with Tattva.
@@ -132,7 +138,7 @@ const HiringPage = () => {
                         </button>
                     </div>
 
-                    <div className={styles.trustedBySection}>
+                    <div className={`${styles.trustedBySection} ${heroInView ? styles.visible : ''}`}>
                         <div className={styles.trustedGroup}>
                             <span className={styles.trustedLabel}>OUR CLIENTS</span>
                             <div className={styles.logoRow}>
@@ -153,35 +159,35 @@ const HiringPage = () => {
             </section>
 
             {/* Light Information & Form Section */}
-            <section className={styles.mainSection} ref={formRef}>
-                <div className="container">
-                    <div className={styles.splitLayout}>
+            <section className={`${styles.mainSection} ${mainInView ? styles.visible : ''}`} ref={mainRef}>
+                <div className="container" ref={infoRef}>
+                    <div className={`${styles.splitLayout} ${mainInView ? styles.visible : ''}`}>
                         
                         {/* Left Side: Text and Graphics */}
-                        <div className={styles.infoSide}>
-                            <h2 className={styles.sectionTitle}>Built on Top Talent<br/>That Delivers</h2>
-                            <p className={styles.sectionDesc}>
+                        <div className={`${styles.infoSide} ${infoInView ? styles.visible : ''}`}>
+                            <h2 className={`${styles.sectionTitle} ${styles.fadeInUp}`}>Built on Top Talent<br/>That Delivers</h2>
+                            <p className={`${styles.sectionDesc} ${styles.fadeInUp}`} style={{ transitionDelay: '0.1s' }}>
                                 Our network includes experts from the top schools, ambitious leaders, and dedicated educators everywhere.
                             </p>
                             
                             <div className={styles.pillarsGraphic}>
                                 {/* Abstract representation of the pillars from the screenshot */}
                                 {[80, 120, 100, 140].map((height, i) => (
-                                    <div key={i} className={styles.pillarWrapper}>
+                                    <div key={i} className={styles.pillarWrapper} style={{ transitionDelay: `${0.2 + i * 0.1}s` }}>
                                         <div className={styles.pillarIcon}>
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                                 <circle cx="12" cy="7" r="4"></circle>
                                             </svg>
                                         </div>
-                                        <div className={styles.pillar} style={{ height: `${height}px` }}></div>
+                                        <div className={styles.pillar} style={{ height: infoInView ? `${height}px` : '0px' }}></div>
                                     </div>
                                 ))}
                             </div>
                         </div>
 
                         {/* Right Side: Form */}
-                        <div className={styles.formSide}>
+                        <div className={styles.formSide} ref={formRef}>
                             <div className={styles.formGlass}>
                                 <h3 className={styles.formTitle}>Application Form</h3>
                                 <form onSubmit={handleSubmit} className={styles.form}>
