@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import { useInView } from 'react-intersection-observer';
@@ -13,16 +13,53 @@ const HiringPage = () => {
         phone: '',
         role: '',
         subject: '',
-        interviewDateTime: '',
     });
     const [resume, setResume] = useState(null);
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState({ type: '', message: '' });
     
+    // Multi-step State Machine
+    const STEPS = {
+        APPLICATION: 'application',
+        SCHEDULING: 'scheduling',
+        PAYMENT: 'payment',
+        SUCCESS: 'success'
+    };
+    const [currentStep, setCurrentStep] = useState(STEPS.APPLICATION);
+    const [applicantId, setApplicantId] = useState(null);
+    const [submittedUser, setSubmittedUser] = useState({ name: '', email: '' });
+    const [uploadingPayment, setUploadingPayment] = useState(false);
+    const [paymentData, setPaymentData] = useState({ utr: '', screenshot: null });
+    
     // Animation hooks
     const { ref: heroRef, inView: heroInView } = useInView({ threshold: 0.1, triggerOnce: true });
     const { ref: infoRef, inView: infoInView } = useInView({ threshold: 0.2, triggerOnce: true });
     const { ref: mainRef, inView: mainInView } = useInView({ threshold: 0.1, triggerOnce: true });
+
+    // Step 2 & 3 Interaction logic
+    useEffect(() => {
+        if (currentStep === STEPS.SCHEDULING && window.Calendly) {
+            window.Calendly.initInlineWidget({
+                url: 'https://calendly.com/buildwithtattva/30min',
+                parentElement: document.getElementById('calendly-embed'),
+                prefill: {
+                    name: submittedUser.name,
+                    email: submittedUser.email,
+                },
+                utm: {}
+            });
+
+            // Listen for Calendly event to transition to Payment
+            const handleCalendlyEvent = (e) => {
+                if (e.data.event === 'calendly.event_scheduled') {
+                    setCurrentStep(STEPS.PAYMENT);
+                }
+            };
+
+            window.addEventListener('message', handleCalendlyEvent);
+            return () => window.removeEventListener('message', handleCalendlyEvent);
+        }
+    }, [currentStep, STEPS.SCHEDULING, STEPS.PAYMENT, submittedUser]);
 
     const roles = [
         'Teacher',
@@ -70,7 +107,7 @@ const HiringPage = () => {
                 .from('resumes')
                 .getPublicUrl(filePath);
 
-            const { error: insertError } = await supabase
+            const { data: insertedData, error: insertError } = await supabase
                 .from('applicants')
                 .insert([{
                     full_name: formData.fullName,
@@ -78,26 +115,22 @@ const HiringPage = () => {
                     phone: formData.phone,
                     role: formData.role,
                     subject: formData.role === 'Subject Teacher' ? formData.subject : null,
-                    interview_date: formData.interviewDateTime,
-                    resume_url: publicUrl
-                }]);
+                    interview_date: new Date().toISOString(),
+                    resume_url: publicUrl,
+                    payment_status: 'pending'
+                }])
+                .select();
 
             if (insertError) throw insertError;
 
+            setApplicantId(insertedData[0].id);
+            setSubmittedUser({ name: formData.fullName, email: formData.email });
+            setCurrentStep(STEPS.SCHEDULING);
+            
             setStatus({
                 type: 'success',
-                message: 'Application submitted successfully! We will confirm your interview slot via email shortly.'
+                message: 'Application received! Now schedule your interview.'
             });
-            setFormData({
-                fullName: '',
-                email: '',
-                phone: '',
-                role: '',
-                subject: '',
-                interviewDateTime: '',
-            });
-            setResume(null);
-            e.target.reset();
 
         } catch (error) {
             console.error('Error:', error);
@@ -110,132 +143,281 @@ const HiringPage = () => {
         }
     };
 
+    const handlePaymentSubmit = async (e) => {
+        e.preventDefault();
+        setUploadingPayment(true);
+        setStatus({ type: '', message: '' });
+
+        try {
+            if (!paymentData.screenshot) throw new Error('Please upload payment screenshot.');
+            if (!paymentData.utr) throw new Error('Please enter UTR number.');
+
+            const fileExt = paymentData.screenshot.name.split('.').pop();
+            const fileName = `${applicantId}_payment.${fileExt}`;
+            const filePath = `payments/${fileName}`;
+
+            const { error: uploadError } = await supabase.storage
+                .from('resumes') // Reusing resumes bucket for simplicity, or use 'payments' if you create it
+                .upload(filePath, paymentData.screenshot);
+
+            if (uploadError) throw uploadError;
+
+            const { data: { publicUrl } } = supabase.storage
+                .from('resumes')
+                .getPublicUrl(filePath);
+
+            const { error: updateError } = await supabase
+                .from('applicants')
+                .update({
+                    utr_number: paymentData.utr,
+                    payment_screenshot_url: publicUrl
+                })
+                .eq('id', applicantId);
+
+            if (updateError) throw updateError;
+
+            setCurrentStep(STEPS.SUCCESS);
+            setStatus({ type: 'success', message: 'Payment details submitted successfully!' });
+
+        } catch (error) {
+            console.error('Payment Error:', error);
+            setStatus({ type: 'error', message: error.message });
+        } finally {
+            setUploadingPayment(false);
+        }
+    };
+
     return (
         <div className={styles.page}>
             <Navigation isSolid={true} />
             
-            {/* Dark Hero Section matching the screenshot */}
-            <section className={styles.hero}>
-                <div className={styles.verticalBeams}>
-                    {[...Array(12)].map((_, i) => (
-                        <div key={i} className={styles.beam}></div>
-                    ))}
-                </div>
-                
-                <div className="container" style={{ position: 'relative', zIndex: 2 }}>
-                    <div className={`${styles.heroContent} ${heroInView ? styles.visible : ''}`} ref={heroRef}>
-                        <h1 className={styles.heroTitle}>Join the Top 1% Global <br/> Experts Shaping <br/> Tomorrow's Education</h1>
-                        <p className={styles.heroSubtitle}>
-                            A global network of visionary faculty, principals, and leaders training the next generation with Tattva.
-                        </p>
-                        
-                        <button onClick={handleScrollToForm} className={styles.applyBtnHero}>
-                            Apply Now 
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </button>
-                    </div>
-
-                    <div className={`${styles.trustedBySection} ${heroInView ? styles.visible : ''}`}>
-                        <div className={styles.trustedGroup}>
-                            <span className={styles.trustedLabel}>OUR CLIENTS</span>
-                            <div className={styles.logoRow}>
-                                <div className={styles.logoBox}>St Martins High School</div>
-                                <div className={styles.logoBox}>Sloka The School</div>
-                                <div className={styles.logoBox}>Cal Public School</div>
+            {/* Step Progress Indicator */}
+            {(currentStep !== STEPS.APPLICATION && currentStep !== STEPS.SUCCESS) && (
+                <div className={styles.progressContainer}>
+                    <div className="container">
+                        <div className={styles.progressBar}>
+                            <div className={`${styles.step} ${currentStep === STEPS.SCHEDULING ? styles.active : styles.completed}`}>
+                                <span className={styles.stepNum}>2</span>
+                                <span className={styles.stepName}>Schedule</span>
                             </div>
-                            <span style={{color: 'rgba(255,255,255,0.6)', fontSize: '0.85rem', marginTop: '5px'}}>and many more</span>
-                        </div>
-                        <div className={styles.trustedGroup}>
-                            <span className={styles.trustedLabel}>BACKED BY</span>
-                            <div className={styles.logoRow}>
-                                <div className={styles.logoBox}>Tattva AI</div>
+                            <div className={styles.line}></div>
+                            <div className={`${styles.step} ${currentStep === STEPS.PAYMENT ? styles.active : ''}`}>
+                                <span className={styles.stepNum}>3</span>
+                                <span className={styles.stepName}>Payment</span>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-
-            {/* Light Information & Form Section */}
-            <section className={`${styles.mainSection} ${mainInView ? styles.visible : ''}`} ref={mainRef}>
-                <div className="container" ref={infoRef}>
-                    <div className={`${styles.splitLayout} ${mainInView ? styles.visible : ''}`}>
+            )}
+            
+            {currentStep === STEPS.APPLICATION && (
+                    {/* Dark Hero Section matching the screenshot */}
+                    <section className={styles.hero}>
+                        <div className={styles.verticalBeams}>
+                            {[...Array(12)].map((_, i) => (
+                                <div key={i} className={styles.beam}></div>
+                            ))}
+                        </div>
                         
-                        {/* Left Side: Text and Graphics */}
-                        <div className={`${styles.infoSide} ${infoInView ? styles.visible : ''}`}>
-                            <h2 className={`${styles.sectionTitle} ${styles.fadeInUp}`}>Built on Top Talent<br/>That Delivers</h2>
-                            <p className={`${styles.sectionDesc} ${styles.fadeInUp}`} style={{ transitionDelay: '0.1s' }}>
-                                Our network includes experts from the top schools, ambitious leaders, and dedicated educators everywhere.
-                            </p>
-                            
-                            <div className={styles.pillarsGraphic}>
-                                {/* Abstract representation of the pillars from the screenshot */}
-                                {[80, 120, 100, 140].map((height, i) => (
-                                    <div key={i} className={styles.pillarWrapper} style={{ transitionDelay: `${0.2 + i * 0.1}s` }}>
-                                        <div className={styles.pillarIcon}>
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                                <circle cx="12" cy="7" r="4"></circle>
-                                            </svg>
-                                        </div>
-                                        <div className={styles.pillar} style={{ height: infoInView ? `${height}px` : '0px' }}></div>
+                        <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+                            <div className={`${styles.heroContent} ${heroInView ? styles.visible : ''}`} ref={heroRef}>
+                                <h1 className={styles.heroTitle}>Join the Top 1% Global <br/> Experts Shaping <br/> Tomorrow's Education</h1>
+                                <p className={styles.heroSubtitle}>
+                                    A global network of visionary faculty, principals, and leaders training the next generation with Tattva.
+                                </p>
+                                
+                                <button onClick={handleScrollToForm} className={styles.applyBtnHero}>
+                                    Apply Now 
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <div className={`${styles.trustedBySection} ${heroInView ? styles.visible : ''}`}>
+                                <div className={styles.trustedGroup}>
+                                    <span className={styles.trustedLabel}>OUR CLIENTS</span>
+                                    <div className={styles.logoRow}>
+                                        <div className={styles.logoBox}>St Martins High School</div>
+                                        <div className={styles.logoBox}>Sloka The School</div>
+                                        <div className={styles.logoBox}>Cal Public School</div>
                                     </div>
-                                ))}
+                                    <span style={{color: 'rgba(255,255,255,0.6)', fontSize: '0.85rem', marginTop: '5px'}}>and many more</span>
+                                </div>
+                                <div className={styles.trustedGroup}>
+                                    <span className={styles.trustedLabel}>BACKED BY</span>
+                                    <div className={styles.logoRow}>
+                                        <div className={styles.logoBox}>Tattva AI</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    </section>
 
-                        {/* Right Side: Form */}
-                        <div className={styles.formSide} ref={formRef}>
-                            <div className={styles.formGlass}>
-                                <h3 className={styles.formTitle}>Application Form</h3>
-                                <form onSubmit={handleSubmit} className={styles.form}>
-                                    <div className={styles.inputGroup}>
-                                        <label>Full Name</label>
-                                        <input type="text" name="fullName" required value={formData.fullName} onChange={handleChange} placeholder="Enter your full name" />
-                                    </div>
-
-                                    <div className={styles.row}>
-                                        <div className={styles.inputGroup}>
-                                            <label>Email Address</label>
-                                            <input type="email" name="email" required value={formData.email} onChange={handleChange} placeholder="yourname@gmail.com" />
-                                        </div>
-                                        <div className={styles.inputGroup}>
-                                            <label>Phone Number</label>
-                                            <input type="tel" name="phone" required value={formData.phone} onChange={handleChange} placeholder="+91 XXXXX XXXXX" />
-                                        </div>
-                                    </div>
-
-                                    <div className={styles.row}>
-                                        <div className={styles.inputGroup}>
-                                            <label>Role Interested In</label>
-                                            <select name="role" required value={formData.role} onChange={handleChange}>
-                                                <option value="">Select a role</option>
-                                                {roles.map(role => (
-                                                    <option key={role} value={role}>{role}</option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                        {formData.role === 'Subject Teacher' && (
-                                            <div className={styles.inputGroup}>
-                                                <label>Specific Subject</label>
-                                                <input type="text" name="subject" required value={formData.subject} onChange={handleChange} placeholder="e.g. Mathematics, AI" />
+                    {/* Light Information & Form Section */}
+                    <section className={`${styles.mainSection} ${mainInView ? styles.visible : ''}`} ref={mainRef}>
+                        <div className="container" ref={infoRef}>
+                            <div className={`${styles.splitLayout} ${mainInView ? styles.visible : ''}`}>
+                                
+                                {/* Left Side: Text and Graphics */}
+                                <div className={`${styles.infoSide} ${infoInView ? styles.visible : ''}`}>
+                                    <h2 className={`${styles.sectionTitle} ${styles.fadeInUp}`}>Built on Top Talent<br/>That Delivers</h2>
+                                    <p className={`${styles.sectionDesc} ${styles.fadeInUp}`} style={{ transitionDelay: '0.1s' }}>
+                                        Our network includes experts from the top schools, ambitious leaders, and dedicated educators everywhere.
+                                    </p>
+                                    
+                                    <div className={styles.pillarsGraphic}>
+                                        {/* Abstract representation of the pillars from the screenshot */}
+                                        {[80, 120, 100, 140].map((height, i) => (
+                                            <div key={i} className={styles.pillarWrapper} style={{ transitionDelay: `${0.2 + i * 0.1}s` }}>
+                                                <div className={styles.pillarIcon}>
+                                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                                        <circle cx="12" cy="7" r="4"></circle>
+                                                    </svg>
+                                                </div>
+                                                <div className={styles.pillar} style={{ height: infoInView ? `${height}px` : '0px' }}></div>
                                             </div>
-                                        )}
+                                        ))}
                                     </div>
+                                </div>
 
-                                    <div className={styles.inputGroup}>
-                                        <label>Prefered Interview Date & Time</label>
-                                        <input type="datetime-local" name="interviewDateTime" required value={formData.interviewDateTime} onChange={handleChange} />
+                                {/* Right Side: Form / Calendly */}
+                                <div className={styles.formSide} ref={formRef}>
+                                    <div className={styles.formGlass}>
+                                        <h3 className={styles.formTitle}>Application Form</h3>
+                                        <form onSubmit={handleSubmit} className={styles.form}>
+                                            <div className={styles.inputGroup}>
+                                                <label>Full Name</label>
+                                                <input type="text" name="fullName" required value={formData.fullName} onChange={handleChange} placeholder="Enter your full name" />
+                                            </div>
+
+                                            <div className={styles.row}>
+                                                <div className={styles.inputGroup}>
+                                                    <label>Email Address</label>
+                                                    <input type="email" name="email" required value={formData.email} onChange={handleChange} placeholder="yourname@gmail.com" />
+                                                </div>
+                                                <div className={styles.inputGroup}>
+                                                    <label>Phone Number</label>
+                                                    <input type="tel" name="phone" required value={formData.phone} onChange={handleChange} placeholder="+91 XXXXX XXXXX" />
+                                                </div>
+                                            </div>
+
+                                            <div className={styles.row}>
+                                                <div className={styles.inputGroup}>
+                                                    <label>Role Interested In</label>
+                                                    <select name="role" required value={formData.role} onChange={handleChange}>
+                                                        <option value="">Select a role</option>
+                                                        {roles.map(role => (
+                                                            <option key={role} value={role}>{role}</option>
+                                                        ))}
+                                                    </select>
+                                                </div>
+                                                {formData.role === 'Subject Teacher' && (
+                                                    <div className={styles.inputGroup}>
+                                                        <label>Specific Subject</label>
+                                                        <input type="text" name="subject" required value={formData.subject} onChange={handleChange} placeholder="e.g. Mathematics, AI" />
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            <div className={styles.inputGroup}>
+                                                <label>Upload Resume (PDF)</label>
+                                                <div className={styles.fileUpload}>
+                                                    <input type="file" accept=".pdf,.doc,.docx" onChange={handleFileChange} required id="resume-upload" />
+                                                    <label htmlFor="resume-upload" className={styles.fileLabel}>
+                                                        {resume ? resume.name : 'Choose file or drag here'}
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            {status.message && (
+                                                <div className={`${styles.status} ${styles[status.type]}`}>
+                                                    {status.message}
+                                                </div>
+                                            )}
+
+                                            <button type="submit" className={styles.submitBtn} disabled={loading}>
+                                                {loading ? 'Processing...' : 'Confirm Interview Time Slot'}
+                                            </button>
+                                        </form>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </>
+            )}
 
+            {currentStep === STEPS.SCHEDULING && (
+                <section className={styles.fullscreenSuccess}>
+                    <div className="container">
+                        <div className={styles.successHeader}>
+                            <div className={styles.successIcon}>
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <h2 className={styles.stepTitle}>Step 2: Book Your Interview</h2>
+                            <h3 className={styles.provisionalNotice}>⚠️ This is a provisional booking</h3>
+                            <p>Great to have you on board, <strong>{submittedUser.name}</strong>. Please select a 30-minute slot. <br/>Note: Your slot is only confirmed after payment verification in the next step.</p>
+                        </div>
+                        <div id="calendly-embed" className={styles.calendlyContainer}>
+                            {/* The widget will be injected here */}
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {currentStep === STEPS.PAYMENT && (
+                <section className={styles.fullscreenSuccess}>
+                    <div className="container">
+                        <div className={styles.successHeader}>
+                            <h2 className={styles.stepTitle}>Step 3: Interview Fee Payment</h2>
+                            <p>To confirm your slot, please complete the non-refundable interview fee of <strong>₹250</strong>.</p>
+                        </div>
+                        
+                        <div className={styles.paymentGrid}>
+                            <div className={styles.qrSide}>
+                                <div className={styles.qrCard}>
+                                    <img src="/assets/images/tattva-upi-qr.png" alt="Tattva AI UPI QR" className={styles.qrImage} />
+                                    <div className={styles.qrBrand}>Tattva AI</div>
+                                </div>
+                                <div className={styles.paymentInstructions}>
+                                    <ol>
+                                        <li>Scan the QR code using any UPI app (GPay, PhonePe, Paytm).</li>
+                                        <li>Pay the amount of <strong>₹250</strong>.</li>
+                                        <li>Note down the <strong>UTR / Transaction ID</strong>.</li>
+                                        <li>Take a screenshot of the success page.</li>
+                                    </ol>
+                                </div>
+                            </div>
+                            
+                            <div className={styles.uploadSide}>
+                                <form onSubmit={handlePaymentSubmit} className={styles.paymentForm}>
                                     <div className={styles.inputGroup}>
-                                        <label>Upload Resume (PDF)</label>
+                                        <label>UTR Number / Transaction ID</label>
+                                        <input 
+                                            type="text" 
+                                            required 
+                                            placeholder="12-digit UTR Number"
+                                            value={paymentData.utr}
+                                            onChange={(e) => setPaymentData({...paymentData, utr: e.target.value})}
+                                        />
+                                    </div>
+                                    <div className={styles.inputGroup}>
+                                        <label>Upload Payment Screenshot</label>
                                         <div className={styles.fileUpload}>
-                                            <input type="file" accept=".pdf,.doc,.docx" onChange={handleFileChange} required id="resume-upload" />
-                                            <label htmlFor="resume-upload" className={styles.fileLabel}>
-                                                {resume ? resume.name : 'Choose file or drag here'}
+                                            <input 
+                                                type="file" 
+                                                accept="image/*" 
+                                                required 
+                                                id="payment-upload"
+                                                onChange={(e) => setPaymentData({...paymentData, screenshot: e.target.files[0]})}
+                                            />
+                                            <label htmlFor="payment-upload" className={styles.fileLabel}>
+                                                {paymentData.screenshot ? paymentData.screenshot.name : 'Choose screenshot'}
                                             </label>
                                         </div>
                                     </div>
@@ -246,16 +428,36 @@ const HiringPage = () => {
                                         </div>
                                     )}
 
-                                    <button type="submit" className={styles.submitBtn} disabled={loading}>
-                                        {loading ? 'Submitting...' : 'Submit Application'}
+                                    <button type="submit" className={styles.submitBtn} disabled={uploadingPayment}>
+                                        {uploadingPayment ? 'Verifying...' : 'Submit Payment Details'}
                                     </button>
                                 </form>
                             </div>
                         </div>
-
                     </div>
-                </div>
-            </section>
+                </section>
+            )}
+
+            {currentStep === STEPS.SUCCESS && (
+                <section className={styles.fullscreenSuccess}>
+                    <div className="container" style={{textAlign: 'center'}}>
+                        <div className={styles.successIcon} style={{margin: '0 auto 30px'}}>
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <h2 className={styles.finalTitle}>All Set!</h2>
+                        <h3 className={styles.finalSubtitle}>Your application and payment are under review.</h3>
+                        <div className={styles.finalCard}>
+                            <p>Our team will verify your payment and confirm your interview slot within 24-48 hours.</p>
+                            <p>You will receive a confirmation via <strong>WhatsApp and Email</strong> once verified.</p>
+                            <div className={styles.warningBox}>
+                                ⚠️ Note: Only verified payments will stay in our interview calendar.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            )}
 
             <Footer />
         </div>

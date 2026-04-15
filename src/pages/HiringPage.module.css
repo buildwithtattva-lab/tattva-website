@@ -464,6 +464,257 @@
     transform: translateX(0);
 }
 
+
+/* Calendly & Success View */
+.fullscreenSuccess {
+    padding: 60px 0 100px;
+    background-color: var(--white);
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* Progress Indicator */
+.progressContainer {
+    padding-top: 100px;
+    background: var(--white);
+}
+
+.progressBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    z-index: 2;
+}
+
+.stepNum {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.stepName {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.line {
+    flex: 1;
+    height: 2px;
+    background: #f1f5f9;
+    margin: -20px 10px 0;
+}
+
+.step.active .stepNum {
+    background: var(--primary-teal);
+    color: var(--white);
+    box-shadow: 0 4px 12px rgba(0, 128, 128, 0.2);
+}
+
+.step.active .stepName {
+    color: var(--primary-teal);
+}
+
+.step.completed .stepNum {
+    background: #48bb78;
+    color: var(--white);
+}
+
+.successHeader {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.stepTitle {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--primary-teal);
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.provisionalNotice {
+    color: #e53e3e;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.successView {
+    text-align: center;
+    padding: 40px 10px;
+    animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+}
+
+.successIcon {
+    width: 60px;
+    height: 60px;
+    background: #48bb78;
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 28px;
+    box-shadow: 0 10px 20px rgba(72, 187, 120, 0.2);
+}
+
+.successView h3 {
+    font-size: 2.2rem;
+    color: var(--primary-teal);
+    margin-bottom: 16px;
+    font-family: var(--font-serif);
+    letter-spacing: -0.02em;
+}
+
+.successView p {
+    color: var(--text-muted);
+    margin-bottom: 40px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+.calendlyContainer {
+    height: 800px;
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 43, 43, 0.08);
+    background: var(--white);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+}
+
+/* Payment Step Styles */
+.paymentGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    max-width: 1000px;
+    margin: 0 auto;
+    align-items: start;
+}
+
+.qrSide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.qrCard {
+    background: var(--white);
+    padding: 24px;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 43, 43, 0.05);
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.qrImage {
+    width: 240px;
+    height: 240px;
+    object-fit: contain;
+    margin-bottom: 15px;
+}
+
+.qrBrand {
+    font-weight: 700;
+    color: var(--primary-teal);
+    font-size: 1.2rem;
+    letter-spacing: 0.05em;
+}
+
+.paymentInstructions {
+    background: rgba(0, 43, 43, 0.03);
+    padding: 24px 30px;
+    border-radius: 16px;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+.paymentInstructions ol {
+    padding-left: 20px;
+}
+
+.paymentInstructions li {
+    margin-bottom: 10px;
+}
+
+.paymentForm {
+    background: var(--white);
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 43, 43, 0.05);
+}
+
+/* Final Success Styles */
+.finalTitle {
+    font-size: 3.5rem;
+    color: var(--primary-teal);
+    font-family: var(--font-serif);
+    margin-bottom: 10px;
+}
+
+.finalSubtitle {
+    color: var(--text-muted);
+    font-size: 1.4rem;
+    margin-bottom: 40px;
+}
+
+.finalCard {
+    background: rgba(0, 43, 43, 0.02);
+    padding: 40px;
+    border-radius: 30px;
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+}
+
+.warningBox {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(229, 62, 62, 0.05);
+    border-radius: 12px;
+    color: #e53e3e;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
 @media (max-width: 480px) {
     .heroTitle {
         font-size: 2.5rem;
@@ -472,5 +723,32 @@
     .logoBox {
         padding: 8px 15px;
         font-size: 0.8rem;
+    }
+    
+    .successView h3,
+    .successHeader h3 {
+        font-size: 1.8rem;
+    }
+    
+    .calendlyContainer {
+        min-height: 900px;
+    }
+
+    .paymentGrid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .qrImage {
+        width: 180px;
+        height: 180px;
+    }
+
+    .finalTitle {
+        font-size: 2.5rem;
+    }
+
+    .finalCard {
+        padding: 24px;
     }
 }

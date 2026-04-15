@@ -15,7 +15,7 @@ serve(async (req) => {
     body: JSON.stringify({
       from: 'Tattva Network <hiring@tattva-ai.in>',
       to: [record.email],
-      subject: 'Application Received - Tattva Network',
+      subject: 'Action Required: Complete your Application - Tattva Network',
       html: `
         <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #eaeaea;">
           <div style="text-align: center; margin-bottom: 30px;">
@@ -26,16 +26,20 @@ serve(async (req) => {
           <h2 style="color: #2d3748; font-size: 20px; font-weight: 600;">Dear ${record.full_name},</h2>
           
           <p style="color: #4a5568; line-height: 1.6; font-size: 16px;">
-            Thank you for applying for the <strong>${record.role}</strong> position at Tattva. We are thrilled to receive your application.
+            Thank you for applying for the <strong>${record.role}</strong> position at Tattva. Your application has been successfully received.
           </p>
           
-          <div style="background-color: #f7fafc; padding: 20px; border-radius: 8px; margin: 25px 0;">
-            <p style="color: #4a5568; margin: 0; font-size: 15px;"><strong>Your Interview Target Slot:</strong><br/>
-            ${new Date(record.interview_date).toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+          <div style="background-color: #fffaf0; padding: 25px; border-radius: 8px; margin: 25px 0; border: 1px solid #fbd38d;">
+            <h3 style="color: #c05621; margin: 0 0 10px 0; font-size: 18px;">⚠️ Next Step: Interview Confirmation</h3>
+            <p style="color: #4a5568; margin: 0; font-size: 15px; line-height: 1.5;">
+              If you have already scheduled your slot via Calendly, please note that it is currently <strong>PROVISIONAL</strong>. 
+              <br/><br/>
+              To confirm your interview, you must complete the <strong>₹250 verification fee</strong> as instructed on our website. Unpaid slots will be automatically cancelled after 24 hours.
+            </p>
           </div>
 
           <p style="color: #4a5568; line-height: 1.6; font-size: 16px;">
-            Our recruitment team will carefully review your profile and get back to you shortly with the next steps and details for your interview.
+            If you missed the scheduling or payment page, please follow the instructions on our website to finalize your spot. Once your payment is verified by our team, you will receive a <strong>final confirmation</strong> via WhatsApp and Email.
           </p>
           
           <div style="margin-top: 40px; border-top: 1px solid #edf2f7; padding-top: 20px;">
