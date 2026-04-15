@@ -6,7 +6,7 @@ import { useInView } from 'react-intersection-observer';
 import styles from './ServicesPage.module.css';
 
 // Custom generated asset
-import heroBg from '/Users/prasad/.gemini/antigravity/brain/a02cb9b0-67ac-4f59-85f0-04b6818e6fa7/services_hero_bg_1775966544341.png';
+import heroPattern from "../assets/about/hero_pattern.png";
 
 const ServicesPage = () => {
     const { ref: headerRef, inView: headerInView } = useInView({ threshold: 0.1, triggerOnce: true });
@@ -82,8 +82,8 @@ const ServicesPage = () => {
 
             {/* Premium Hero Section */}
             <header className={styles.hero}>
-                <div 
-                    className={styles.heroBg} 
+                <div
+                    className={styles.heroBg}
                     style={{ backgroundImage: `url(${heroBg})` }}
                 ></div>
                 <div className={styles.heroOverlay}></div>
@@ -108,7 +108,7 @@ const ServicesPage = () => {
                     <div className={`${styles.offeringsGrid}`} ref={gridRef}>
                         {serviceCategories.map((service, index) => {
                             const Card = (
-                                <div 
+                                <div
                                     className={`${styles.offeringCard} ${gridInView ? styles.visible : ''}`}
                                     style={{ transitionDelay: `${index * 0.1}s` }}
                                 >
