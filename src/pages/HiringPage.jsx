@@ -211,6 +211,7 @@ const HiringPage = () => {
             )}
             
             {currentStep === STEPS.APPLICATION && (
+                <>
                     {/* Dark Hero Section matching the screenshot */}
                     <section className={styles.hero}>
                         <div className={styles.verticalBeams}>
