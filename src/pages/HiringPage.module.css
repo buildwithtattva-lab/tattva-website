@@ -39,14 +39,17 @@
     bottom: 0;
     display: flex;
     justify-content: space-around;
-    opacity: 0.5; /* Increased container visibility */
+    opacity: 0.5;
+    /* Increased container visibility */
     z-index: 0;
 }
 
 .beam {
-    width: 80px; /* Slightly wider for better presence */
+    width: 80px;
+    /* Slightly wider for better presence */
     height: 100%;
-    background: rgba(0, 43, 43, 0.08); /* More visible strips */
+    background: rgba(0, 43, 43, 0.08);
+    /* More visible strips */
 }
 
 .heroContent {
@@ -97,6 +100,68 @@
     box-shadow: 0 10px 20px rgba(0, 43, 43, 0.1);
 }
 
+/* ----------------------------------
+   TOGGLE SWITCH (Employer vs Employee)
+---------------------------------- */
+.heroToggleWrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 10;
+}
+
+.heroToggle {
+    display: flex;
+    position: relative;
+    background: rgba(0, 43, 43, 0.05);
+    /* Same unified feel as borders */
+    border-radius: 999px;
+    padding: 6px;
+    border: 1px solid rgba(0, 43, 43, 0.1);
+}
+
+.toggleSlider {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: calc(50% - 6px);
+    height: calc(100% - 12px);
+    background: var(--primary-teal);
+    border-radius: 999px;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0, 128, 128, 0.2);
+}
+
+.toggleBtn {
+    flex: 1;
+    position: relative;
+    z-index: 2;
+    padding: 12px 32px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    font-family: var(--font-sans);
+    color: var(--primary-teal);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.4s ease;
+    border-radius: 999px;
+    width: 220px;
+}
+
+.toggleBtn.active {
+    color: var(--white);
+}
+
+@media (max-width: 600px) {
+    .toggleBtn {
+        width: 160px;
+        padding: 10px 16px;
+        font-size: 0.9rem;
+    }
+}
+
 .trustedBySection {
     position: relative;
     z-index: 2;
@@ -140,7 +205,7 @@
     font-size: 0.9rem;
     font-family: var(--font-sans);
     background: var(--white);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
 }
 
 
@@ -171,7 +236,7 @@
         text-align: center;
         gap: 60px;
     }
-    
+
     .hero {
         padding: 100px 0 60px;
     }
@@ -281,7 +346,7 @@
     .row {
         grid-template-columns: 1fr;
     }
-    
+
     .formGlass {
         padding: 30px 20px;
     }
@@ -301,7 +366,7 @@
     font-family: var(--font-sans);
 }
 
-.inputGroup input, 
+.inputGroup input,
 .inputGroup select {
     background: var(--white);
     border: 1px solid var(--border-muted);
@@ -313,11 +378,25 @@
     transition: var(--transition);
 }
 
-.inputGroup input:focus, 
-.inputGroup select:focus {
+.inputGroup input:focus,
+.inputGroup select:focus,
+.inputGroup .textarea:focus {
     outline: none;
     border-color: var(--accent-teal);
     box-shadow: 0 0 0 3px rgba(0, 128, 128, 0.1);
+}
+
+.textarea {
+    resize: vertical;
+    min-height: 80px;
+    background: var(--white);
+    border: 1px solid var(--border-muted);
+    padding: 12px 16px;
+    border-radius: 8px;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    font-family: var(--font-sans);
+    transition: var(--transition);
 }
 
 .fileUpload {
@@ -397,6 +476,7 @@
     color: #C53030;
     border: 1px solid rgba(245, 101, 101, 0.2);
 }
+
 /* ----------------------------------
    ANIMATIONS
 ---------------------------------- */
@@ -438,8 +518,15 @@
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 .trustedBySection {
@@ -502,8 +589,8 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: #f1f5f9;
-    color: #94a3b8;
+    background: rgba(0, 43, 43, 0.05); /* Native teal tint rather than blue-grey */
+    color: var(--text-muted);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -515,7 +602,7 @@
 .stepName {
     font-size: 0.8rem;
     font-weight: 600;
-    color: #94a3b8;
+    color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
@@ -523,7 +610,7 @@
 .line {
     flex: 1;
     height: 2px;
-    background: #f1f5f9;
+    background: rgba(0, 43, 43, 0.05);
     margin: -20px 10px 0;
 }
 
@@ -719,17 +806,17 @@
     .heroTitle {
         font-size: 2.5rem;
     }
-    
+
     .logoBox {
         padding: 8px 15px;
         font-size: 0.8rem;
     }
-    
+
     .successView h3,
     .successHeader h3 {
         font-size: 1.8rem;
     }
-    
+
     .calendlyContainer {
         min-height: 900px;
     }
@@ -751,4 +838,64 @@
     .finalCard {
         padding: 24px;
     }
+}
+
+/* Autocomplete Styles */
+.suggestionsList {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    width: 100%;
+    background: var(--white);
+    border: 1px solid var(--border-muted);
+    border-radius: 8px;
+    max-height: 250px;
+    overflow-y: auto;
+    z-index: 50;
+    box-shadow: var(--shadow-md);
+    list-style: none;
+    padding: 0;
+}
+
+.suggestionItem {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    border-bottom: 1px solid rgba(0, 43, 43, 0.05);
+}
+
+.suggestionItem:last-child {
+    border-bottom: none;
+}
+
+.suggestionItem:hover {
+    background: rgba(0, 43, 43, 0.04);
+}
+
+.suggestionLogo {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    border-radius: 4px;
+    margin-right: 12px;
+    background: var(--bg-light);
+    border: 1px solid rgba(0, 43, 43, 0.05);
+}
+
+.suggestionText {
+    display: flex;
+    flex-direction: column;
+}
+
+.suggestionName {
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    font-weight: 500;
+}
+
+.suggestionDomain {
+    font-size: 0.8rem;
+    color: var(--text-muted);
 }
