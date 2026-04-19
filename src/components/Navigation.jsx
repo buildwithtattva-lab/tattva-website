@@ -41,6 +41,7 @@ const Navigation = ({ isSolid = false }) => {
           <Link to="/for-schools" onClick={() => setMobileMenuOpen(false)}>For Schools</Link>
           <Link to="/for-colleges" onClick={() => setMobileMenuOpen(false)}>For Colleges</Link>
           <Link to="/services" onClick={() => setMobileMenuOpen(false)}>Services</Link>
+          <Link to="/events" onClick={() => setMobileMenuOpen(false)}>Events</Link>
           <Link to="/hiring" onClick={() => setMobileMenuOpen(false)}>Hiring</Link>
           <Link to="/about" onClick={() => setMobileMenuOpen(false)}>About Us</Link>
           <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>Contact</Link>

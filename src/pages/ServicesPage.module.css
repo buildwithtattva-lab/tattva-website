@@ -62,7 +62,7 @@
     font-weight: 700;
     margin-bottom: 1rem;
     letter-spacing: -0.02em;
-    color: var(--white);
+    color: var(--white) !important;
 }
 
 .breadcrumb {
@@ -75,7 +75,7 @@
 }
 
 .breadcrumb a {
-    color: var(--white);
+    color: var(--white) !important;
     text-decoration: none;
     transition: opacity 0.3s;
 }

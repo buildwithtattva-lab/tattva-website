@@ -8,13 +8,12 @@ import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import ProjectsPage from './pages/ProjectsPage';
 import HiringPage from './pages/HiringPage';
-import PromoPopup from './components/PromoPopup';
+import EventsPage from './pages/EventsPage';
 import './styles/globals.css';
 
 function App() {
   return (
     <Router>
-      <PromoPopup />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/for-colleges" element={<ForCollegesPage />} />
@@ -25,6 +24,7 @@ function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/projects" element={<ProjectsPage />} />
         <Route path="/hiring" element={<HiringPage />} />
+        <Route path="/events" element={<EventsPage />} />
       </Routes>
     </Router>
   );
