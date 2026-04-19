@@ -41,7 +41,6 @@
   transition: all 0.3s ease;
   object-fit: contain;
   /* Seamlessly blends the logo's ivory background with the navbar */
-  mix-blend-mode: multiply;
   margin-right: 0.8rem;
 }
 

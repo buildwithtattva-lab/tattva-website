@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&display=swap');
 
 :root {
-  color-scheme: light;
+  color-scheme: only light;
   --primary-teal: #002B2B;        /* Deep brand teal from logo */
   --accent-teal: #008080;         /* Brighter teal for high-impact accents */
   --font-serif: 'Instrument Serif', serif;
@@ -46,12 +46,23 @@ html {
 
 body {
   font-family: var(--font-sans);
-  color: var(--text-dark);
-  background-color: var(--white);
+  color: var(--text-dark) !important;
+  background-color: var(--ivory) !important;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+}
+
+/* Force light mode colors even if OS is set to dark */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: only light;
+  }
+  body {
+    background-color: var(--ivory) !important;
+    color: var(--text-dark) !important;
+  }
 }
 
 @keyframes reveal {
