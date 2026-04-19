@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import NavDropdown from './NavDropdown';
 import styles from './Navigation.module.css';
 
 const Navigation = ({ isSolid = false }) => {
@@ -13,6 +14,21 @@ const Navigation = ({ isSolid = false }) => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const solutionItems = [
+    { label: 'For Schools', path: '/for-schools' },
+    { label: 'For Colleges', path: '/for-colleges' }
+  ];
+
+  const recruitmentItems = [
+    { label: 'Join as Educator', path: '/hiring/educator' },
+    { label: 'Hire Talent', path: '/hiring/employer' }
+  ];
+
+  const discoverItems = [
+    { label: 'Services', path: '/services' },
+    { label: 'Upcoming Events', path: '/events' }
+  ];
 
   return (
     <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ''} ${isSolid ? styles.solid : ''}`}>
@@ -38,13 +54,28 @@ const Navigation = ({ isSolid = false }) => {
 
         <div className={`${styles.navLinks} ${mobileMenuOpen ? styles.mobileMenuActive : ''}`}>
           <Link to="/" onClick={() => setMobileMenuOpen(false)}>Home</Link>
-          <Link to="/for-schools" onClick={() => setMobileMenuOpen(false)}>For Schools</Link>
-          <Link to="/for-colleges" onClick={() => setMobileMenuOpen(false)}>For Colleges</Link>
-          <Link to="/services" onClick={() => setMobileMenuOpen(false)}>Services</Link>
-          <Link to="/events" onClick={() => setMobileMenuOpen(false)}>Events</Link>
-          <Link to="/hiring" onClick={() => setMobileMenuOpen(false)}>Hiring</Link>
+          
+          <NavDropdown 
+            label="Solutions" 
+            items={solutionItems} 
+            onMobileClick={() => setMobileMenuOpen(false)} 
+          />
+
+          <NavDropdown 
+            label="Discover" 
+            items={discoverItems} 
+            onMobileClick={() => setMobileMenuOpen(false)} 
+          />
+
+          <NavDropdown 
+            label="Recruitment" 
+            items={recruitmentItems} 
+            onMobileClick={() => setMobileMenuOpen(false)} 
+          />
+
           <Link to="/about" onClick={() => setMobileMenuOpen(false)}>About Us</Link>
           <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
+          
           <a
             href="http://wa.me/+918886945890"
             className={styles.ctaBtn}

@@ -7,7 +7,8 @@ import ServicesPage from './pages/ServicesPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import ProjectsPage from './pages/ProjectsPage';
-import HiringPage from './pages/HiringPage';
+import EducatorPage from './pages/EducatorPage';
+import EmployerPage from './pages/EmployerPage';
 import EventsPage from './pages/EventsPage';
 import PromoPopup from './components/PromoPopup';
 import './styles/globals.css';
@@ -25,7 +26,8 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/projects" element={<ProjectsPage />} />
-        <Route path="/hiring" element={<HiringPage />} />
+        <Route path="/hiring/educator" element={<EducatorPage />} />
+        <Route path="/hiring/employer" element={<EmployerPage />} />
         <Route path="/events" element={<EventsPage />} />
       </Routes>
     </Router>
