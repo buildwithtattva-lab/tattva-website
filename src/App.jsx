@@ -9,11 +9,13 @@ import ContactPage from './pages/ContactPage';
 import ProjectsPage from './pages/ProjectsPage';
 import HiringPage from './pages/HiringPage';
 import EventsPage from './pages/EventsPage';
+import PromoPopup from './components/PromoPopup';
 import './styles/globals.css';
 
 function App() {
   return (
     <Router>
+      <PromoPopup />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/for-colleges" element={<ForCollegesPage />} />

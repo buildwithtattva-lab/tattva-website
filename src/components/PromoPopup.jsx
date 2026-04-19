@@ -5,17 +5,12 @@ const PromoPopup = () => {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-        // Check if the user has already dismissed the popup in the current session
-        const isDismissed = sessionStorage.getItem('promo_dismissed');
-        
-        if (!isDismissed) {
-            // Show popup after a 1.5 second delay
-            const timer = setTimeout(() => {
-                setIsVisible(true);
-            }, 1500);
+        // Show popup after a 1.5 second delay
+        const timer = setTimeout(() => {
+            setIsVisible(true);
+        }, 1500);
 
-            return () => clearTimeout(timer);
-        }
+        return () => clearTimeout(timer);
     }, []);
 
     const handleClose = (e) => {
