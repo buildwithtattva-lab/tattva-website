@@ -19,6 +19,13 @@
     border-radius: 0;
 }
 
+@media (max-width: 768px) {
+    .ctaBanner {
+        padding: 4rem 1.5rem;
+        margin-bottom: 3rem;
+    }
+}
+
 .bannerContainer {
     display: flex;
     align-items: center;
@@ -222,6 +229,20 @@
     font-family: var(--font-sans);
     letter-spacing: -0.05em;
     width: 100%;
+}
+
+@media (max-width: 768px) {
+    .massiveBrand {
+        font-size: 15vw;
+        margin-top: 2rem;
+        opacity: 0.5;
+    }
+}
+
+@media (max-width: 480px) {
+    .massiveBrand {
+        display: none;
+    }
 }
 
 /* Legal Bar */
