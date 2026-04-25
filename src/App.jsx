@@ -9,7 +9,6 @@ import ContactPage from './pages/ContactPage';
 import ProjectsPage from './pages/ProjectsPage';
 import EducatorPage from './pages/EducatorPage';
 import EmployerPage from './pages/EmployerPage';
-import EventsPage from './pages/EventsPage';
 import './styles/globals.css';
 
 function App() {
@@ -26,7 +25,6 @@ function App() {
         <Route path="/projects" element={<ProjectsPage />} />
         <Route path="/hiring/educator" element={<EducatorPage />} />
         <Route path="/hiring/employer" element={<EmployerPage />} />
-        <Route path="/events" element={<EventsPage />} />
       </Routes>
     </Router>
   );

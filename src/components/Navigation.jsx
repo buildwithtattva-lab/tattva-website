@@ -26,8 +26,7 @@ const Navigation = ({ isSolid = false }) => {
   ];
 
   const discoverItems = [
-    { label: 'Services', path: '/services' },
-    { label: 'Upcoming Events', path: '/events' }
+    { label: 'Services', path: '/services' }
   ];
 
   return (
