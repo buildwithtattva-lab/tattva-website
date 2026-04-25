@@ -6,6 +6,22 @@ import { useInView } from 'react-intersection-observer';
 import { supabase } from '../lib/supabaseClient';
 import styles from './EducatorPage.module.css';
 
+const APPLICATION_STATUS = {
+    SUBMITTED: 'application_submitted',
+    SLOT_BOOKED: 'slot_booked',
+    PENDING_VERIFICATION: 'pending_verification',
+};
+
+const SLOT_STATUS = {
+    NOT_SCHEDULED: 'not_scheduled',
+    SCHEDULED: 'scheduled',
+};
+
+const PAYMENT_STATUS = {
+    NOT_SUBMITTED: 'not_submitted',
+    PENDING_VERIFICATION: 'pending_verification',
+};
+
 const EducatorPage = () => {
     const formRef = useRef(null);
     const [formData, setFormData] = useState({
@@ -22,15 +38,17 @@ const EducatorPage = () => {
     // Step state
     const STEPS = {
         APPLICATION: 'application',
-        SCHEDULING: 'scheduling',
+        SLOT: 'slot',
         PAYMENT: 'payment',
         SUCCESS: 'success'
     };
     const [currentStep, setCurrentStep] = useState(STEPS.APPLICATION);
     const [applicantId, setApplicantId] = useState(null);
-    const [submittedUser, setSubmittedUser] = useState({ name: '', email: '' });
+    const [submissionToken, setSubmissionToken] = useState('');
     const [uploadingPayment, setUploadingPayment] = useState(false);
+    const [updatingSlot, setUpdatingSlot] = useState(false);
     const [paymentData, setPaymentData] = useState({ utr: '', screenshot: null });
+    const [selectedSlot, setSelectedSlot] = useState({ date: '', time: '' });
 
     // Animation hooks
     const { ref: heroRef, inView: heroInView } = useInView({ threshold: 0.1, triggerOnce: true });
@@ -39,29 +57,7 @@ const EducatorPage = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-    }, []);
-
-    // Step 2 & 3 Interaction logic
-    useEffect(() => {
-        if (currentStep === STEPS.SCHEDULING && window.Calendly) {
-            window.Calendly.initInlineWidget({
-                url: 'https://calendly.com/buildwithtattva/30min?primary_color=002B2B&text_color=1A1A1A&background_color=FBFAF3',
-                parentElement: document.getElementById('calendly-embed'),
-                prefill: {
-                    name: submittedUser.name,
-                    email: submittedUser.email,
-                }
-            });
-
-            const handleCalendlyEvent = (e) => {
-                if (e.data.event === 'calendly.event_scheduled') {
-                    setCurrentStep(STEPS.PAYMENT);
-                }
-            };
-            window.addEventListener('message', handleCalendlyEvent);
-            return () => window.removeEventListener('message', handleCalendlyEvent);
-        }
-    }, [currentStep, submittedUser]);
+    }, [currentStep]);
 
     const roles = ['Teacher', 'Subject Teacher', 'Principal', 'Management', 'Coordinator'];
 
@@ -101,32 +97,60 @@ const EducatorPage = () => {
                 .from('resumes')
                 .getPublicUrl(filePath);
 
-            const { data: insertedData, error: insertError } = await supabase
-                .from('applicants')
-                .insert([{
-                    full_name: formData.fullName,
-                    email: formData.email,
-                    phone: formData.phone,
-                    role: formData.role,
-                    subject: formData.role === 'Subject Teacher' ? formData.subject : null,
-                    interview_date: new Date().toISOString(),
-                    resume_url: publicUrl,
-                    payment_status: 'pending'
-                }])
-                .select();
+            const { data, error } = await supabase.functions.invoke('educator-submissions', {
+                body: {
+                    action: 'submit_application',
+                    applicant: {
+                        fullName: formData.fullName,
+                        email: formData.email,
+                        phone: formData.phone,
+                        role: formData.role,
+                        subject: formData.subject,
+                        resumeUrl: publicUrl,
+                    },
+                },
+            });
 
-            if (insertError) throw insertError;
+            if (error) throw error;
 
-            setApplicantId(insertedData[0].id);
-            setSubmittedUser({ name: formData.fullName, email: formData.email });
-            setCurrentStep(STEPS.SCHEDULING);
-            setStatus({ type: 'success', message: 'Application received! Now schedule your interview.' });
-
+            setApplicantId(data.applicantId);
+            setSubmissionToken(data.submissionToken);
+            setCurrentStep(STEPS.SLOT);
         } catch (error) {
             console.error('Error:', error);
             setStatus({ type: 'error', message: error.message || 'Something went wrong.' });
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleSlotSubmit = async (e) => {
+        e.preventDefault();
+        setUpdatingSlot(true);
+        setStatus({ type: '', message: '' });
+
+        try {
+            if (!selectedSlot.date || !selectedSlot.time) throw new Error('Please select both date and time.');
+
+            const interviewDate = new Date(`${selectedSlot.date}T${selectedSlot.time}`).toISOString();
+
+            const { error: slotError } = await supabase.functions.invoke('educator-submissions', {
+                body: {
+                    action: 'update_slot',
+                    applicantId,
+                    submissionToken,
+                    interviewDate,
+                },
+            });
+
+            if (slotError) throw slotError;
+
+            setCurrentStep(STEPS.PAYMENT);
+        } catch (error) {
+            console.error('Slot Error:', error);
+            setStatus({ type: 'error', message: error.message });
+        } finally {
+            setUpdatingSlot(false);
         }
     };
 
@@ -153,12 +177,17 @@ const EducatorPage = () => {
                 .from('resumes')
                 .getPublicUrl(filePath);
 
-            const { error: updateError } = await supabase
-                .from('applicants')
-                .update({ utr_number: paymentData.utr, payment_screenshot_url: publicUrl })
-                .eq('id', applicantId);
+            const { error: paymentError } = await supabase.functions.invoke('educator-submissions', {
+                body: {
+                    action: 'submit_payment',
+                    applicantId,
+                    submissionToken,
+                    utrNumber: paymentData.utr,
+                    paymentScreenshotUrl: publicUrl,
+                },
+            });
 
-            if (updateError) throw updateError;
+            if (paymentError) throw paymentError;
 
             setCurrentStep(STEPS.SUCCESS);
         } catch (error) {
@@ -174,11 +203,16 @@ const EducatorPage = () => {
             <Navigation isSolid={true} />
 
             {/* Step Progress */}
-            {(currentStep !== STEPS.APPLICATION && currentStep !== STEPS.SUCCESS) && (
+            {(currentStep === STEPS.SLOT || currentStep === STEPS.PAYMENT) && (
                 <div className={styles.progressContainer}>
                     <div className="container">
                         <div className={styles.progressBar}>
-                            <div className={`${styles.step} ${currentStep === STEPS.SCHEDULING ? styles.active : styles.completed}`}>
+                            <div className={`${styles.step} ${styles.completed}`}>
+                                <span className={styles.stepNum}>1</span>
+                                <span className={styles.stepName}>Details</span>
+                            </div>
+                            <div className={styles.line}></div>
+                            <div className={`${styles.step} ${currentStep === STEPS.SLOT ? styles.active : styles.completed}`}>
                                 <span className={styles.stepNum}>2</span>
                                 <span className={styles.stepName}>Schedule</span>
                             </div>
@@ -287,14 +321,29 @@ const EducatorPage = () => {
                 </>
             )}
 
-            {currentStep === STEPS.SCHEDULING && (
-                <div style={{ padding: '100px 0', background: 'var(--white)' }}>
+            {currentStep === STEPS.SLOT && (
+                <div style={{ padding: '100px 0', background: 'var(--white)', minHeight: '80vh', display: 'flex', alignItems: 'center' }}>
                     <div className="container">
-                        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-                            <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2.5rem', color: 'var(--primary-teal)' }}>Schedule Your Quick Interview</h2>
-                            <p style={{ color: 'var(--text-muted)' }}>Choose a time that works best for you. Note: Your booking is provisional until verified.</p>
+                        <div style={{ maxWidth: '600px', margin: '0 auto', background: '#fff', padding: '48px', borderRadius: '32px', boxShadow: '0 40px 100px rgba(0,43,43,0.08)' }}>
+                            <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+                                <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', color: 'var(--primary-teal)', marginBottom: '12px' }}>Select Interview Slot</h2>
+                                <p style={{ color: 'var(--text-muted)' }}>Choose your preferred date and time for the interview.</p>
+                            </div>
+                            <form onSubmit={handleSlotSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                                <div className={styles.inputGroup}>
+                                    <label>Preferred Date</label>
+                                    <input type="date" required min={new Date().toISOString().split('T')[0]} value={selectedSlot.date} onChange={(e) => setSelectedSlot({ ...selectedSlot, date: e.target.value })} />
+                                </div>
+                                <div className={styles.inputGroup}>
+                                    <label>Preferred Time</label>
+                                    <input type="time" required value={selectedSlot.time} onChange={(e) => setSelectedSlot({ ...selectedSlot, time: e.target.value })} />
+                                </div>
+                                <button type="submit" disabled={updatingSlot} className={styles.submitBtn}>
+                                    {updatingSlot ? 'Saving Slot...' : 'Continue to Payment'}
+                                </button>
+                                {status.message && <div className={`${styles.status} ${styles[status.type]}`}>{status.message}</div>}
+                            </form>
                         </div>
-                        <div id="calendly-embed" style={{ height: '800px', width: '100%', borderRadius: '24px', overflow: 'hidden', border: '1px solid rgba(0,43,43,0.1)' }}></div>
                     </div>
                 </div>
             )}
@@ -303,7 +352,10 @@ const EducatorPage = () => {
                 <div style={{ padding: '100px 0', background: 'var(--white)' }}>
                     <div className="container">
                         <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-                            <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2.5rem', color: 'var(--primary-teal)' }}>Submit Interview Processing Fee</h2>
+                            <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2.5rem', color: 'var(--primary-teal)' }}>Submit Payment Proof</h2>
+                            <p style={{ color: 'var(--text-muted)', maxWidth: '640px', margin: '16px auto 0' }}>
+                                Your selected interview slot: <strong>{new Date(`${selectedSlot.date}T${selectedSlot.time}`).toLocaleString([], { dateStyle: 'long', timeStyle: 'short' })}</strong>
+                            </p>
                         </div>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', maxWidth: '1000px', margin: '0 auto' }}>
                             <div style={{ textAlign: 'center' }}>
@@ -315,9 +367,10 @@ const EducatorPage = () => {
                                     <h4 style={{ marginBottom: '10px' }}>Instructions:</h4>
                                     <ol style={{ paddingLeft: '20px' }}>
                                         <li>Scan the QR code to pay</li>
-                                        <li>Alternatively, pay via Phone Number: **9652796537**</li>
+                                        <li>Alternatively, pay via Phone Number: <strong>9652796537</strong></li>
                                         <li>Pay the one-time processing fee of ₹250</li>
                                         <li>Copy the UTR / Transaction ID</li>
+                                        <li>Upload the screenshot below for verification</li>
                                     </ol>
                                 </div>
                             </div>
@@ -335,8 +388,9 @@ const EducatorPage = () => {
                                         </div>
                                     </div>
                                     <button type="submit" disabled={uploadingPayment} className={styles.submitBtn}>
-                                        {uploadingPayment ? 'Processing...' : 'Confirm Payment & Verify Slot'}
+                                        {uploadingPayment ? 'Submitting...' : 'Submit Payment Proof'}
                                     </button>
+                                    {status.message && <div className={`${styles.status} ${styles[status.type]}`}>{status.message}</div>}
                                 </form>
                             </div>
                         </div>
@@ -350,9 +404,9 @@ const EducatorPage = () => {
                         <div style={{ width: '80px', height: '80px', background: '#48bb78', borderRadius: '50%', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 30px' }}>
                             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                         </div>
-                        <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '3rem', color: 'var(--primary-teal)', marginBottom: '20px' }}>Application Complete!</h2>
+                        <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '3rem', color: 'var(--primary-teal)', marginBottom: '20px' }}>Payment Proof Submitted</h2>
                         <p style={{ fontSize: '1.2rem', color: 'var(--text-muted)', maxWidth: '600px', margin: '0 auto' }}>
-                            Your interview slot is currently **Provisional**. Our team will verify your payment details and confirm your appointment via email within 2-4 business hours.
+                            Our team will verify your payment details. Once verified, we will confirm your selected interview slot (<strong>{new Date(`${selectedSlot.date}T${selectedSlot.time}`).toLocaleString([], { dateStyle: 'long', timeStyle: 'short' })}</strong>).
                         </p>
                         <Link to="/" style={{ display: 'inline-block', marginTop: '40px', padding: '12px 30px', background: 'var(--primary-teal)', color: '#fff', borderRadius: '999px', textDecoration: 'none' }}>Return Home</Link>
                     </div>
