@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import { useInView } from 'react-intersection-observer';
@@ -108,6 +109,7 @@ const EducatorPage = () => {
                     phone: formData.phone,
                     role: formData.role,
                     subject: formData.role === 'Subject Teacher' ? formData.subject : null,
+                    interview_date: new Date().toISOString(),
                     resume_url: publicUrl,
                     payment_status: 'pending'
                 }])
@@ -305,15 +307,16 @@ const EducatorPage = () => {
                         </div>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', maxWidth: '1000px', margin: '0 auto' }}>
                             <div style={{ textAlign: 'center' }}>
-                                <div style={{ background: '#fff', padding: '24px', borderRadius: '24px', boxShadow: '0 20px 40px rgba(0,0,0,0.05)', marginBottom: '30px' }}>
-                                    <img src="/assets/payments/qr_code.png" alt="Payment QR" style={{ width: '240px' }} />
+                                <div style={{ background: '#fff', padding: '24px', borderRadius: '24px', boxShadow: '0 20px 40px rgba(0,0,0,0.05)', marginBottom: '30px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                    <img src="/assets/images/tattva-upi-qr.png" alt="Payment QR" style={{ width: '240px', display: 'block' }} />
                                     <p style={{ fontWeight: 700, color: 'var(--primary-teal)', marginTop: '15px' }}>Tattva Recruiting</p>
                                 </div>
                                 <div style={{ background: 'rgba(0,43,43,0.03)', padding: '20px', borderRadius: '16px', textAlign: 'left' }}>
                                     <h4 style={{ marginBottom: '10px' }}>Instructions:</h4>
                                     <ol style={{ paddingLeft: '20px' }}>
-                                        <li>Scan QR or pay via UPI ID: **tattva@upi**</li>
-                                        <li>Pay the one-time processing fee of ₹199</li>
+                                        <li>Scan the QR code to pay</li>
+                                        <li>Alternatively, pay via Phone Number: **9652796537**</li>
+                                        <li>Pay the one-time processing fee of ₹250</li>
                                         <li>Copy the UTR / Transaction ID</li>
                                     </ol>
                                 </div>
@@ -351,7 +354,7 @@ const EducatorPage = () => {
                         <p style={{ fontSize: '1.2rem', color: 'var(--text-muted)', maxWidth: '600px', margin: '0 auto' }}>
                             Your interview slot is currently **Provisional**. Our team will verify your payment details and confirm your appointment via email within 2-4 business hours.
                         </p>
-                        <Link to="/" style={{ display: 'inline-block', marginTop: '40px', padding: '12px 30px', background: 'var(--primary-teal)', color: '#white', borderRadius: '999px', textDecoration: 'none' }}>Return Home</Link>
+                        <Link to="/" style={{ display: 'inline-block', marginTop: '40px', padding: '12px 30px', background: 'var(--primary-teal)', color: '#fff', borderRadius: '999px', textDecoration: 'none' }}>Return Home</Link>
                     </div>
                 </div>
             )}
