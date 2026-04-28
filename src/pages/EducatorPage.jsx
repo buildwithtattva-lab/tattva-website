@@ -59,7 +59,7 @@ const EducatorPage = () => {
         window.scrollTo(0, 0);
     }, [currentStep]);
 
-    const roles = ['Teacher', 'Subject Teacher', 'Principal', 'Management', 'Coordinator'];
+    const roles = ['Teacher', 'Subject Teacher', 'Principal', 'Admin', 'Coordinator'];
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -322,14 +322,14 @@ const EducatorPage = () => {
             )}
 
             {currentStep === STEPS.SLOT && (
-                <div style={{ padding: '100px 0', background: 'var(--white)', minHeight: '80vh', display: 'flex', alignItems: 'center' }}>
+                <div className={styles.slotSection}>
                     <div className="container">
-                        <div style={{ maxWidth: '600px', margin: '0 auto', background: '#fff', padding: '48px', borderRadius: '32px', boxShadow: '0 40px 100px rgba(0,43,43,0.08)' }}>
+                        <div className={styles.slotCard}>
                             <div style={{ textAlign: 'center', marginBottom: '40px' }}>
                                 <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', color: 'var(--primary-teal)', marginBottom: '12px' }}>Select Interview Slot</h2>
                                 <p style={{ color: 'var(--text-muted)' }}>Choose your preferred date and time for the interview.</p>
                             </div>
-                            <form onSubmit={handleSlotSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                            <form onSubmit={handleSlotSubmit} className={styles.form}>
                                 <div className={styles.inputGroup}>
                                     <label>Preferred Date</label>
                                     <input type="date" required min={new Date().toISOString().split('T')[0]} value={selectedSlot.date} onChange={(e) => setSelectedSlot({ ...selectedSlot, date: e.target.value })} />
@@ -349,21 +349,21 @@ const EducatorPage = () => {
             )}
 
             {currentStep === STEPS.PAYMENT && (
-                <div style={{ padding: '100px 0', background: 'var(--white)' }}>
+                <div className={styles.paymentSection}>
                     <div className="container">
-                        <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+                        <div className={styles.paymentHeader}>
                             <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2.5rem', color: 'var(--primary-teal)' }}>Submit Payment Proof</h2>
                             <p style={{ color: 'var(--text-muted)', maxWidth: '640px', margin: '16px auto 0' }}>
                                 Your selected interview slot: <strong>{new Date(`${selectedSlot.date}T${selectedSlot.time}`).toLocaleString([], { dateStyle: 'long', timeStyle: 'short' })}</strong>
                             </p>
                         </div>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', maxWidth: '1000px', margin: '0 auto' }}>
+                        <div className={styles.paymentGrid}>
                             <div style={{ textAlign: 'center' }}>
-                                <div style={{ background: '#fff', padding: '24px', borderRadius: '24px', boxShadow: '0 20px 40px rgba(0,0,0,0.05)', marginBottom: '30px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                    <img src="/assets/images/tattva-upi-qr.png" alt="Payment QR" style={{ width: '240px', display: 'block' }} />
+                                <div className={styles.qrCard}>
+                                    <img src="/assets/images/tattva-upi-qr.png" alt="Payment QR" className={styles.qrImage} />
                                     <p style={{ fontWeight: 700, color: 'var(--primary-teal)', marginTop: '15px' }}>Tattva Recruiting</p>
                                 </div>
-                                <div style={{ background: 'rgba(0,43,43,0.03)', padding: '20px', borderRadius: '16px', textAlign: 'left' }}>
+                                <div className={styles.instructions}>
                                     <h4 style={{ marginBottom: '10px' }}>Instructions:</h4>
                                     <ol style={{ paddingLeft: '20px' }}>
                                         <li>Scan the QR code to pay</li>
@@ -374,8 +374,8 @@ const EducatorPage = () => {
                                     </ol>
                                 </div>
                             </div>
-                            <div style={{ background: '#fff', padding: '40px', borderRadius: '24px', boxShadow: '0 20px 40px rgba(0,0,0,0.05)' }}>
-                                <form onSubmit={handlePaymentSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                            <div className={styles.paymentFormCard}>
+                                <form onSubmit={handlePaymentSubmit} className={styles.form}>
                                     <div className={styles.inputGroup}>
                                         <label>UTR Number</label>
                                         <input type="text" required value={paymentData.utr} onChange={(e) => setPaymentData({ ...paymentData, utr: e.target.value })} placeholder="12-digit transaction ID" />
@@ -399,7 +399,7 @@ const EducatorPage = () => {
             )}
 
             {currentStep === STEPS.SUCCESS && (
-                <div style={{ padding: '150px 0', textAlign: 'center', background: 'var(--white)' }}>
+                <div className={styles.successSection}>
                     <div className="container">
                         <div style={{ width: '80px', height: '80px', background: '#48bb78', borderRadius: '50%', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 30px' }}>
                             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>

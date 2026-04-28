@@ -375,4 +375,106 @@
     .row {
         grid-template-columns: 1fr;
     }
+    .progressBar {
+        padding: 0 10px;
+    }
+    .stepName {
+        font-size: 0.7rem;
+    }
+}
+
+/* ----------------------------------
+   SLOT & PAYMENT STEPS (Responsive)
+---------------------------------- */
+.slotSection {
+    padding: 80px 0;
+    background: var(--white);
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+}
+
+.slotCard {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 48px;
+    border-radius: 32px;
+    box-shadow: 0 40px 100px rgba(0,43,43,0.08);
+}
+
+.paymentSection {
+    padding: 80px 0;
+    background: var(--white);
+}
+
+.paymentHeader {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 0 20px;
+}
+
+.paymentGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.qrCard {
+    background: #fff;
+    padding: 24px;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.qrImage {
+    width: 240px;
+    display: block;
+}
+
+.instructions {
+    background: rgba(0, 43, 43, 0.03);
+    padding: 24px;
+    border-radius: 16px;
+    text-align: left;
+}
+
+.paymentFormCard {
+    background: #fff;
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+}
+
+.successSection {
+    padding: 120px 0;
+    text-align: center;
+    background: var(--white);
+}
+
+@media (max-width: 968px) {
+    .paymentGrid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 0 20px;
+    }
+    
+    .slotCard, .paymentFormCard {
+        padding: 30px 20px;
+        border-radius: 20px;
+    }
+
+    .paymentHeader h2 {
+        font-size: 2rem;
+    }
+    
+    .qrImage {
+        width: 200px;
+    }
 }
