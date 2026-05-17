@@ -28,39 +28,38 @@
   display: flex;
   align-items: center;
   text-decoration: none;
-  transition: transform 0.3s ease;
+  transition: transform 0.24s ease;
 }
 
 .logoLink:hover {
-  transform: scale(1.05);
+  transform: translateY(-1px);
 }
 
 .logoSymbol {
-  height: 50px;
+  height: 46px;
   width: auto;
-  transition: all 0.3s ease;
+  transition: height 0.3s ease, transform 0.24s ease;
   object-fit: contain;
-  /* Seamlessly blends the logo's ivory background with the navbar */
   margin-right: 0.8rem;
 }
 
 .logoText {
   font-family: var(--font-sans);
-  font-size: 1.6rem;
+  font-size: 1.68rem;
   font-weight: 600;
   color: var(--primary-teal);
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   line-height: 1;
-  transition: all 0.3s ease;
+  transition: color 0.24s ease, transform 0.24s ease;
   white-space: nowrap;
 }
 
 .nav.scrolled .logoSymbol {
-  height: 40px;
+  height: 42px;
 }
 
 .nav.scrolled .logoText {
-  font-size: 1.6rem;
+  font-size: 1.62rem;
 }
 
 .mobileMenuBtn {
@@ -90,13 +89,11 @@
 .navLinks a {
   font-weight: 500;
   color: var(--text-dark);
-  transition: all 0.3s ease;
+  transition: color 0.22s ease, transform 0.22s ease;
   font-size: 0.95rem;
-  /* Reduced from 1rem */
   position: relative;
   text-decoration: none;
   white-space: nowrap;
-  /* Prevent wrapping of links */
 }
 
 .navLinks a::after {
@@ -116,6 +113,7 @@
 
 .navLinks a:hover {
   color: var(--primary-teal);
+  transform: translateY(-2px);
 }
 
 .navLinks a.ctaBtn {
@@ -188,16 +186,16 @@
 
 @media (max-width: 768px) {
   .logoSymbol {
-    height: 40px;
+    height: 42px;
   }
 
   .nav.scrolled .logoSymbol,
   .nav.solid .logoSymbol {
-    height: 36px;
+    height: 38px;
   }
 
   .logoText {
-    font-size: 1.3rem;
+    font-size: 1.35rem;
   }
 }
 
@@ -209,4 +207,4 @@
   .logoText {
     font-size: 1.2rem;
   }
-}
+}

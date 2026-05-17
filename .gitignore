@@ -3,3 +3,5 @@ dist/
 .env
 .env.example
 .DS_Store
+.playwright-cli/
+src/assets/bento/m8.mov

@@ -1,142 +1,564 @@
-.page {
-    background-color: var(--ivory);
-    min-height: 100vh;
-    color: var(--primary-teal);
-    overflow-x: hidden;
-    font-family: var(--font-sans);
+.contactPage {
+  --contact-ink: #071b17;
+  --contact-green: #93cf2d;
+  --contact-soft: #edf5e5;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: #fff;
+  color: var(--contact-ink);
+  font-family: var(--font-sans);
 }
 
-.header {
-    position: relative;
-    padding: 160px 0 60px; /* High padding for navbar */
-    text-align: center;
-    background-color: var(--ivory);
-    overflow: hidden;
-}
-
-/* Faded Watermark Brand Effect */
-.header::before {
-    content: "Get in Touch";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: clamp(5rem, 15vw, 15rem);
-    font-weight: 800;
-    color: rgba(0, 43, 43, 0.03); /* Extremely subtle */
-    white-space: nowrap;
-    z-index: 0;
-    pointer-events: none;
-}
-
-.headerContent {
-    position: relative;
-    z-index: 2;
-    max-width: 800px;
-    margin: 0 auto;
+@keyframes fadeDown {
+  from {
     opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
+    transform: translateY(-12px);
+  }
 
-.headerContent.visible {
+  to {
     opacity: 1;
     transform: translateY(0);
+  }
 }
 
-.title {
-    font-family: var(--font-serif);
-    font-size: clamp(3rem, 6vw, 5rem);
-    font-weight: 500;
-    margin-bottom: 24px;
-    color: var(--primary-teal);
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.subtitle {
-    font-size: 1.25rem;
-    line-height: 1.6;
-    color: rgba(0, 43, 43, 0.7); /* Improved contrast from reference but kept stylish */
-    max-width: 600px;
-    margin: 0 auto;
+.hero {
+  background:
+    radial-gradient(circle at 88% 18%, rgba(147, 207, 45, 0.18), transparent 28%),
+    linear-gradient(135deg, #ffffff 0%, #f4f8ef 100%);
 }
 
-.contactGridSection {
-    padding: 80px 0 140px;
+.nav {
+  min-height: 72px;
+  padding: 0 max(28px, calc((100vw - 1420px) / 2));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  background: #020b0c;
+  color: rgba(255, 255, 255, 0.86);
+  animation: fadeDown 520ms cubic-bezier(0.2, 0.72, 0.18, 1) both;
 }
 
-.contactGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px;
-    max-width: 1000px;
-    margin: 0 auto;
+.logoLink,
+.footerLogo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  font-weight: 850;
+  letter-spacing: 0;
+}
+
+.logoLink img,
+.footerLogo img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.logoLink img {
+  width: 42px;
+  height: 42px;
+}
+
+.logoLink span,
+.footerLogo span {
+  font-size: 1.42rem;
+  line-height: 1;
+}
+
+.logoLink span {
+  font-size: 1.6rem;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 1.55vw, 28px);
+  font-size: 0.84rem;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.navLinks a {
+  color: rgba(255, 255, 255, 0.82);
+  transition: color 180ms ease, transform 180ms ease;
+}
+
+.navLinks a:hover {
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 0 auto;
+}
+
+.demoButton,
+.whatsappButton,
+.primaryCta,
+.secondaryCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 850;
+  border-radius: 6px;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.demoButton {
+  min-height: 42px;
+  padding: 0 22px;
+  color: var(--contact-green);
+  border: 1px solid rgba(147, 207, 45, 0.66);
+  font-size: 0.86rem;
+}
+
+.whatsappButton {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(147, 207, 45, 0.66);
+  border-radius: 50%;
+  color: var(--contact-green);
+}
+
+.whatsappButton svg,
+.cardIcon svg,
+.panelBadge svg,
+.quickInfo svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.whatsappButton svg {
+  width: 22px;
+  height: 22px;
+  stroke-width: 1.9;
+}
+
+.demoButton:hover,
+.whatsappButton:hover,
+.primaryCta:hover,
+.secondaryCta:hover {
+  transform: translateY(-2px);
+}
+
+.heroStage {
+  width: min(1280px, calc(100% - 80px));
+  min-height: 525px;
+  margin: 0 auto;
+  padding: 72px 0;
+  display: grid;
+  grid-template-columns: minmax(420px, 0.9fr) minmax(340px, 0.62fr);
+  gap: clamp(38px, 6vw, 86px);
+  align-items: center;
+}
+
+.heroCopy,
+.heroPanel,
+.contactCard,
+.demoSection {
+  animation: fadeUp 680ms cubic-bezier(0.2, 0.72, 0.18, 1) both;
+}
+
+.heroPanel {
+  animation-delay: 110ms;
+}
+
+.breadcrumb,
+.kicker {
+  color: #277039;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.breadcrumb {
+  margin-bottom: 28px;
+  color: #10251f;
+  font-size: 0.78rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.kicker {
+  margin: 0 0 12px;
+  font-size: 0.72rem;
+  line-height: 1;
+}
+
+.heroCopy h1,
+.heroPanel h2,
+.contactCard h2,
+.demoSection h2 {
+  margin: 0;
+  color: var(--contact-ink);
+  font-family: var(--font-sans);
+  font-weight: 850;
+  letter-spacing: 0;
+}
+
+.heroCopy h1 {
+  max-width: 720px;
+  font-size: clamp(2.65rem, 5vw, 5.4rem);
+  line-height: 0.98;
+}
+
+.heroCopy > p:last-of-type,
+.heroPanel p,
+.contactCard p,
+.demoSection p {
+  color: #172923;
+  line-height: 1.7;
+}
+
+.heroCopy > p:last-of-type {
+  max-width: 610px;
+  margin: 24px 0 0;
+  font-size: 1.05rem;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 32px;
+}
+
+.primaryCta,
+.secondaryCta {
+  min-height: 48px;
+  padding: 0 24px;
+  font-size: 0.9rem;
+}
+
+.primaryCta {
+  color: #071b17;
+  background: var(--contact-green);
+}
+
+.secondaryCta {
+  color: #071b17;
+  border: 1px solid rgba(7, 27, 23, 0.2);
+  background: #fff;
+}
+
+.heroPanel {
+  min-height: 360px;
+  padding: 38px;
+  border: 1px solid rgba(7, 27, 23, 0.08);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 24px 70px rgba(7, 27, 23, 0.12);
+}
+
+.panelBadge,
+.cardIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--contact-soft);
+  color: #173f26;
+}
+
+.panelBadge {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  margin-bottom: 28px;
+}
+
+.panelBadge svg {
+  width: 40px;
+  height: 40px;
+  stroke-width: 1.8;
+}
+
+.heroPanel h2 {
+  max-width: 360px;
+  font-size: clamp(1.55rem, 2.4vw, 2.35rem);
+  line-height: 1.08;
+}
+
+.heroPanel p {
+  margin: 18px 0 0;
+  font-size: 0.96rem;
+}
+
+.quickInfo {
+  display: grid;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.quickInfo span {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #10251f;
+  font-size: 0.9rem;
+  font-weight: 760;
+}
+
+.quickInfo svg {
+  width: 22px;
+  height: 22px;
+  stroke-width: 1.9;
+}
+
+.contactSection {
+  width: min(1280px, calc(100% - 80px));
+  margin: 58px auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
 }
 
 .contactCard {
-    padding: 60px 40px;
-    background: var(--white);
-    border-radius: 32px;
-    box-shadow: 0 40px 100px rgba(0, 43, 43, 0.05);
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid rgba(0, 43, 43, 0.05);
+  min-height: 300px;
+  padding: 34px;
+  border: 1px solid rgba(7, 27, 23, 0.09);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 16px 44px rgba(7, 27, 23, 0.08);
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.contactCard:nth-child(2) {
+  animation-delay: 80ms;
+}
+
+.contactCard:nth-child(3) {
+  animation-delay: 160ms;
 }
 
 .contactCard:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 50px 120px rgba(0, 43, 43, 0.08);
+  transform: translateY(-6px);
+  box-shadow: 0 26px 60px rgba(7, 27, 23, 0.12);
 }
 
-.iconWrapper {
-    width: 80px;
-    height: 80px;
-    background: var(--ivory);
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 32px;
-    color: var(--primary-teal);
+.cardIcon {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  margin-bottom: 24px;
 }
 
-.cardTitle {
-    font-family: var(--font-serif);
-    font-size: 2rem;
-    font-weight: 500;
-    margin-bottom: 16px;
-    color: var(--primary-teal);
+.cardIcon svg {
+  width: 34px;
+  height: 34px;
+  stroke-width: 1.8;
 }
 
-.cardDesc {
-    color: var(--text-muted);
-    font-size: 1.1rem;
-    line-height: 1.6;
-    margin-bottom: 32px;
+.contactCard h2 {
+  font-size: 1.5rem;
+  line-height: 1.12;
 }
 
-.primaryBtn {
-    background: var(--primary-teal);
-    color: var(--white);
-    padding: 16px 36px;
-    border-radius: 12px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    display: inline-block;
-    font-family: var(--font-sans);
+.contactCard p:not(.kicker) {
+  margin: 14px 0 24px;
+  font-size: 0.92rem;
 }
 
-.primaryBtn:hover {
-    background: #001a1a;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(0, 43, 43, 0.1);
+.contactCard a,
+.cardText {
+  color: #173f26;
+  font-size: 0.95rem;
+  font-weight: 850;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
 }
 
-@media (max-width: 768px) {
-    .header {
-        padding: 120px 0 40px;
-    }
-    .contactCard {
-        padding: 40px 24px;
-    }
+.demoSection {
+  width: min(1280px, calc(100% - 80px));
+  margin: 28px auto 0;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 34px;
+  border-radius: 8px;
+  background: #071b17;
+  color: #fff;
+}
+
+.demoSection h2 {
+  color: #fff;
+  font-size: clamp(1.75rem, 2.8vw, 2.7rem);
+  line-height: 1.08;
+}
+
+.demoSection p {
+  max-width: 690px;
+  margin: 14px 0 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.94rem;
+}
+
+.demoSection .kicker {
+  color: var(--contact-green);
+}
+
+.siteFooter {
+  margin-top: 56px;
+  background: #020b0c;
+  color: #fff;
+  padding: 36px max(24px, calc((100vw - 1320px) / 2)) 18px;
+}
+
+.footerBrand {
+  max-width: 330px;
+}
+
+.footerBrand p {
+  margin: 18px 0 0;
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 0.86rem;
+  line-height: 1.65;
+}
+
+.socials {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.socials a {
+  width: 34px;
+  height: 34px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.footerLinks {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(150px, 1fr));
+  gap: 40px;
+  margin-top: 34px;
+}
+
+.footerLinks h3 {
+  margin: 0 0 14px;
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 850;
+}
+
+.footerLinks a,
+.footerLinks span {
+  display: block;
+  margin-top: 8px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.footerBottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 34px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 1180px) {
+  .navLinks {
+    display: none;
+  }
+
+  .heroStage,
+  .contactSection,
+  .demoSection {
+    width: calc(100% - 48px);
+  }
+
+  .heroStage {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .contactSection {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .nav {
+    min-height: 66px;
+    padding: 0 16px;
+  }
+
+  .demoButton {
+    display: none;
+  }
+
+  .heroStage,
+  .contactSection,
+  .demoSection {
+    width: calc(100% - 28px);
+  }
+
+  .heroStage {
+    padding: 42px 0;
+  }
+
+  .heroCopy h1 {
+    font-size: clamp(2.35rem, 12vw, 3.5rem);
+  }
+
+  .heroPanel,
+  .contactCard,
+  .demoSection {
+    padding: 28px 24px;
+  }
+
+  .demoSection {
+    display: block;
+  }
+
+  .demoSection .primaryCta {
+    margin-top: 24px;
+  }
+
+  .footerLinks {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .footerBottom {
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav,
+  .heroCopy,
+  .heroPanel,
+  .contactCard,
+  .demoSection {
+    animation: none;
+  }
 }

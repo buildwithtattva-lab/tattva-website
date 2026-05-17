@@ -40,7 +40,7 @@ const Footer = () => {
                     </div>
 
                     <div className={styles.bannerAction}>
-                        <a href="http://wa.me/+918886945890" target="_blank" rel="noopener noreferrer" className={styles.btnLime}>
+                        <a href="https://wa.me/918886945890" target="_blank" rel="noopener noreferrer" className={styles.btnLime}>
                             Join Now
                         </a>
                     </div>
@@ -53,7 +53,7 @@ const Footer = () => {
                     <div className={styles.footerColumn}>
                         <h4>Contact</h4>
                         <a href="mailto:buildwithtattva@gmail.com">buildwithtattva@gmail.com</a>
-                        <p>+91 96527 96537</p>
+                        <p>+91 9652796537</p>
                     </div>
 
                     <div className={styles.footerColumn}>
@@ -65,23 +65,27 @@ const Footer = () => {
                         <h4>Main Pages</h4>
                         <Link to="/">Home</Link>
                         <Link to="/about">About</Link>
-                        <Link to="/services">Services</Link>
+                        <Link to="/projects">Gallery</Link>
                         <Link to="/contact">Contact</Link>
                     </div>
 
                     <div className={styles.footerColumn}>
                         <h4>Solutions</h4>
-                        <Link to="/schools">For Schools</Link>
-                        <Link to="/colleges">For Colleges</Link>
-                        <Link to="/students">For Students</Link>
-                        <Link to="/hiring">Hiring</Link>
+                        <Link to="/for-schools">For Schools</Link>
+                        <Link to="/for-students">For Students</Link>
+                        <Link to="/faculty-training">Faculty Training</Link>
                     </div>
 
                     <div className={styles.footerColumn}>
                         <h4>Connect</h4>
-                        <a href="https://instagram.com/tattvahq" target="_blank" rel="noopener noreferrer">Instagram</a>
-                        <a href="http://wa.me/+918886945890" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-                        <a href="https://linkedin.com/company/tattva-ai" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                        <div className={styles.socialLinks}>
+                            <a href="https://instagram.com/tattvahq" className="footer-social-icon instagram-icon" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                                <span className="sr-only">Instagram</span>
+                            </a>
+                            <a href="https://wa.me/918886945890" className="footer-social-icon whatsapp-icon" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                                <span className="sr-only">WhatsApp</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
 

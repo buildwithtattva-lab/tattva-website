@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import NavDropdown from './NavDropdown';
 import styles from './Navigation.module.css';
 
 const Navigation = ({ isSolid = false }) => {
@@ -15,20 +14,6 @@ const Navigation = ({ isSolid = false }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const solutionItems = [
-    { label: 'For Schools', path: '/for-schools' },
-    { label: 'For Colleges', path: '/for-colleges' }
-  ];
-
-  const recruitmentItems = [
-    { label: 'Join as Educator', path: '/hiring/educator' },
-    { label: 'Hire Talent', path: '/hiring/employer' }
-  ];
-
-  const discoverItems = [
-    { label: 'Services', path: '/services' }
-  ];
-
   return (
     <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ''} ${isSolid ? styles.solid : ''}`}>
       <div className={`container ${styles.navContainer}`}>
@@ -38,7 +23,7 @@ const Navigation = ({ isSolid = false }) => {
             alt="Tattva Logo"
             className={styles.logoSymbol}
           />
-          <span className={styles.logoText}>tattva.ai</span>
+          <span className={styles.logoText}>tattva-ai</span>
         </Link>
 
         <button
@@ -53,30 +38,15 @@ const Navigation = ({ isSolid = false }) => {
 
         <div className={`${styles.navLinks} ${mobileMenuOpen ? styles.mobileMenuActive : ''}`}>
           <Link to="/" onClick={() => setMobileMenuOpen(false)}>Home</Link>
-          
-          <NavDropdown 
-            label="Solutions" 
-            items={solutionItems} 
-            onMobileClick={() => setMobileMenuOpen(false)} 
-          />
-
-          <NavDropdown 
-            label="Discover" 
-            items={discoverItems} 
-            onMobileClick={() => setMobileMenuOpen(false)} 
-          />
-
-          <NavDropdown 
-            label="Recruitment" 
-            items={recruitmentItems} 
-            onMobileClick={() => setMobileMenuOpen(false)} 
-          />
-
-          <Link to="/about" onClick={() => setMobileMenuOpen(false)}>About Us</Link>
+          <Link to="/for-schools" onClick={() => setMobileMenuOpen(false)}>For Schools</Link>
+          <Link to="/for-students" onClick={() => setMobileMenuOpen(false)}>Student Programs</Link>
+          <Link to="/faculty-training" onClick={() => setMobileMenuOpen(false)}>Faculty Training</Link>
+          <Link to="/projects" onClick={() => setMobileMenuOpen(false)}>Gallery</Link>
+          <Link to="/about" onClick={() => setMobileMenuOpen(false)}>About</Link>
           <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
           
           <a
-            href="http://wa.me/+918886945890"
+            href="https://wa.me/918886945890"
             className={styles.ctaBtn}
             target="_blank"
             rel="noopener noreferrer"
