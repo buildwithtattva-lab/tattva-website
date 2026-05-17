@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tattva-ai.in/sitemap.xml
