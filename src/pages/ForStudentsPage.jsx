@@ -310,7 +310,7 @@ const ForStudentsPage = () => {
       </div>
 
       <div className={styles.footerBottom}>
-        <span>© 2024 Tattva AI. All rights reserved.</span>
+        <span>© 2026 Tattva AI. All rights reserved.</span>
         <span>Privacy Policy&nbsp;&nbsp;|&nbsp;&nbsp;Terms of Use</span>
       </div>
     </footer>
