@@ -670,6 +670,41 @@
   background: rgba(255, 255, 255, 0.04);
 }
 
+.modalTriggerButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 20px;
+  border: 1px solid #d0d8d0;
+  border-radius: 6px;
+  background: #f6f8f2;
+  color: #07121f;
+  font-size: 13px;
+  font-weight: 800;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.modalTriggerButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: #8da98d;
+  background: #ffffff;
+}
+
+.modalTriggerButton:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.galleryInlineNote {
+  margin: 12px 0 0;
+  color: #516059;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
 .pathSteps {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -986,19 +1021,22 @@
 }
 
 .iconAssessment::before {
-  inset: 3px 5px;
+  left: 4px;
+  top: 2px;
+  width: 16px;
+  height: 19px;
   border: var(--icon-stroke) solid currentColor;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 .iconAssessment::after {
   left: 9px;
-  top: 9px;
-  width: 10px;
-  height: 6px;
-  border-left: var(--icon-stroke) solid currentColor;
+  top: 7px;
+  width: 6px;
+  height: 10px;
+  border-right: var(--icon-stroke) solid currentColor;
   border-bottom: var(--icon-stroke) solid currentColor;
-  transform: rotate(-45deg);
+  transform: rotate(45deg);
 }
 
 .iconClassroom::before {
@@ -1021,20 +1059,20 @@
 }
 
 .iconWorkflow::before {
-  left: 3px;
-  top: 3px;
-  width: 8px;
-  height: 8px;
+  left: 4px;
+  top: 4px;
+  width: 6px;
+  height: 6px;
   border: var(--icon-stroke) solid currentColor;
   border-radius: 3px;
-  box-shadow: 13px 13px 0 -1px currentColor;
+  box-shadow: 10px 10px 0 -1px currentColor;
 }
 
 .iconWorkflow::after {
-  left: 10px;
-  top: 11px;
-  width: 9px;
-  height: 9px;
+  left: 9px;
+  top: 8px;
+  width: 7px;
+  height: 7px;
   border-top: var(--icon-stroke) solid currentColor;
   border-right: var(--icon-stroke) solid currentColor;
   transform: rotate(45deg);
@@ -1246,6 +1284,178 @@
   grid-row: span 2;
 }
 
+.galleryModalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 26px;
+  background: rgba(4, 12, 12, 0.62);
+}
+
+.galleryModal {
+  position: relative;
+  width: min(100%, 1080px);
+  padding: 22px;
+  border-radius: 28px;
+  border: 1px solid rgba(209, 218, 205, 0.9);
+  background:
+    radial-gradient(circle at top right, rgba(194, 242, 95, 0.18), transparent 24%),
+    linear-gradient(180deg, #ffffff 0%, #f7f8f4 100%);
+  box-shadow: 0 36px 90px rgba(3, 16, 16, 0.32);
+  isolation: isolate;
+}
+
+.galleryModalHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding-right: 58px;
+  margin-bottom: 18px;
+}
+
+.galleryModalEyebrow {
+  margin: 0 0 8px;
+  color: #6b7d73;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.galleryModalHeader h2 {
+  margin: 0;
+  color: #07121f;
+  font-family: var(--font-sans);
+  font-size: clamp(28px, 2.2vw, 38px);
+  font-weight: 800;
+  line-height: 1.05;
+}
+
+.galleryModalClose {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #d7ddd6;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: #07121f;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 10px 26px rgba(7, 18, 31, 0.1);
+}
+
+.galleryModalFrame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 22px;
+  background: #eef2ea;
+  aspect-ratio: 16 / 9;
+  border: 1px solid rgba(209, 218, 205, 0.72);
+}
+
+.galleryModalImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.galleryArrow {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  width: 58px;
+  height: 58px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.94);
+  color: #07121f;
+  font-size: 40px;
+  line-height: 1;
+  transform: translateY(-50%);
+  cursor: pointer;
+  box-shadow: 0 16px 32px rgba(6, 17, 17, 0.18);
+}
+
+.galleryArrowLeft {
+  left: 18px;
+}
+
+.galleryArrowRight {
+  right: 18px;
+}
+
+.galleryThumbRail {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+
+.galleryThumb {
+  flex: 0 0 118px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #dfe5da;
+  cursor: pointer;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.galleryThumb img {
+  width: 100%;
+  height: 82px;
+  object-fit: cover;
+  display: block;
+}
+
+.galleryThumb:hover,
+.galleryThumbActive {
+  transform: translateY(-2px);
+  border-color: #b7ef4c;
+  box-shadow: 0 12px 24px rgba(116, 181, 45, 0.18);
+}
+
+.galleryModalFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 16px;
+}
+
+.galleryModalFooter span {
+  color: #304039;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.galleryModalLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid #9dcf3c;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #075a31;
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
 .teacherSection {
   display: grid;
   grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
@@ -1300,27 +1510,48 @@
   grid-template-columns: repeat(5, minmax(90px, 1fr));
   gap: 16px;
   margin-bottom: 28px;
+  align-items: stretch;
 }
 
-.teacherFeatureGrid span {
-  display: grid;
-  gap: 7px;
+.teacherFeatureGrid > span {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+  min-height: 112px;
+  padding: 14px 14px 12px;
+  border: 1px solid #dfe4dc;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 10px 24px rgba(11, 23, 16, 0.04);
   color: #13231e;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
-  line-height: 1.25;
-  transition: transform 180ms ease, color 180ms ease;
+  line-height: 1.3;
+  text-align: left;
+  transition: transform 180ms ease, color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
-.teacherFeatureGrid svg {
-  width: 24px;
-  height: 24px;
-  color: #073a25;
+.teacherFeatureIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
 }
 
-.teacherFeatureGrid span:hover {
+.teacherFeatureLabel {
+  display: block;
+  max-width: 100%;
+}
+
+.teacherFeatureGrid > span:hover {
   color: #075a31;
   transform: translateY(-2px);
+  border-color: #c7d8c6;
+  box-shadow: 0 14px 30px rgba(11, 23, 16, 0.08);
 }
 
 .impactSection {
@@ -1921,6 +2152,10 @@
     max-width: 520px;
   }
 
+  .galleryModal {
+    width: min(100%, 920px);
+  }
+
   .teacherCopy {
     padding-right: 22px;
     padding-left: 42px;
@@ -1998,6 +2233,21 @@
   .campGrid {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(3, 190px);
+  }
+
+  .galleryModal {
+    padding: 18px;
+    border-radius: 24px;
+  }
+
+  .galleryModalHeader {
+    margin-bottom: 14px;
+  }
+
+  .galleryArrow {
+    width: 50px;
+    height: 50px;
+    font-size: 34px;
   }
 
   .campLarge,
@@ -2158,6 +2408,70 @@
   .campGrid {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(4, 220px);
+  }
+
+  .modalTriggerButton {
+    width: 100%;
+  }
+
+  .galleryModalOverlay {
+    padding: 14px;
+  }
+
+  .galleryModal {
+    padding: 14px;
+    border-radius: 20px;
+  }
+
+  .galleryModalHeader {
+    padding-right: 42px;
+  }
+
+  .galleryModalHeader h2 {
+    font-size: 24px;
+  }
+
+  .galleryModalClose {
+    top: 10px;
+    right: 10px;
+    width: 38px;
+    height: 38px;
+    font-size: 24px;
+  }
+
+  .galleryModalFrame {
+    aspect-ratio: 4 / 5;
+  }
+
+  .galleryArrow {
+    width: 42px;
+    height: 42px;
+    font-size: 28px;
+  }
+
+  .galleryArrowLeft {
+    left: 10px;
+  }
+
+  .galleryArrowRight {
+    right: 10px;
+  }
+
+  .galleryThumb {
+    flex-basis: 84px;
+  }
+
+  .galleryThumb img {
+    height: 62px;
+  }
+
+  .galleryModalFooter {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .galleryModalLink {
+    width: 100%;
   }
 
   .teacherFeatureGrid,

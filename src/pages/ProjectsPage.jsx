@@ -1,13 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import galleryHeroImage from '../assets/bento/m6.png';
+import { fetchGalleryResources } from '../lib/cloudinaryGallery';
 import styles from './ProjectsPage.module.css';
 
 const whatsappUrl = 'https://wa.me/918886945890';
-
-const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || import.meta.env.CLOUDINARY_CLOUD_NAME;
-const galleryTag = import.meta.env.VITE_CLOUDINARY_GALLERY_TAG || import.meta.env.CLOUDINARY_GALLERY_TAG || 'tattva-gallery';
-const manifestUrl = import.meta.env.VITE_CLOUDINARY_GALLERY_MANIFEST_URL;
 
 const categories = [
   { label: 'All', value: 'All', icon: 'all' },
@@ -16,15 +13,6 @@ const categories = [
   { label: 'Student Projects', value: 'Student Projects', icon: 'projects' },
   { label: 'Achievements', value: 'Achievements', icon: 'achievements' }
 ];
-
-const categoryLookup = new Map(
-  categories
-    .filter((category) => category.value !== 'All')
-    .flatMap((category) => [
-      [category.value.toLowerCase(), category.value],
-      [category.value.toLowerCase().replace(/\s+/g, '-'), category.value]
-    ])
-);
 
 const Icon = ({ type }) => {
   const icons = {
@@ -44,79 +32,6 @@ const Icon = ({ type }) => {
       {icons[type]}
     </svg>
   );
-};
-
-const toTitle = (publicId = '') => {
-  const fileName = publicId.split('/').pop() || 'Gallery image';
-  return fileName
-    .replace(/[-_]+/g, ' ')
-    .replace(/\b\w/g, (letter) => letter.toUpperCase());
-};
-
-const normalizeCategory = (resource) => {
-  const custom = resource.context?.custom || resource.context || {};
-  const candidate = custom.category || resource.category || resource.metadata?.category;
-  const tags = resource.tags || [];
-  const folderSegments = [
-    resource.public_id || resource.publicId || '',
-    resource.asset_folder || resource.assetFolder || resource.folder || ''
-  ].flatMap((value) => String(value).split('/'));
-  const matched = [candidate, ...tags, ...folderSegments]
-    .filter(Boolean)
-    .map((item) => categoryLookup.get(String(item).toLowerCase()))
-    .find(Boolean);
-
-  return matched || 'Classroom';
-};
-
-const cloudinaryImageUrl = (resource, transform = 'f_auto,q_auto,c_fill,w_720,h_540') => {
-  if (resource.secure_url && resource.secure_url.includes('/upload/')) {
-    return resource.secure_url.replace('/upload/', `/upload/${transform}/`);
-  }
-
-  if (!cloudName || !resource.public_id) return '';
-
-  const version = resource.version ? `v${resource.version}/` : '';
-  const extension = resource.format ? `.${resource.format}` : '';
-  return `https://res.cloudinary.com/${cloudName}/image/upload/${transform}/${version}${resource.public_id}${extension}`;
-};
-
-const normalizeResource = (resource, index) => {
-  const custom = resource.context?.custom || resource.context || {};
-  const publicId = resource.public_id || resource.publicId || resource.id || `gallery-${index}`;
-
-  return {
-    id: `${publicId}-${resource.version || index}`,
-    public_id: publicId,
-    version: resource.version,
-    format: resource.format,
-    secure_url: resource.secure_url || resource.url,
-    created_at: resource.created_at || resource.createdAt || '',
-    title: custom.caption || custom.title || resource.title || toTitle(publicId),
-    alt: custom.alt || resource.alt || custom.caption || toTitle(publicId),
-    category: normalizeCategory(resource),
-    thumb: cloudinaryImageUrl(resource),
-    full: cloudinaryImageUrl(resource, 'f_auto,q_auto,w_1600')
-  };
-};
-
-const fetchGalleryResources = async () => {
-  const sourceUrl = manifestUrl || (cloudName ? `https://res.cloudinary.com/${cloudName}/image/list/${galleryTag}.json` : '');
-
-  if (!sourceUrl) {
-    throw new Error('Cloudinary gallery is not configured.');
-  }
-
-  const response = await fetch(sourceUrl);
-
-  if (!response.ok) {
-    throw new Error(`Unable to load Cloudinary gallery (${response.status}).`);
-  }
-
-  const data = await response.json();
-  const resources = Array.isArray(data) ? data : data.resources || data.images || [];
-
-  return resources.map(normalizeResource).filter((image) => image.thumb);
 };
 
 const ProjectsPage = () => {

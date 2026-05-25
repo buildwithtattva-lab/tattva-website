@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import heroImage from '../assets/bento/herosection.png';
 import summerCampImg from '../assets/bento/v2.png';
@@ -13,9 +14,41 @@ import fbhisLogo from '../assets/bento/FBHIS-logo.png';
 import stMartinsLogo from '../assets/bento/st martins no bg.png';
 import stepsLogo from '../assets/bento/steps-the-school-miyapur-hyderabad-playgroups-11x0h1k7f1.avif';
 import sudhaPortraitImg from '../assets/team/sudha mam.png';
+import { fetchGalleryResources } from '../lib/cloudinaryGallery';
 import styles from './HomePage.module.css';
 
 const whatsappUrl = 'https://wa.me/918886945890';
+const homeGalleryFolder = import.meta.env.VITE_CLOUDINARY_HOME_GALLERY_FOLDER || 'Main Gallery';
+
+const normalizeGallerySegment = (value = '') => String(value)
+  .toLowerCase()
+  .replace(/[_-]+/g, ' ')
+  .replace(/\s+/g, ' ')
+  .trim();
+
+const matchesGalleryFolder = (image, folderName) => {
+  const expectedFolder = normalizeGallerySegment(folderName);
+  if (!expectedFolder) return true;
+
+  return [image.folder, image.public_id]
+    .filter(Boolean)
+    .flatMap((value) => String(value).split('/'))
+    .some((segment) => normalizeGallerySegment(segment) === expectedFolder);
+};
+
+const isPopupFriendlyImage = (image) => {
+  const searchableText = [
+    image.public_id,
+    image.display_name,
+    image.title,
+    image.alt
+  ]
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase();
+
+  return !searchableText.includes('screenshot');
+};
 
 const stats = [
   {
@@ -295,6 +328,11 @@ const AnimatedStatValue = ({ value, suffix }) => {
 
 const HomePage = () => {
   const [showWhatsApp, setShowWhatsApp] = useState(false);
+  const [homeGalleryImages, setHomeGalleryImages] = useState([]);
+  const [homeGalleryStatus, setHomeGalleryStatus] = useState('loading');
+  const [homeGalleryError, setHomeGalleryError] = useState('');
+  const [isGalleryModalOpen, setIsGalleryModalOpen] = useState(false);
+  const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -333,6 +371,187 @@ const HomePage = () => {
     revealElements.forEach((element) => observer.observe(element));
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadHomeGallery = async () => {
+      try {
+        const images = await fetchGalleryResources();
+        if (!isMounted) return;
+
+        const folderImages = images.filter((image) => matchesGalleryFolder(image, homeGalleryFolder));
+        const curatedImages = folderImages.filter(isPopupFriendlyImage);
+        const mainGalleryImages = (curatedImages.length ? curatedImages : folderImages)
+          .sort((a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime());
+
+        setHomeGalleryImages(mainGalleryImages);
+        setHomeGalleryStatus(mainGalleryImages.length ? 'ready' : 'empty');
+
+        if (mainGalleryImages.length) {
+          setIsGalleryModalOpen(true);
+        }
+      } catch (galleryError) {
+        if (!isMounted) return;
+        setHomeGalleryError(galleryError.message);
+        setHomeGalleryStatus('error');
+      }
+    };
+
+    loadHomeGallery();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!homeGalleryImages.length) {
+      setActiveGalleryIndex(0);
+      return;
+    }
+
+    setActiveGalleryIndex((currentIndex) => Math.min(currentIndex, homeGalleryImages.length - 1));
+  }, [homeGalleryImages]);
+
+  useEffect(() => {
+    if (!isGalleryModalOpen) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setIsGalleryModalOpen(false);
+      }
+
+      if (homeGalleryImages.length < 2) return;
+
+      if (event.key === 'ArrowRight') {
+        setActiveGalleryIndex((currentIndex) => (currentIndex + 1) % homeGalleryImages.length);
+      }
+
+      if (event.key === 'ArrowLeft') {
+        setActiveGalleryIndex((currentIndex) => (currentIndex - 1 + homeGalleryImages.length) % homeGalleryImages.length);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isGalleryModalOpen, homeGalleryImages.length]);
+
+  const activeGalleryImage = homeGalleryImages[activeGalleryIndex] || null;
+
+  const closeGalleryModal = () => {
+    setIsGalleryModalOpen(false);
+  };
+
+  const openGalleryModal = () => {
+    if (!homeGalleryImages.length) return;
+    setIsGalleryModalOpen(true);
+  };
+
+  const showPreviousGalleryImage = () => {
+    setActiveGalleryIndex((currentIndex) => (currentIndex - 1 + homeGalleryImages.length) % homeGalleryImages.length);
+  };
+
+  const showNextGalleryImage = () => {
+    setActiveGalleryIndex((currentIndex) => (currentIndex + 1) % homeGalleryImages.length);
+  };
+
+  const galleryModal = isGalleryModalOpen && activeGalleryImage && typeof document !== 'undefined'
+    ? createPortal(
+      <div
+        className={styles.galleryModalOverlay}
+        onClick={(event) => {
+          if (event.target === event.currentTarget) {
+            closeGalleryModal();
+          }
+        }}
+      >
+        <section
+          className={styles.galleryModal}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Main gallery highlights"
+        >
+          <div className={styles.galleryModalHeader}>
+            <div>
+              <p className={styles.galleryModalEyebrow}>Our Achievements & Moments</p>
+              <h2>Main Gallery</h2>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            className={styles.galleryModalClose}
+            onClick={closeGalleryModal}
+            aria-label="Close gallery popup"
+          >
+            ×
+          </button>
+
+          <div className={styles.galleryModalFrame}>
+            {homeGalleryImages.length > 1 && (
+              <button
+                type="button"
+                className={`${styles.galleryArrow} ${styles.galleryArrowLeft}`}
+                onClick={showPreviousGalleryImage}
+                aria-label="Previous image"
+              >
+                ‹
+              </button>
+            )}
+
+            <img
+              src={activeGalleryImage.full}
+              alt={activeGalleryImage.alt}
+              className={styles.galleryModalImage}
+            />
+
+            {homeGalleryImages.length > 1 && (
+              <button
+                type="button"
+                className={`${styles.galleryArrow} ${styles.galleryArrowRight}`}
+                onClick={showNextGalleryImage}
+                aria-label="Next image"
+              >
+                ›
+              </button>
+            )}
+          </div>
+
+          {homeGalleryImages.length > 1 && (
+            <div className={styles.galleryThumbRail} aria-label="Gallery image thumbnails">
+              {homeGalleryImages.map((image, index) => (
+                <button
+                  type="button"
+                  key={image.id}
+                  className={`${styles.galleryThumb} ${index === activeGalleryIndex ? styles.galleryThumbActive : ''}`}
+                  onClick={() => setActiveGalleryIndex(index)}
+                  aria-label={`Show gallery image ${index + 1}`}
+                >
+                  <img src={image.thumb} alt="" loading="lazy" />
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div className={styles.galleryModalFooter}>
+            <span>{activeGalleryIndex + 1} / {homeGalleryImages.length}</span>
+            <Link to="/projects" className={styles.galleryModalLink} onClick={closeGalleryModal}>
+              View Full Gallery
+            </Link>
+          </div>
+        </section>
+      </div>,
+      document.body
+    )
+    : null;
 
   return (
     <div className={styles.homePage}>
@@ -515,6 +734,14 @@ const HomePage = () => {
               View All Photos
               <span aria-hidden="true">→</span>
             </Link>
+            {homeGalleryStatus === 'error' && (
+              <p className={styles.galleryInlineNote}>{homeGalleryError}</p>
+            )}
+            {homeGalleryStatus === 'empty' && (
+              <p className={styles.galleryInlineNote}>
+                Add images to the Cloudinary folder `{homeGalleryFolder}` and resync the gallery manifest.
+              </p>
+            )}
           </aside>
 
           <div className={styles.campGrid}>
@@ -554,8 +781,10 @@ const HomePage = () => {
                   data-reveal
                   key={feature.label}
                 >
-                  <i className={`${styles.cssIcon} ${styles.teacherCssIcon} ${styles[feature.icon]}`} aria-hidden="true" />
-                  {feature.label}
+                  <span className={styles.teacherFeatureIcon} aria-hidden="true">
+                    <i className={`${styles.cssIcon} ${styles.teacherCssIcon} ${styles[feature.icon]}`} />
+                  </span>
+                  <span className={styles.teacherFeatureLabel}>{feature.label}</span>
                 </span>
               ))}
             </div>
@@ -688,6 +917,8 @@ const HomePage = () => {
           </aside>
         </section>
       </main>
+
+      {galleryModal}
 
       <footer className={styles.siteFooter}>
         <div className={styles.footerBrand}>
