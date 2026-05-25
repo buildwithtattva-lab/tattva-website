@@ -1297,8 +1297,9 @@
 
 .galleryModal {
   position: relative;
-  width: min(100%, 1080px);
-  padding: 22px;
+  width: min(100%, 860px);
+  max-height: min(calc(100vh - 72px), 760px);
+  padding: 20px;
   border-radius: 28px;
   border: 1px solid rgba(209, 218, 205, 0.9);
   background:
@@ -1306,6 +1307,7 @@
     linear-gradient(180deg, #ffffff 0%, #f7f8f4 100%);
   box-shadow: 0 36px 90px rgba(3, 16, 16, 0.32);
   isolation: isolate;
+  overflow: auto;
 }
 
 .galleryModalHeader {
@@ -1354,16 +1356,22 @@
 
 .galleryModalFrame {
   position: relative;
+  display: grid;
+  place-items: center;
   overflow: hidden;
+  width: min(100%, 640px);
+  height: min(52vh, 420px);
+  margin: 0 auto;
   border-radius: 22px;
   background: #eef2ea;
-  aspect-ratio: 16 / 9;
   border: 1px solid rgba(209, 218, 205, 0.72);
 }
 
 .galleryModalImage {
-  width: 100%;
-  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
   object-fit: contain;
   display: block;
 }
@@ -1403,10 +1411,10 @@
 }
 
 .galleryThumb {
-  flex: 0 0 118px;
+  flex: 0 0 88px;
   padding: 0;
   border: 2px solid transparent;
-  border-radius: 14px;
+  border-radius: 12px;
   overflow: hidden;
   background: #dfe5da;
   cursor: pointer;
@@ -1415,7 +1423,7 @@
 
 .galleryThumb img {
   width: 100%;
-  height: 82px;
+  height: 62px;
   object-fit: cover;
   display: block;
 }
@@ -2236,12 +2244,19 @@
   }
 
   .galleryModal {
+    width: min(100%, 760px);
+    max-height: min(calc(100vh - 48px), 700px);
     padding: 18px;
     border-radius: 24px;
   }
 
   .galleryModalHeader {
     margin-bottom: 14px;
+  }
+
+  .galleryModalFrame {
+    width: 100%;
+    height: min(46vh, 360px);
   }
 
   .galleryArrow {
@@ -2440,7 +2455,8 @@
   }
 
   .galleryModalFrame {
-    aspect-ratio: 4 / 5;
+    width: 100%;
+    height: min(48vh, 400px);
   }
 
   .galleryArrow {
@@ -2458,11 +2474,11 @@
   }
 
   .galleryThumb {
-    flex-basis: 84px;
+    flex-basis: 72px;
   }
 
   .galleryThumb img {
-    height: 62px;
+    height: 52px;
   }
 
   .galleryModalFooter {
