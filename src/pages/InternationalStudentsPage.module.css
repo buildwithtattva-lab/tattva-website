@@ -934,9 +934,24 @@
     padding-bottom: 64px;
   }
 
+  .heroSection {
+    gap: 24px;
+  }
+
   .heroSection::before {
     inset: 0 -8% auto -8%;
     height: 58%;
+  }
+
+  .breadcrumb {
+    margin-bottom: 16px;
+    font-size: 0.82rem;
+  }
+
+  .heroCopy > p {
+    margin-top: 20px;
+    font-size: 1rem;
+    line-height: 1.68;
   }
 
   .featureItem {
@@ -945,12 +960,31 @@
 
   .heroCopy h1 {
     max-width: 100%;
-    font-size: clamp(2.9rem, 12vw, 4.4rem);
+    font-size: clamp(2.7rem, 10.5vw, 3.9rem);
+    line-height: 0.98;
+    letter-spacing: -0.05em;
+  }
+
+  .heroCopy h1 span {
+    margin-top: 6px;
+  }
+
+  .heroChecklist {
+    gap: 14px;
+    margin-top: 28px;
+  }
+
+  .heroChecklist li {
+    align-items: flex-start;
+    font-size: 0.96rem;
+    line-height: 1.45;
   }
 
   .heroActions {
     flex-direction: column;
     align-items: stretch;
+    gap: 14px;
+    margin-top: 32px;
   }
 
   .primaryCta,
@@ -962,6 +996,21 @@
     position: static;
     width: 100%;
     margin-top: 16px;
+  }
+
+  .heroVisual {
+    min-height: 0;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 16px;
+  }
+
+  .heroImage {
+    max-width: none;
+    min-height: 0;
+    aspect-ratio: 4 / 4.6;
+    border-radius: 28px;
   }
 
   .heroVisual::before,
@@ -1003,6 +1052,52 @@
   .footerLogo img {
     width: 34px;
     height: 34px;
+  }
+
+  .heroSection {
+    gap: 20px;
+  }
+
+  .heroCopy h1 {
+    font-size: clamp(2.35rem, 13vw, 3.1rem);
+    line-height: 1;
+  }
+
+  .heroCopy > p {
+    font-size: 0.94rem;
+  }
+
+  .heroChecklist li {
+    font-size: 0.9rem;
+  }
+
+  .primaryCta,
+  .secondaryCta {
+    min-height: 52px;
+    padding: 0 22px;
+    font-size: 0.92rem;
+  }
+
+  .heroImage {
+    aspect-ratio: 4 / 4.8;
+    border-radius: 24px;
+  }
+
+  .heroInfoCard {
+    grid-template-columns: 56px minmax(0, 1fr);
+    column-gap: 14px;
+    padding: 16px 18px;
+    border-radius: 18px;
+  }
+
+  .infoIcon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .infoIcon svg {
+    width: 24px;
+    height: 24px;
   }
 
   .programBody,
