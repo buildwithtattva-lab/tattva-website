@@ -1,0 +1,1033 @@
+.page {
+  --international-dark: #031816;
+  --international-green: #a8d840;
+  --international-green-deep: #1f5b31;
+  --international-text: #14201c;
+  --international-muted: #4f6258;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #ffffff 0%, #f8faf4 72%, #f2f6ef 100%);
+  color: var(--international-text);
+  overflow-x: hidden;
+}
+
+.topBar {
+  background: var(--international-dark);
+  position: relative;
+  z-index: 20;
+}
+
+.nav {
+  width: min(1620px, calc(100% - 64px));
+  min-height: 84px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.logoLink,
+.footerLogo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  font-weight: 850;
+}
+
+.logoSymbol,
+.footerLogo img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.logoLink span,
+.footerLogo span {
+  font-size: 1.62rem;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  gap: clamp(14px, 1.35vw, 24px);
+  font-size: 0.84rem;
+  font-weight: 720;
+  white-space: nowrap;
+}
+
+.navLinks a {
+  position: relative;
+  color: rgba(255, 255, 255, 0.88);
+  transition: color 180ms ease, transform 180ms ease;
+}
+
+.navLinks a:hover,
+.navLinks .activeNav {
+  color: #fff;
+}
+
+.navLinks a:hover {
+  transform: translateY(-2px);
+}
+
+.navLinks .activeNav::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -12px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--international-green);
+}
+
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 0 auto;
+}
+
+.demoButton,
+.whatsappButton,
+.primaryCta,
+.secondaryCta,
+.learnMore,
+.contactCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 180ms ease, background 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+
+.demoButton {
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 10px;
+  border: 1px solid rgba(168, 216, 64, 0.58);
+  color: var(--international-green);
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.whatsappButton {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(168, 216, 64, 0.52);
+  color: var(--international-green);
+}
+
+.demoButton:hover,
+.whatsappButton:hover,
+.primaryCta:hover,
+.secondaryCta:hover,
+.learnMore:hover,
+.contactCta:hover {
+  transform: translateY(-2px);
+}
+
+.mainContent {
+  width: min(1420px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 0 0 86px;
+}
+
+.heroSection {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(580px, 0.98fr) minmax(640px, 1.02fr);
+  gap: clamp(28px, 3vw, 52px);
+  align-items: center;
+  min-height: 620px;
+  padding: 0 0 8px;
+}
+
+.heroSection::before {
+  content: "";
+  position: absolute;
+  inset: 0 -6% 8% -10%;
+  background:
+    radial-gradient(circle at 18% 28%, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.98) 24%, rgba(255, 255, 255, 0.84) 42%, rgba(255, 255, 255, 0.3) 58%, transparent 74%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.heroCopy {
+  position: relative;
+  z-index: 2;
+  padding: 44px 0 0;
+}
+
+.breadcrumb {
+  color: #506059;
+  font-size: 0.94rem;
+  font-weight: 650;
+  margin-bottom: 22px;
+}
+
+.heroCopy h1 {
+  margin: 0;
+  max-width: 660px;
+  font-family: var(--font-sans);
+  font-size: clamp(4rem, 5.6vw, 6rem);
+  font-weight: 850;
+  line-height: 0.96;
+  letter-spacing: -0.055em;
+  color: #111917;
+}
+
+.heroCopy h1 span {
+  display: block;
+  color: var(--international-green);
+  margin-top: 10px;
+}
+
+.heroCopy > p {
+  max-width: 500px;
+  margin: 28px 0 0;
+  color: #25312d;
+  font-size: 1.12rem;
+  line-height: 1.72;
+}
+
+.heroChecklist {
+  display: grid;
+  gap: 16px;
+  margin: 34px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.heroChecklist li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #22302b;
+  font-size: 0.98rem;
+  font-weight: 580;
+}
+
+.heroChecklist li span,
+.programBody li span,
+.infoIcon,
+.featureIcon,
+.programIcon,
+.benefitIcon,
+.scheduleIcon,
+.contactList a span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.heroChecklist li span {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #ebf6d6;
+  color: var(--international-green-deep);
+}
+
+.heroActions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.primaryCta,
+.secondaryCta {
+  min-height: 54px;
+  padding: 0 28px;
+  border-radius: 8px;
+  font-size: 0.96rem;
+  font-weight: 800;
+}
+
+.primaryCta {
+  gap: 10px;
+  background: var(--international-green);
+  border: 1px solid var(--international-green);
+  color: #11220f;
+}
+
+.secondaryCta {
+  border: 1px solid rgba(20, 32, 28, 0.26);
+  color: #16221e;
+  background: #fff;
+}
+
+.heroVisual {
+  position: relative;
+  z-index: 1;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.heroVisual::before {
+  content: "";
+  position: absolute;
+  top: 4%;
+  bottom: 4%;
+  left: -18%;
+  width: 44%;
+  background: linear-gradient(90deg, #fff 0%, rgba(255, 255, 255, 0.98) 28%, rgba(255, 255, 255, 0.72) 52%, rgba(255, 255, 255, 0.18) 78%, transparent 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.heroVisual::after {
+  content: "";
+  position: absolute;
+  inset: auto 6% -8% auto;
+  width: 30%;
+  height: 24%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(168, 216, 64, 0.22) 0%, rgba(168, 216, 64, 0.08) 45%, transparent 72%);
+  filter: blur(24px);
+  pointer-events: none;
+}
+
+.heroImage {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 960px;
+  min-height: 520px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 34px;
+  box-shadow: none;
+}
+
+.heroInfoCard {
+  position: absolute;
+  top: 68px;
+  right: -22px;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: center;
+  column-gap: 18px;
+  width: 320px;
+  padding: 18px 22px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(20, 32, 28, 0.06);
+  box-shadow: 0 18px 44px rgba(17, 25, 23, 0.1);
+}
+
+.infoIcon {
+  width: 64px;
+  height: 64px;
+  position: relative;
+  border-radius: 50%;
+  background: #eef7de;
+  color: var(--international-green-deep);
+  justify-self: center;
+  line-height: 0;
+  overflow: hidden;
+}
+
+.heroInfoCard > div {
+  display: grid;
+  align-content: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.heroInfoCard strong,
+.heroInfoCard span,
+.featureItem strong,
+.featureItem span,
+.programBody h3,
+.programAge,
+.benefitItem h3,
+.stepContent h3,
+.scheduleCard h3,
+.contactCard h3,
+.contactKicker {
+  font-family: var(--font-sans);
+}
+
+.heroInfoCard strong {
+  display: block;
+  color: #15211d;
+  font-size: 0.96rem;
+  font-weight: 770;
+  line-height: 1.18;
+  margin: 0;
+}
+
+.heroInfoCard span {
+  display: block;
+  color: #3d4f47;
+  font-size: 0.88rem;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.featureStrip {
+  margin-top: 18px;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid rgba(20, 32, 28, 0.06);
+  box-shadow: 0 18px 42px rgba(17, 25, 23, 0.08);
+}
+
+.featureItem {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  min-height: 92px;
+  padding: 14px 16px;
+  border-radius: 14px;
+}
+
+.featureIcon,
+.programIcon,
+.benefitIcon,
+.scheduleIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: #edf6de;
+  color: var(--international-green-deep);
+}
+
+.featureText {
+  display: grid;
+  align-content: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.featureItem strong {
+  display: block;
+  color: #18231f;
+  font-size: 0.98rem;
+  font-weight: 750;
+  line-height: 1.2;
+}
+
+.featureText span {
+  display: block;
+  color: #364641;
+  font-size: 0.88rem;
+  line-height: 1.2;
+}
+
+.revealUp {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 620ms cubic-bezier(0.2, 0.72, 0.18, 1), transform 620ms cubic-bezier(0.2, 0.72, 0.18, 1);
+}
+
+.isVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.sectionKicker {
+  margin: 0;
+  color: #2d6e47;
+  font-size: 0.82rem;
+  font-weight: 820;
+  letter-spacing: 0.16em;
+}
+
+.programsSection,
+.benefitsSection,
+.stepsSection {
+  margin-top: 42px;
+}
+
+.programsSection h2,
+.benefitsSection h2,
+.stepsSection h2 {
+  margin: 12px 0 0;
+  font-family: var(--font-sans);
+  font-size: clamp(2.2rem, 3.2vw, 3.3rem);
+  font-weight: 830;
+  line-height: 1.04;
+  color: #16211d;
+}
+
+.sectionLead {
+  max-width: 660px;
+  margin: 16px 0 0;
+  color: var(--international-muted);
+  font-size: 1rem;
+  line-height: 1.72;
+}
+
+.programGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.programCard {
+  position: relative;
+  background: #fff;
+  border-radius: 18px;
+  border: 1px solid rgba(20, 32, 28, 0.08);
+  box-shadow: 0 18px 40px rgba(17, 25, 23, 0.07);
+  overflow: hidden;
+}
+
+.programImageWrap {
+  height: 188px;
+  overflow: hidden;
+}
+
+.programImageWrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.programIcon {
+  position: absolute;
+  top: 160px;
+  left: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  border: 5px solid #fff;
+}
+
+.programBody {
+  padding: 34px 20px 22px;
+}
+
+.programBody h3 {
+  margin: 0;
+  color: #18221f;
+  font-size: 1.12rem;
+  font-weight: 780;
+}
+
+.programAge {
+  display: block;
+  margin-top: 4px;
+  color: #566963;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.programBody p {
+  margin: 14px 0 0;
+  color: #455851;
+  font-size: 0.94rem;
+  line-height: 1.72;
+}
+
+.programBody ul {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.programBody li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: #22312b;
+  font-size: 0.92rem;
+  line-height: 1.48;
+}
+
+.programBody li span {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  border-radius: 50%;
+  background: #eef7de;
+  color: var(--international-green-deep);
+}
+
+.programBody li span svg {
+  width: 13px;
+  height: 13px;
+}
+
+.learnMore {
+  margin-top: 18px;
+  gap: 8px;
+  color: var(--international-green-deep);
+  font-size: 0.96rem;
+  font-weight: 760;
+}
+
+.benefitGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.benefitItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(20, 32, 28, 0.06);
+}
+
+.benefitItem h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 740;
+  color: #16211d;
+}
+
+.benefitItem p {
+  margin: 6px 0 0;
+  color: #536760;
+  font-size: 0.9rem;
+  line-height: 1.56;
+}
+
+.stepsSection {
+  display: grid;
+  grid-template-columns: 1.15fr 0.78fr 0.92fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.stepList {
+  display: grid;
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.stepItem {
+  position: relative;
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.stepBadge {
+  width: 48px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: #eef7de;
+  color: var(--international-green-deep);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.stepContent h3 {
+  margin: 4px 0 0;
+  color: #18221f;
+  font-size: 1.1rem;
+  font-weight: 760;
+}
+
+.stepContent p {
+  margin: 8px 0 0;
+  color: #586a64;
+  font-size: 0.94rem;
+  line-height: 1.7;
+}
+
+.stepLine {
+  position: absolute;
+  top: 50px;
+  left: 23px;
+  width: 2px;
+  height: 50px;
+  background: linear-gradient(180deg, #d5e9bf 0%, #edf6de 100%);
+}
+
+.scheduleCard,
+.contactCard {
+  min-height: 100%;
+  padding: 28px 24px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #f7faef 0%, #eef5e5 100%);
+  border: 1px solid rgba(20, 32, 28, 0.06);
+  box-shadow: 0 16px 34px rgba(17, 25, 23, 0.06);
+}
+
+.scheduleCard {
+  text-align: center;
+}
+
+.scheduleIcon {
+  margin: 0 auto;
+}
+
+.scheduleCard h3,
+.contactCard h3 {
+  margin: 18px 0 0;
+  color: #1a241f;
+  font-size: 1.9rem;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.scheduleCard p,
+.contactText {
+  margin: 14px 0 0;
+  color: #52655e;
+  font-size: 0.97rem;
+  line-height: 1.72;
+}
+
+.contactCard {
+  background: #fff;
+}
+
+.contactKicker {
+  margin: 0;
+  color: #1b221f;
+  font-size: 1rem;
+  font-weight: 620;
+}
+
+.contactList {
+  display: grid;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.contactList a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #22312b;
+  font-size: 0.96rem;
+  line-height: 1.45;
+}
+
+.contactList a span {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #eef7de;
+  color: var(--international-green-deep);
+}
+
+.contactCta {
+  width: 100%;
+  min-height: 54px;
+  margin-top: 22px;
+  gap: 10px;
+  border-radius: 10px;
+  background: var(--international-green);
+  color: #10200f;
+  font-size: 0.98rem;
+  font-weight: 800;
+}
+
+.siteFooter {
+  margin-top: 26px;
+  background: #061b17;
+  color: #fff;
+  padding: 62px max(24px, calc((100vw - 1320px) / 2)) 28px;
+}
+
+.footerBrand {
+  max-width: 320px;
+}
+
+.footerBrand p {
+  margin: 20px 0 0;
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.socials {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.socials a {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.footerLinks {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(150px, 1fr));
+  gap: 40px;
+  margin-top: 48px;
+}
+
+.footerLinks h3 {
+  margin: 0 0 14px;
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 850;
+}
+
+.footerLinks a,
+.footerLinks span {
+  display: block;
+  margin-top: 9px;
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.footerBottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 52px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 0.82rem;
+}
+
+.heroChecklist svg,
+.programBody li svg,
+.featureIcon svg,
+.programIcon svg,
+.benefitIcon svg,
+.scheduleIcon svg,
+.infoIcon svg,
+.contactList a span svg,
+.primaryCta svg,
+.learnMore svg,
+.contactCta svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.infoIcon svg {
+  width: 26px;
+  height: 26px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  transform: translate(-50%, -50%);
+}
+
+.primaryCta svg,
+.learnMore svg,
+.contactCta svg {
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 1220px) {
+  .navLinks {
+    display: none;
+  }
+
+  .heroSection {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    padding-top: 8px;
+  }
+
+  .heroCopy {
+    padding-top: 0;
+  }
+
+  .heroCopy h1 {
+    max-width: 680px;
+  }
+
+  .heroImage {
+    min-height: 360px;
+  }
+
+  .heroVisual {
+    min-height: 0;
+  }
+
+  .heroVisual::before {
+    left: 0;
+    width: 34%;
+  }
+
+  .heroInfoCard {
+    right: 16px;
+  }
+
+  .featureStrip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .programGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .benefitGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stepsSection {
+    grid-template-columns: 1fr;
+  }
+
+  .footerLinks {
+    grid-template-columns: repeat(2, minmax(150px, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .nav,
+  .mainContent {
+    width: min(100% - 32px, 1420px);
+  }
+
+  .nav {
+    min-height: 68px;
+  }
+
+  .demoButton {
+    display: none;
+  }
+
+  .mainContent {
+    padding-top: 0;
+    padding-bottom: 64px;
+  }
+
+  .heroSection::before {
+    inset: 0 -8% auto -8%;
+    height: 58%;
+  }
+
+  .featureItem {
+    min-height: 0;
+  }
+
+  .heroCopy h1 {
+    max-width: 100%;
+    font-size: clamp(2.9rem, 12vw, 4.4rem);
+  }
+
+  .heroActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .primaryCta,
+  .secondaryCta {
+    width: 100%;
+  }
+
+  .heroInfoCard {
+    position: static;
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  .heroVisual::before,
+  .heroVisual::after {
+    display: none;
+  }
+
+  .featureStrip {
+    grid-template-columns: 1fr;
+  }
+
+  .programGrid,
+  .benefitGrid,
+  .footerLinks {
+    grid-template-columns: 1fr;
+  }
+
+  .siteFooter {
+    padding: 46px 16px 24px;
+  }
+
+  .footerBottom {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav,
+  .mainContent {
+    width: calc(100% - 24px);
+  }
+
+  .logoLink span,
+  .footerLogo span {
+    font-size: 1.34rem;
+  }
+
+  .logoSymbol,
+  .footerLogo img {
+    width: 34px;
+    height: 34px;
+  }
+
+  .programBody,
+  .scheduleCard,
+  .contactCard {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .revealUp,
+  .demoButton,
+  .whatsappButton,
+  .primaryCta,
+  .secondaryCta,
+  .learnMore,
+  .contactCta,
+  .navLinks a {
+    transition: none;
+    animation: none;
+  }
+
+  .revealUp {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -44,6 +44,7 @@ const ContactPage = () => {
             <Link to="/">Home</Link>
             <Link to="/for-schools">For Schools</Link>
             <Link to="/for-students">Student Programs</Link>
+            <Link to="/international-students">International Students</Link>
             <Link to="/faculty-training">Faculty Training</Link>
             <Link to="/projects">Gallery</Link>
             <Link to="/about">About</Link>

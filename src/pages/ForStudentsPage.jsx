@@ -134,6 +134,7 @@ const ForStudentsPage = () => {
           <Link to="/">Home</Link>
           <Link to="/for-schools">For Schools</Link>
           <Link to="/for-students" className={styles.activeNav}>Student Programs</Link>
+          <Link to="/international-students">International Students</Link>
           <Link to="/faculty-training">Faculty Training</Link>
           <Link to="/projects">Gallery</Link>
           <Link to="/about">About</Link>
