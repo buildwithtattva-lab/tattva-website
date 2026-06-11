@@ -1,5 +1,23 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  Presentation,
+  School,
+  ClipboardList,
+  Trophy,
+  Award,
+  BookOpen,
+  Wrench,
+  Cpu,
+  Rocket,
+  Clock,
+  MessageSquare,
+  TrendingUp,
+  Users,
+  Quote,
+  ShieldCheck,
+  HelpCircle
+} from 'lucide-react';
 import heroImage from '../assets/bento/t8.png';
 import foundationsImage from '../assets/bento/t4.png';
 import toolsImage from '../assets/bento/t7.png';
@@ -10,30 +28,27 @@ import styles from './FacultyTrainingPage.module.css';
 
 const whatsappUrl = 'https://wa.me/918886945890';
 
-const Icon = ({ type }) => {
+const Icon = ({ type, size = 24, strokeWidth = 2, style }) => {
   const icons = {
-    board: <path d="M5 6h22v14H5zM10 26h12M16 20v6M11 12h5M19 11l4 3-4 3" />,
-    school: <path d="M5 27h22M8 27V11l8-5 8 5v16M13 27v-7h6v7M11 15h3M18 15h3" />,
-    program: <path d="M8 5h16v22H8zM12 10h8M12 15h8M12 20h5" />,
-    trophy: <path d="M9 6h14v7a7 7 0 0 1-14 0V6ZM7 6h18M13 25h6M16 20v5M5 9h4v3a4 4 0 0 1-4-3ZM27 9h-4v3a4 4 0 0 0 4-3Z" />,
-    medal: <path d="M10 4h12l-3 7h-6L10 4ZM12 19a4 4 0 1 0 8 0 4 4 0 0 0-8 0ZM12 25l-2 4 6-2 6 2-2-4" />,
-    book: <path d="M6 6h8a4 4 0 0 1 4 4v16a4 4 0 0 0-4-4H6zM18 10a4 4 0 0 1 4-4h4v16h-4a4 4 0 0 0-4 4z" />,
-    tools: <path d="M9 6l5 5M7 8l5 5M20 5l7 7-3 3-7-7zM6 26l7-7M19 19l7 7M12 20l-5 5" />,
-    learning: <path d="M16 5a6 6 0 0 0-4 10.5V19h8v-3.5A6 6 0 0 0 16 5ZM13 23h6M14 27h4M9 14h14M16 10v7" />,
-    rocket: <path d="M12 20 6 26l6-2 2 4 4-6M13 17l-4-4 5-5c3-3 7-4 11-3 1 4 0 8-3 11l-5 5-4-4ZM20 9a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" />,
-    time: <path d="M16 5a11 11 0 1 0 0 22 11 11 0 0 0 0-22ZM16 10v7l5 3" />,
-    teach: <path d="M6 21v-9h20v12H11l-5 4v-4M11 16h7M20 16h2M11 20h10" />,
-    grow: <path d="M6 26h20M9 23v-6M16 23V9M23 23V5M8 12l4 4 5-7 4 5 5-9" />,
-    community: <path d="M11 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10ZM21 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM3 27c1-5 4-8 8-8s7 3 8 8M17 26c1-4 3-6 6-6 2.5 0 4.5 1.7 6 5" />,
-    quote: <path d="M12 9c-3 1-5 4-5 8v5h8v-8h-4c0-2 1-4 3-5zM24 9c-3 1-5 4-5 8v5h8v-8h-4c0-2 1-4 3-5z" />,
-    check: <path d="M10 16l4 4 8-9M16 4l10 5v7c0 6-4 10-10 12C10 26 6 22 6 16V9z" />
+    board: Presentation,
+    school: School,
+    program: ClipboardList,
+    trophy: Trophy,
+    medal: Award,
+    book: BookOpen,
+    tools: Wrench,
+    learning: Cpu,
+    rocket: Rocket,
+    time: Clock,
+    teach: MessageSquare,
+    grow: TrendingUp,
+    community: Users,
+    quote: Quote,
+    check: ShieldCheck
   };
 
-  return (
-    <svg viewBox="0 0 32 32" aria-hidden="true">
-      {icons[type]}
-    </svg>
-  );
+  const IconComponent = icons[type] || HelpCircle;
+  return <IconComponent size={size} strokeWidth={strokeWidth} style={style} />;
 };
 
 const stats = [
@@ -208,7 +223,7 @@ const FacultyTrainingPage = () => {
                   <ul>
                     {program.points.map((point) => (
                       <li key={point}>
-                        <span><Icon type="check" /></span>
+                        <Icon type="check" size={18} strokeWidth={2} style={{ color: '#075a31', flexShrink: 0, marginRight: '8px' }} />
                         {point}
                       </li>
                     ))}

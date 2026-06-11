@@ -1,5 +1,23 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  School,
+  Users,
+  Trophy,
+  MessageSquare,
+  Award,
+  Cpu,
+  Laptop,
+  Lightbulb,
+  Rocket,
+  Wrench,
+  FlaskConical,
+  Compass,
+  TrendingUp,
+  FileCheck,
+  ShieldCheck,
+  HelpCircle
+} from 'lucide-react';
 import heroImage from '../assets/bento/m6.png';
 import explorersImage from '../assets/bento/m5.png';
 import creatorsImage from '../assets/bento/m4.png';
@@ -9,30 +27,27 @@ import styles from './ForStudentsPage.module.css';
 
 const whatsappUrl = 'https://wa.me/918886945890';
 
-const Icon = ({ type }) => {
+const Icon = ({ type, size = 24, strokeWidth = 2, style }) => {
   const icons = {
-    school: <path d="M5 27h22M8 27V11l8-5 8 5v16M13 27v-7h6v7M11 15h3M18 15h3" />,
-    students: <path d="M11 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10ZM21 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM3 27c1-5 4-8 8-8s7 3 8 8M17 26c1-4 3-6 6-6 2.5 0 4.5 1.7 6 5" />,
-    trophy: <path d="M9 6h14v7a7 7 0 0 1-14 0V6ZM7 6h18M13 25h6M16 20v5M5 9h4v3a4 4 0 0 1-4-3ZM27 9h-4v3a4 4 0 0 0 4-3Z" />,
-    mentor: <path d="M6 20v-9h20v13H10l-4 4v-4M11 15h6M11 19h10M8 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8" />,
-    medal: <path d="M10 4h12l-3 7h-6L10 4ZM12 19a4 4 0 1 0 8 0 4 4 0 0 0-8 0ZM16 15v4l2 1M12 25l-2 4 6-2 6 2-2-4" />,
-    aiBasics: <path d="M8 8h16v12H8zM12 24h8M16 20v4M12 13h8M14 16h4M6 10H3M29 10h-3M6 18H3M29 18h-3" />,
-    creators: <path d="M6 10h20v12H6zM10 25h12M16 22v3M11 15h5M20 14l3 2-3 2M12 6l2 2-2 2M19 6l-2 2 2 2" />,
-    innovators: <path d="M16 5a7 7 0 0 0-4 12v3h8v-3a7 7 0 0 0-4-12ZM13 24h6M14 28h4M11 13h10M16 9v8M7 9 4 6M25 9l3-3" />,
-    rocket: <path d="M12 20 6 26l6-2 2 4 4-6M13 17l-4-4 5-5c3-3 7-4 11-3 1 4 0 8-3 11l-5 5-4-4ZM20 9a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" />,
-    skill: <path d="M5 27h22M8 27V11l8-5 8 5v16M13 27v-7h6v7M11 15h10" />,
-    lab: <path d="M7 26h18M11 4v8l-5 10a4 4 0 0 0 3.6 6h12.8a4 4 0 0 0 3.6-6l-5-10V4M10 4h12M11 20h10" />,
-    guide: <path d="M16 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10ZM5 28c1.5-6 5-9 11-9s9.5 3 11 9M11 23l5 3 5-3" />,
-    future: <path d="M6 25h20M9 22v-6M16 22V10M23 22V6M8 10l3 3 5-5 4 4 6-7" />,
-    certificate: <path d="M8 4h12l4 4v13H8V4ZM20 4v5h4M12 13h7M12 17h6M18 24a4 4 0 1 0 8 0 4 4 0 0 0-8 0ZM20 27l-1 3 3-1.4 3 1.4-1-3" />,
-    safe: <path d="M16 5 26 9v7c0 6-4 10-10 12C10 26 6 22 6 16V9l10-4ZM12 16l3 3 6-7" />
+    school: School,
+    students: Users,
+    trophy: Trophy,
+    mentor: MessageSquare,
+    medal: Award,
+    aiBasics: Cpu,
+    creators: Laptop,
+    innovators: Lightbulb,
+    rocket: Rocket,
+    skill: Wrench,
+    lab: FlaskConical,
+    guide: Compass,
+    future: TrendingUp,
+    certificate: FileCheck,
+    safe: ShieldCheck
   };
 
-  return (
-    <svg viewBox="0 0 32 32" aria-hidden="true">
-      {icons[type]}
-    </svg>
-  );
+  const IconComponent = icons[type] || HelpCircle;
+  return <IconComponent size={size} strokeWidth={strokeWidth} style={style} />;
 };
 
 const stats = [
@@ -209,7 +224,7 @@ const ForStudentsPage = () => {
                 <ul>
                   {program.points.map((point) => (
                     <li key={point}>
-                      <span><Icon type="safe" /></span>
+                      <Icon type="safe" size={18} strokeWidth={2} style={{ color: '#075a31', flexShrink: 0, marginRight: '8px' }} />
                       {point}
                     </li>
                   ))}

@@ -1,6 +1,29 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
+import {
+  School,
+  Users,
+  Award,
+  GraduationCap,
+  Cpu,
+  Sparkles,
+  ClipboardList,
+  TrendingUp,
+  Brain,
+  Terminal,
+  Database,
+  Layers,
+  Code2,
+  Trophy,
+  BookOpen,
+  Laptop,
+  Workflow,
+  Scale,
+  Smile,
+  Presentation,
+  Target
+} from 'lucide-react';
 import heroImage from '../assets/bento/herosection.png';
 import summerCampImg from '../assets/bento/v2.png';
 import facultyTrainingImg from '../assets/bento/v3.png';
@@ -55,86 +78,50 @@ const stats = [
     value: 10,
     suffix: '+',
     label: 'Partner Schools',
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M5 27h22M8 27V11l8-5 8 5v16M13 27v-7h6v7M11 15h3M18 15h3M11 20h3M18 20h3" />
-      </svg>
-    )
+    icon: <School size={28} strokeWidth={1.8} />
   },
   {
     value: 1000,
     suffix: '+',
     label: 'Students Impacted',
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M11 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10ZM21 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM3 27c1-5 4-8 8-8s7 3 8 8M17 26c1-4 3-6 6-6 2.5 0 4.5 1.7 6 5" />
-      </svg>
-    )
+    icon: <Users size={28} strokeWidth={1.8} />
   },
   {
     value: 98,
     suffix: '%',
     label: 'Program Satisfaction',
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M8 10h16v12H8zM13 22l-2 5M19 22l2 5M11 27h10M16 13v6M13 16h6M25 14h3v5h-3M4 14h4v5H4" />
-      </svg>
-    )
+    icon: <Smile size={28} strokeWidth={1.8} />
   },
   {
     value: 50,
     suffix: '+',
     label: 'Faculty Trained',
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M4 25v-3a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v3M10 14a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM18 8h10v12H18zM21 12h4M21 16h3" />
-      </svg>
-    )
+    icon: <GraduationCap size={28} strokeWidth={1.8} />
   },
   {
     value: 10,
     suffix: '+',
     label: 'AI Programs',
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M5 27h22M7 27l9-19 9 19M11 19h10M13 27v-5h6v5M16 8v-4M16 4h6" />
-      </svg>
-    )
+    icon: <Cpu size={28} strokeWidth={1.8} />
   }
 ];
 
 const needs = [
   {
     label: 'Students are curious about AI and using it every day.',
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M11 25V12a5 5 0 0 1 10 0v13M11 17H8a4 4 0 0 1 0-8h3M21 17h3a4 4 0 0 0 0-8h-3M13 25h6M16 9v16M8 21a3 3 0 0 0 3 3M24 21a3 3 0 0 1-3 3" />
-      </svg>
-    )
+    icon: <Sparkles size={28} strokeWidth={1.8} />
   },
   {
     label: 'Teachers need practical training and classroom support.',
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M16 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10ZM7 27a9 9 0 0 1 18 0M11 24l3-4 2 3 2-3 3 4M6 12l-3 3M26 12l3 3" />
-      </svg>
-    )
+    icon: <GraduationCap size={28} strokeWidth={1.8} />
   },
   {
     label: 'Schools need a clear plan to implement AI education.',
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M5 27h22M8 27V11l8-5 8 5v16M12 27v-7h8v7M12 15h8" />
-      </svg>
-    )
+    icon: <ClipboardList size={28} strokeWidth={1.8} />
   },
   {
     label: 'Parents want skills that prepare children for the future.',
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M10 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM22 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM3 27a7 7 0 0 1 14 0M15 27a7 7 0 0 1 14 0" />
-      </svg>
-    )
+    icon: <TrendingUp size={28} strokeWidth={1.8} />
   }
 ];
 
@@ -166,20 +153,20 @@ const offers = [
 ];
 
 const learningSteps = [
-  { step: '01', title: 'AI Awareness', desc: 'Understand AI, its applications, and real-world impact.', icon: 'iconHead' },
-  { step: '02', title: 'Prompting & Responsible Use', desc: 'Learn effective prompting and ethical AI usage.', icon: 'iconPrompt' },
-  { step: '03', title: 'Data & Automation', desc: 'Work with data and automate everyday tasks with AI tools.', icon: 'iconData' },
-  { step: '04', title: 'No-code AI Projects', desc: 'Build AI apps and solutions using no-code platforms.', icon: 'iconLayers' },
-  { step: '05', title: 'Coding with AI', desc: 'Use Python and AI libraries to build intelligent applications.', icon: 'iconCode' },
-  { step: '06', title: 'Capstone Projects', desc: 'Solve real-world problems and build portfolio-worthy projects.', icon: 'iconTrophy' }
+  { step: '01', title: 'AI Awareness', desc: 'Understand AI, its applications, and real-world impact.', icon: Brain },
+  { step: '02', title: 'Prompting & Responsible Use', desc: 'Learn effective prompting and ethical AI usage.', icon: Terminal },
+  { step: '03', title: 'Data & Automation', desc: 'Work with data and automate everyday tasks with AI tools.', icon: Database },
+  { step: '04', title: 'No-code AI Projects', desc: 'Build AI apps and solutions using no-code platforms.', icon: Layers },
+  { step: '05', title: 'Coding with AI', desc: 'Use Python and AI libraries to build intelligent applications.', icon: Code2 },
+  { step: '06', title: 'Capstone Projects', desc: 'Solve real-world problems and build portfolio-worthy projects.', icon: Trophy }
 ];
 
 const campFeatures = [
-  { label: 'Live Workshops', icon: 'iconWorkshop' },
-  { label: 'AI Projects', icon: 'iconProject' },
-  { label: 'Team Challenges', icon: 'iconTeam' },
-  { label: 'Certificates', icon: 'iconCertificate' },
-  { label: 'Fun & Exploration', icon: 'iconSpark' }
+  { label: 'Live Workshops', icon: Presentation },
+  { label: 'AI Projects', icon: Cpu },
+  { label: 'Team Challenges', icon: Users },
+  { label: 'Certificates', icon: Award },
+  { label: 'Fun & Exploration', icon: Sparkles }
 ];
 
 const campGallery = [
@@ -208,20 +195,20 @@ const campGallery = [
 ];
 
 const teacherFeatures = [
-  { label: 'AI for Lesson Planning', icon: 'iconLesson' },
-  { label: 'Assessment Support', icon: 'iconAssessment' },
-  { label: 'Classroom Activities', icon: 'iconClassroom' },
-  { label: 'Productivity Workflows', icon: 'iconWorkflow' },
-  { label: 'Responsible & Ethical AI', icon: 'iconEthics' }
+  { label: 'AI for Lesson Planning', icon: BookOpen },
+  { label: 'Assessment Support', icon: GraduationCap },
+  { label: 'Classroom Activities', icon: Laptop },
+  { label: 'Productivity Workflows', icon: Workflow },
+  { label: 'Responsible & Ethical AI', icon: Scale }
 ];
 
 const outcomes = [
-  { label: 'Students build real AI projects', icon: 'iconProject' },
-  { label: 'Teachers save time with AI workflows', icon: 'iconWorkflow' },
-  { label: 'Schools get structured AI adoption', icon: 'iconSchool' },
-  { label: 'Parents see visible future-readiness', icon: 'iconTeam' },
-  { label: 'Leadership gets clear implementation plan', icon: 'iconPlan' },
-  { label: 'Confident classrooms ready for tomorrow', icon: 'iconClassroom' }
+  { label: 'Students build real AI projects', icon: Cpu },
+  { label: 'Teachers save time with AI workflows', icon: Workflow },
+  { label: 'Schools get structured AI adoption', icon: School },
+  { label: 'Parents see visible future-readiness', icon: TrendingUp },
+  { label: 'Leadership gets clear implementation plan', icon: ClipboardList },
+  { label: 'Confident classrooms ready for tomorrow', icon: Sparkles }
 ];
 
 const testimonials = [
@@ -698,7 +685,7 @@ const HomePage = () => {
           </div>
 
           <div className={styles.pathSteps}>
-            {learningSteps.map(({ step, title, desc, icon }, index) => (
+            {learningSteps.map(({ step, title, desc, icon: IconComponent }, index) => (
               <article
                 className={`${styles.pathStep} ${styles.reveal}`}
                 style={{ '--reveal-delay': `${index * 110}ms` }}
@@ -706,7 +693,7 @@ const HomePage = () => {
                 key={step}
               >
                 <div className={styles.pathIcon}>
-                  <span className={`${styles.cssIcon} ${styles[icon]}`} aria-hidden="true" />
+                  <IconComponent size={28} strokeWidth={1.8} />
                 </div>
                 <span className={styles.pathStepNumber}>{step}</span>
                 <h3>{title}</h3>
@@ -724,10 +711,10 @@ const HomePage = () => {
               Hands-on learning, creativity, teamwork, and real AI projects that students love.
             </p>
             <ul>
-              {campFeatures.map((feature) => (
-                <li key={feature.label}>
-                  <span className={`${styles.cssIcon} ${styles.smallListIcon} ${styles[feature.icon]}`} aria-hidden="true" />
-                  {feature.label}
+              {campFeatures.map(({ label, icon: IconComponent }) => (
+                <li key={label}>
+                  <IconComponent size={18} strokeWidth={2} style={{ color: '#075a31', flexShrink: 0 }} />
+                  {label}
                 </li>
               ))}
             </ul>
@@ -775,17 +762,17 @@ const HomePage = () => {
               save time, and create better learning experiences for students.
             </p>
             <div className={styles.teacherFeatureGrid}>
-              {teacherFeatures.map((feature, index) => (
+              {teacherFeatures.map(({ label, icon: IconComponent }, index) => (
                 <span
                   className={styles.reveal}
                   style={{ '--reveal-delay': `${index * 75}ms` }}
                   data-reveal
-                  key={feature.label}
+                  key={label}
                 >
                   <span className={styles.teacherFeatureIcon} aria-hidden="true">
-                    <i className={`${styles.cssIcon} ${styles.teacherCssIcon} ${styles[feature.icon]}`} />
+                    <IconComponent size={24} strokeWidth={2} style={{ color: '#073a25' }} />
                   </span>
-                  <span className={styles.teacherFeatureLabel}>{feature.label}</span>
+                  <span className={styles.teacherFeatureLabel}>{label}</span>
                 </span>
               ))}
             </div>
@@ -801,15 +788,15 @@ const HomePage = () => {
             <p className={styles.sectionKicker}>IMPACT THAT MATTERS</p>
             <h2>Real Outcomes for Students, Teachers & Schools</h2>
             <div className={styles.outcomeGrid}>
-              {outcomes.map((outcome, index) => (
+              {outcomes.map(({ label, icon: IconComponent }, index) => (
                 <div
                   className={`${styles.outcomeItem} ${styles.reveal}`}
                   style={{ '--reveal-delay': `${index * 65}ms` }}
                   data-reveal
-                  key={outcome.label}
+                  key={label}
                 >
-                  <span className={`${styles.cssIcon} ${styles.outcomeCssIcon} ${styles[outcome.icon]}`} aria-hidden="true" />
-                  {outcome.label}
+                  <IconComponent size={22} strokeWidth={2} style={{ color: '#075a31', flexShrink: 0 }} />
+                  {label}
                 </div>
               ))}
             </div>
@@ -875,9 +862,7 @@ const HomePage = () => {
           </div>
           <div className={`${styles.missionCard} ${styles.reveal}`} data-reveal>
             <span>
-              <svg viewBox="0 0 32 32" aria-hidden="true">
-                <path d="M16 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10ZM7 27a9 9 0 0 1 18 0M16 20v5M12 23h8" />
-              </svg>
+              <Target size={28} strokeWidth={1.8} />
             </span>
             <p>
               <strong>Our mission is simple:</strong>

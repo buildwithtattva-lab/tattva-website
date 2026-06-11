@@ -1,5 +1,19 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  BookOpen,
+  Presentation,
+  Cpu,
+  Award,
+  Laptop,
+  Handshake,
+  Users,
+  School,
+  MapPin,
+  ShieldCheck,
+  GraduationCap,
+  TrendingUp
+} from 'lucide-react';
 import heroBg from '../assets/bento/school.png';
 import slokaLogo from '../assets/bento/sloka-the-school-manikonda-logo.png';
 import fbhisLogo from '../assets/bento/FBHIS-logo.png';
@@ -16,66 +30,42 @@ const ecosystemCards = [
     desc: 'Seamlessly integrate AI concepts into your existing curriculum across grades and subjects.',
     action: 'Explore Curriculum',
     featured: true,
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M6 8.5c4.2 0 7.3 1 10 3.2 2.7-2.2 5.8-3.2 10-3.2v16c-4.2 0-7.3 1-10 3.2-2.7-2.2-5.8-3.2-10-3.2v-16ZM16 11.7v16M10 13.5h2.8M10 17h2.8M19.2 13.5H22M19.2 17H22" />
-      </svg>
-    )
+    icon: <BookOpen size={24} strokeWidth={2} />
   },
   {
     number: '02',
     title: 'Teacher Enablement',
     desc: 'Equip educators with practical AI tools, resources, and teaching strategies.',
     action: 'Empower Teachers',
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M6 9h18v12H6zM10 24h10M15 21v3M11 14h6M11 17h4M22 12l4-4M23 8h3v3M9 27c1.2-2.8 3.2-4.2 6-4.2 1.4 0 2.6.35 3.6 1.05" />
-      </svg>
-    )
+    icon: <Presentation size={24} strokeWidth={2} />
   },
   {
     number: '03',
     title: 'Student Innovation Programs',
     desc: 'Hands-on programs that build real-world skills, creativity, and AI confidence.',
     action: 'Explore Programs',
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M16 14a4.2 4.2 0 1 0 0-8.4 4.2 4.2 0 0 0 0 8.4ZM7 27c1.2-5.2 4.2-8 9-8s7.8 2.8 9 8M11 20l5 3 5-3M22.5 6.5l1.2-2.4 1.2 2.4 2.4 1.2-2.4 1.2-1.2 2.4-1.2-2.4-2.4-1.2 2.4-1.2ZM7.7 9.5l.8-1.6.8 1.6 1.6.8-1.6.8-.8 1.6-.8-1.6-1.6-.8 1.6-.8Z" />
-      </svg>
-    )
+    icon: <Cpu size={24} strokeWidth={2} />
   },
   {
     number: '04',
     title: 'Assessments & Certification',
     desc: 'Evaluate learning outcomes with AI-driven assessments and recognized certifications.',
     action: 'View Certifications',
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M8 4h12l4 4v12H8V4ZM20 4v5h4M12 12h7M12 16h6M18 22a4 4 0 1 0 8 0 4 4 0 0 0-8 0ZM20 25.4 19 29l3-1.5 3 1.5-1-3.6" />
-      </svg>
-    )
+    icon: <Award size={24} strokeWidth={2} />
   },
   {
     number: '05',
     title: 'AI Labs & Infrastructure',
     desc: 'Set up future-ready AI labs with the right hardware, software, and learning environment.',
     action: 'Design AI Labs',
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M5 7h22v14H5zM10 25h12M16 21v4M10 12h5M10 16h3M19 12h4M19 16h4M7 27h18M8 10v8M24 10v8" />
-      </svg>
-    )
+    icon: <Laptop size={24} strokeWidth={2} />
   },
   {
     number: '06',
     title: 'Long-Term Partnership',
     desc: 'Ongoing support, training, and strategic guidance for successful implementation and growth.',
     action: 'Partner With Us',
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="m12 18 3 3a3 3 0 0 0 4.2 0l1.2-1.2M14.5 14.5l3.7-3.7a3 3 0 0 1 4.2 0L29 17.4l-4.6 4.6-2.6-2.6M10.5 22 3 14.5 7.5 10l5.3 5.3M5.5 16.8l3.8 3.8M8 19.2l3.6 3.6M21.5 21.5l2.2 2.2M18.7 23.2l1.7 1.7" />
-      </svg>
-    )
+    icon: <Handshake size={24} strokeWidth={2} />
   }
 ];
 
@@ -83,38 +73,22 @@ const approachSteps = [
   {
     label: 'Learn',
     desc: 'Build AI foundations',
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M7 8c4 0 7 1 9 3 2-2 5-3 9-3v16c-4 0-7 1-9 3-2-2-5-3-9-3V8ZM16 11v16" />
-      </svg>
-    )
+    icon: <BookOpen size={28} strokeWidth={2} />
   },
   {
     label: 'Enable',
     desc: 'Empower educators',
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM21 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM4 27c1.1-5 3.5-7.5 7-7.5S16.9 22 18 27M16.5 26c.9-4 2.9-6 6-6 2.5 0 4.4 1.6 5.5 4.8" />
-      </svg>
-    )
+    icon: <GraduationCap size={28} strokeWidth={2} />
   },
   {
     label: 'Build',
     desc: 'Hands-on learning',
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M6 9h20v14H6zM10 26h12M16 23v3M11 14h5M11 18h3M21 14h1M21 18h1" />
-      </svg>
-    )
+    icon: <Laptop size={28} strokeWidth={2} />
   },
   {
     label: 'Scale',
     desc: 'Sustained impact',
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M6 25h20M9 22v-6M16 22V10M23 22V6M8 10l3 3 5-5 4 4 6-7" />
-      </svg>
-    )
+    icon: <TrendingUp size={28} strokeWidth={2} />
   }
 ];
 
@@ -122,38 +96,22 @@ const ecosystemImpact = [
   {
     value: '10+',
     label: 'Schools',
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M5 27h22M8 27V11l8-5 8 5v16M13 27v-7h6v7M11 15h3M18 15h3" />
-      </svg>
-    )
+    icon: <School size={28} strokeWidth={2} />
   },
   {
     value: '1,000+',
     label: 'Students Impacted',
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M11 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10ZM21 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM3 27c1-5 4-8 8-8s7 3 8 8M17 26c1-4 3-6 6-6 2.5 0 4.5 1.7 6 5" />
-      </svg>
-    )
+    icon: <Users size={28} strokeWidth={2} />
   },
   {
     value: '50+',
     label: 'Faculty Trained',
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M4 12 16 6l12 6-12 6-12-6ZM9 15v6c2 2 4.5 3 7 3s5-1 7-3v-6M27 13v8M25 21h4" />
-      </svg>
-    )
+    icon: <GraduationCap size={28} strokeWidth={2} />
   },
   {
     value: '10',
     label: 'Cities',
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M9 6h14v7a7 7 0 0 1-14 0V6ZM7 6h18M13 25h6M16 20v5M5 9h4v3a4 4 0 0 1-4-3ZM27 9h-4v3a4 4 0 0 0 4-3Z" />
-      </svg>
-    )
+    icon: <MapPin size={28} strokeWidth={2} />
   }
 ];
 
@@ -319,9 +277,7 @@ const ForSchoolsPage = () => {
 
         <div className={styles.ecosystemImpact} data-school-animate>
           <span className={styles.impactBadge}>
-            <svg viewBox="0 0 32 32" aria-hidden="true">
-              <path d="M16 5 26 9v7c0 6-4 10-10 12C10 26 6 22 6 16V9l10-4ZM12 16l3 3 6-7" />
-            </svg>
+            <ShieldCheck size={28} strokeWidth={2} />
           </span>
           <p>Trusted by forward-thinking schools to drive AI adoption and prepare students for the future.</p>
           <div className={styles.impactMetrics}>

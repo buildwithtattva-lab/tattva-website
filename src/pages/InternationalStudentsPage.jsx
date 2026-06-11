@@ -1,5 +1,20 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  CheckCircle,
+  Video,
+  Users,
+  Clock,
+  BookOpen,
+  Globe,
+  GraduationCap,
+  Calendar,
+  Mail,
+  Phone,
+  MessageSquare,
+  ArrowRight,
+  HelpCircle
+} from 'lucide-react';
 import heroImage from '../assets/bento/in4.png';
 import explorersImage from '../assets/bento/in3.png';
 import creatorsImage from '../assets/bento/in1.png';
@@ -9,27 +24,24 @@ import styles from './InternationalStudentsPage.module.css';
 
 const whatsappUrl = 'https://wa.me/918886945890';
 
-const Icon = ({ type }) => {
+const Icon = ({ type, size = 24, strokeWidth = 2, style }) => {
   const icons = {
-    check: <path d="M7 16.5 12.2 21.7 25 9" />,
-    live: <path d="M5 8h22v14H5zM10 25h12M16 22v3M11 13l6 4-6 4v-8Z" />,
-    mentor: <path d="M10 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM22 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM4 27c1-4.6 4-7 8-7s7 2.4 8 7m2 0c.7-3.2 2.8-5 5.7-5 2.1 0 3.9 1 5.3 3" />,
-    clock: <path d="M16 5a11 11 0 1 0 0 22 11 11 0 0 0 0-22Zm0 5v6l4 2" />,
-    book: <path d="M7 8.5A2.5 2.5 0 0 1 9.5 6H25v18H9.5A2.5 2.5 0 0 0 7 26.5V8.5Zm0 0V24m6-12h7m-7 4h7" />,
-    globe: <path d="M16 4C9.4 4 4 9.4 4 16s5.4 12 12 12 12-5.4 12-12S22.6 4 16 4Zm0 0c3.2 3.1 5 7.4 5 12s-1.8 8.9-5 12m0-24c-3.2 3.1-5 7.4-5 12s1.8 8.9 5 12m-11-12h22" />,
-    student: <path d="M16 8a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9ZM7 27a9 9 0 0 1 18 0" />,
-    calendar: <path d="M9 6v4M23 6v4M7 10h18v15H7V10Zm0 5h18M14 19h4" />,
-    mail: <path d="M5 9h22v14H5V9Zm0 1 11 8 11-8" />,
-    phone: <path d="M10.5 6.5h3.9l1.5 4.3-2.2 2.2a19 19 0 0 0 5.3 5.3l2.2-2.2 4.3 1.5v3.9c0 1-.8 1.8-1.8 1.8A17.7 17.7 0 0 1 8.7 8.3c0-1 .8-1.8 1.8-1.8Z" />,
-    chat: <path d="M7 8h18v12H13l-6 4v-4H7V8Zm5 5h8M12 17h5" />,
-    arrow: <path d="M7 16h18M19 9l6 7-6 7" />
+    check: CheckCircle,
+    live: Video,
+    mentor: Users,
+    clock: Clock,
+    book: BookOpen,
+    globe: Globe,
+    student: GraduationCap,
+    calendar: Calendar,
+    mail: Mail,
+    phone: Phone,
+    chat: MessageSquare,
+    arrow: ArrowRight
   };
 
-  return (
-    <svg viewBox="0 0 32 32" aria-hidden="true">
-      {icons[type]}
-    </svg>
-  );
+  const IconComponent = icons[type] || HelpCircle;
+  return <IconComponent size={size} strokeWidth={strokeWidth} style={style} />;
 };
 
 const highlightItems = [
@@ -195,16 +207,16 @@ const InternationalStudentsPage = () => {
             <p>Live, interactive online AI classes for students anywhere in the world.</p>
 
             <ul className={styles.heroChecklist}>
-              <li>
-                <span><Icon type="check" /></span>
+              <li style={{ display: 'flex', alignItems: 'center' }}>
+                <Icon type="check" size={18} strokeWidth={2} style={{ color: '#075a31', flexShrink: 0, marginRight: '8px' }} />
                 Learn from expert educators
               </li>
-              <li>
-                <span><Icon type="check" /></span>
+              <li style={{ display: 'flex', alignItems: 'center' }}>
+                <Icon type="check" size={18} strokeWidth={2} style={{ color: '#075a31', flexShrink: 0, marginRight: '8px' }} />
                 Flexible timings that suit your schedule
               </li>
-              <li>
-                <span><Icon type="check" /></span>
+              <li style={{ display: 'flex', alignItems: 'center' }}>
+                <Icon type="check" size={18} strokeWidth={2} style={{ color: '#075a31', flexShrink: 0, marginRight: '8px' }} />
                 Personalized learning experience
               </li>
             </ul>
@@ -264,7 +276,7 @@ const InternationalStudentsPage = () => {
                   <ul>
                     {program.points.map((point) => (
                       <li key={point}>
-                        <span><Icon type="check" /></span>
+                        <Icon type="check" size={16} strokeWidth={2} style={{ color: '#075a31', flexShrink: 0, marginRight: '8px' }} />
                         {point}
                       </li>
                     ))}

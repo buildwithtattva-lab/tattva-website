@@ -71,32 +71,92 @@
   0%,
   100% {
     transform: rotate(-22deg) translateY(0);
+    box-shadow: 0 18px 32px rgba(7, 29, 23, 0.22);
+    border: 1px solid transparent;
   }
 
   50% {
-    transform: rotate(-22deg) translateY(-10px);
+    transform: rotate(-22deg) translateY(-12px);
+    box-shadow: 0 24px 44px rgba(183, 242, 106, 0.45);
+    border: 1px solid rgba(183, 242, 106, 0.7);
   }
 }
 
 @keyframes orbitDrift {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0);
+  0% {
+    transform: rotate(0deg) translate3d(0, 0, 0);
   }
-
   50% {
-    transform: translate3d(8px, -8px, 0);
+    transform: rotate(180deg) translate3d(6px, -6px, 0);
+  }
+  100% {
+    transform: rotate(360deg) translate3d(0, 0, 0);
   }
 }
 
 @keyframes panelGlide {
   0%,
   100% {
-    transform: skewY(8deg) translateY(0);
+    transform: skewY(-6deg) translateY(0) scale(1);
+    box-shadow: 0 20px 50px rgba(7, 29, 23, 0.12);
   }
 
   50% {
-    transform: skewY(8deg) translateY(8px);
+    transform: skewY(-6deg) translateY(-8px) scale(1.01);
+    box-shadow: 0 30px 60px rgba(155, 224, 71, 0.18);
+  }
+}
+
+@keyframes nodePulse {
+  0%, 100% {
+    transform: scale(1);
+    background: #9be047;
+    box-shadow: 0 0 0px rgba(155, 224, 71, 0);
+  }
+  50% {
+    transform: scale(1.35);
+    background: #d0f77e;
+    box-shadow: 0 0 16px rgba(183, 242, 106, 1);
+  }
+}
+
+@keyframes orbitDot {
+  0% {
+    transform: rotate(0deg) translateX(52px) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translateX(52px) rotate(-360deg);
+  }
+}
+
+@keyframes orbitDotReverse {
+  0% {
+    transform: rotate(0deg) translateX(42px) rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg) translateX(42px) rotate(360deg);
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(155, 224, 71, 0);
+    background: rgba(155, 224, 71, 0.82);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(155, 224, 71, 0.15), 0 0 20px 4px rgba(155, 224, 71, 0.5);
+    background: rgba(200, 248, 120, 1);
+  }
+}
+
+@keyframes chipDiagFloat {
+  0%, 100% {
+    transform: rotate(-22deg) translateY(0) scale(1);
+    box-shadow: 0 14px 32px rgba(7, 29, 23, 0.28);
+  }
+  50% {
+    transform: rotate(-22deg) translateY(-10px) scale(1.02);
+    box-shadow: 0 22px 48px rgba(155, 224, 71, 0.35), 0 14px 32px rgba(7, 29, 23, 0.28);
   }
 }
 
@@ -558,9 +618,10 @@
 .featuredCard {
   min-height: 280px;
   grid-column: span 6;
-  grid-template-columns: 46px minmax(220px, 0.72fr) minmax(190px, 1fr);
+  grid-template-columns: 46px minmax(200px, 0.65fr) minmax(280px, 1fr);
   padding: 28px;
   border-color: rgba(155, 224, 71, 0.42);
+  overflow: hidden;
   background:
     radial-gradient(circle at 82% 18%, rgba(183, 242, 106, 0.34), transparent 28%),
     linear-gradient(135deg, #fbfff4 0%, #eefbdc 100%);
@@ -658,155 +719,231 @@
   font-weight: 850;
 }
 
+/* ── Feature Art — AI Curriculum illustration ──────────────────────── */
 .featureArt {
   position: relative;
-  min-height: 100%;
+  width: 300px;
+  min-height: 220px;
   align-self: stretch;
+  flex-shrink: 0;
 }
 
-.featureArt::before,
-.featureArt::after {
-  content: "";
-  position: absolute;
-  background: rgba(155, 224, 71, 0.48);
-  border-radius: 999px;
-}
-
-.featureArt::before {
-  width: 88px;
-  height: 2px;
-  right: 36px;
-  top: 84px;
-  transform: rotate(-30deg);
-}
-
-.featureArt::after {
-  width: 98px;
-  height: 2px;
-  right: 42px;
-  bottom: 64px;
-  transform: rotate(34deg);
-}
-
-.orbitOne,
-.orbitTwo {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(155, 224, 71, 0.38);
-}
-
+/* Orbit ring one — large central ring with travelling dot */
 .orbitOne {
-  width: 108px;
-  height: 108px;
-  left: 10px;
-  top: 22px;
-  animation: orbitDrift 8s ease-in-out infinite;
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  left: 14px;
+  top: 18px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(155, 224, 71, 0.45);
+  animation: orbitDrift 10s linear infinite;
+  box-shadow: 0 0 18px rgba(155, 224, 71, 0.1);
 }
 
+/* Central green core inside orbit ring */
+.orbitOne::before {
+  content: "";
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #c8f878 0%, #9be047 60%, #70b82a 100%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 20px rgba(155, 224, 71, 0.7);
+  animation: glowPulse 2.8s ease-in-out infinite;
+}
+
+/* Travelling dot on orbit ring one */
+.orbitOne::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #d0f77e;
+  top: 50%;
+  left: 50%;
+  margin-top: -6px;
+  margin-left: -6px;
+  box-shadow: 0 0 12px rgba(155, 224, 71, 0.9);
+  animation: orbitDot 6s linear infinite;
+}
+
+/* Orbit ring two — smaller accent ring top-right */
 .orbitTwo {
-  width: 90px;
-  height: 90px;
-  right: 6px;
-  top: 16px;
-  animation: orbitDrift 9s ease-in-out infinite reverse;
+  position: absolute;
+  width: 96px;
+  height: 96px;
+  right: 8px;
+  top: 10px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(155, 224, 71, 0.32);
+  animation: orbitDrift 8s linear infinite reverse;
 }
 
-.orbitOne::before,
+/* Travelling dot on orbit ring two */
 .orbitTwo::before {
   content: "";
   position: absolute;
-  width: 28px;
-  height: 28px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background: rgba(155, 224, 71, 0.72);
+  background: #b7f26a;
+  top: 50%;
+  left: 50%;
+  margin-top: -5px;
+  margin-left: -5px;
+  box-shadow: 0 0 10px rgba(183, 242, 106, 0.85);
+  animation: orbitDotReverse 8s linear infinite;
 }
 
-.orbitOne::before {
-  left: 40px;
-  top: 40px;
+/* Connection lines from orbit to panel */
+.featureArt::before {
+  content: "";
+  position: absolute;
+  width: 72px;
+  height: 1.5px;
+  background: linear-gradient(to right, rgba(155, 224, 71, 0.6), rgba(155, 224, 71, 0.1));
+  left: 130px;
+  top: 68px;
+  transform: rotate(-12deg);
+  border-radius: 2px;
 }
 
-.orbitTwo::before {
-  right: 14px;
-  top: 26px;
+.featureArt::after {
+  content: "";
+  position: absolute;
+  width: 60px;
+  height: 1.5px;
+  background: linear-gradient(to right, rgba(155, 224, 71, 0.5), rgba(155, 224, 71, 0.08));
+  left: 126px;
+  bottom: 56px;
+  transform: rotate(14deg);
+  border-radius: 2px;
 }
 
+/* AI Chip — dark badge with glow & diagonal lines */
 .aiChip {
   position: absolute;
-  left: 88px;
-  bottom: 28px;
-  width: 88px;
-  height: 48px;
-  display: inline-flex;
+  bottom: 20px;
+  left: 72px;
+  width: 92px;
+  height: 50px;
+  display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
-  background: linear-gradient(145deg, #103b2f, #071d17);
+  border-radius: 12px;
+  background: linear-gradient(145deg, #133d2e, #071d17);
   color: #fff;
-  font-size: 1.45rem;
-  font-weight: 850;
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  box-shadow: 0 14px 32px rgba(7, 29, 23, 0.35);
+  animation: chipDiagFloat 5.5s ease-in-out infinite;
+  overflow: hidden;
   transform: rotate(-22deg);
-  box-shadow: 0 18px 32px rgba(7, 29, 23, 0.22);
-  animation: chipFloat 5.8s ease-in-out infinite;
 }
 
+/* Diagonal slash lines on AI chip */
+.aiChip::before,
+.aiChip::after {
+  content: "";
+  position: absolute;
+  width: 130%;
+  height: 1.5px;
+  background: rgba(155, 224, 71, 0.5);
+  border-radius: 2px;
+  left: -15%;
+}
+
+.aiChip::before {
+  transform: rotate(28deg) translateY(-8px);
+}
+
+.aiChip::after {
+  transform: rotate(-28deg) translateY(8px);
+}
+
+/* Graph Panel — frosted glass floating card */
 .graphPanel {
   position: absolute;
-  left: 150px;
-  top: 30px;
-  width: 142px;
-  height: 150px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.66);
-  border: 1px solid rgba(255, 255, 255, 0.88);
-  box-shadow: 0 20px 50px rgba(7, 29, 23, 0.1);
-  transform: skewY(8deg);
+  right: 0;
+  top: 18px;
+  width: 148px;
+  height: 158px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 16px 48px rgba(7, 29, 23, 0.12), inset 0 1px 0 rgba(255,255,255,0.6);
   animation: panelGlide 7s ease-in-out infinite;
+  overflow: hidden;
 }
 
+/* Horizontal data bars inside panel */
 .graphPanel::before,
 .graphPanel::after {
   content: "";
   position: absolute;
-  left: 38px;
-  right: 28px;
-  border-top: 2px solid rgba(155, 224, 71, 0.55);
+  left: 32px;
+  right: 24px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(to right, rgba(155, 224, 71, 0.65), rgba(155, 224, 71, 0.2));
 }
 
 .graphPanel::before {
-  top: 48px;
+  top: 44px;
 }
 
 .graphPanel::after {
-  top: 96px;
+  top: 94px;
 }
 
+/* Data node dots inside graph panel */
 .graphPanel i {
   position: absolute;
-  width: 13px;
-  height: 13px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: #9be047;
+  animation: nodePulse 2.4s infinite ease-in-out;
+  display: block;
+  font-style: normal;
 }
 
 .graphPanel i:nth-child(1) {
-  left: 34px;
-  top: 42px;
+  left: 28px;
+  top: 38px;
+  animation-delay: 0s;
+  width: 14px;
+  height: 14px;
 }
 
 .graphPanel i:nth-child(2) {
-  left: 64px;
-  top: 72px;
+  left: 60px;
+  top: 70px;
+  animation-delay: 0.7s;
 }
 
 .graphPanel i:nth-child(3) {
-  left: 96px;
-  top: 58px;
+  left: 94px;
+  top: 52px;
+  animation-delay: 1.4s;
+  width: 10px;
+  height: 10px;
 }
 
 .graphPanel i:nth-child(4) {
-  left: 86px;
-  top: 104px;
+  left: 82px;
+  top: 100px;
+  animation-delay: 2.1s;
+  width: 11px;
+  height: 11px;
 }
 
 .ecosystemImpact {

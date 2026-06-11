@@ -1,33 +1,34 @@
 import { Link } from 'react-router-dom';
+import {
+  Mail,
+  School,
+  MapPin,
+  Clock,
+  HelpCircle
+} from 'lucide-react';
 import styles from './ContactPage.module.css';
 
 const whatsappUrl = 'https://wa.me/918886945890';
 const emailUrl = 'mailto:buildwithtattva@gmail.com';
 
-const Icon = ({ type }) => {
+const Icon = ({ type, size = 24, strokeWidth = 2, style }) => {
   const icons = {
-    whatsapp: (
-      <path d="M16 4a12 12 0 0 0-10.3 18.1L4 28l6-1.6A12 12 0 1 0 16 4ZM11 10c.4 0 1 .1 1.2.8l.8 2c.2.5 0 .8-.3 1.1l-.6.7c.9 1.7 2.2 3 4 3.9l.8-.9c.3-.4.7-.5 1.2-.3l2 .9c.6.3.8.8.7 1.3-.2 1.2-1.2 2-2.5 2-4.2 0-9.7-5.3-9.7-9.8 0-1 .9-1.7 1.7-1.7H11Z" />
-    ),
-    mail: (
-      <path d="M5 8h22v16H5V8ZM6 9l10 8 10-8M6 23l7-7M26 23l-7-7" />
-    ),
-    school: (
-      <path d="M6 25h20M8 25V12l8-5 8 5v13M13 25v-7h6v7M11 15h3M18 15h3M15 11h2" />
-    ),
-    location: (
-      <path d="M16 4a8 8 0 0 1 8 8c0 6-8 16-8 16S8 18 8 12a8 8 0 0 1 8-8ZM16 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-    ),
-    clock: (
-      <path d="M16 5a11 11 0 1 0 0 22 11 11 0 0 0 0-22ZM16 10v7l5 3" />
-    )
+    mail: Mail,
+    school: School,
+    location: MapPin,
+    clock: Clock
   };
 
-  return (
-    <svg viewBox="0 0 32 32" aria-hidden="true">
-      {icons[type]}
-    </svg>
-  );
+  if (type === 'whatsapp') {
+    return (
+      <svg viewBox="0 0 32 32" aria-hidden="true" width={size} height={size} style={style}>
+        <path d="M16 4a12 12 0 0 0-10.3 18.1L4 28l6-1.6A12 12 0 1 0 16 4ZM11 10c.4 0 1 .1 1.2.8l.8 2c.2.5 0 .8-.3 1.1l-.6.7c.9 1.7 2.2 3 4 3.9l.8-.9c.3-.4.7-.5 1.2-.3l2 .9c.6.3.8.8.7 1.3-.2 1.2-1.2 2-2.5 2-4.2 0-9.7-5.3-9.7-9.8 0-1 .9-1.7 1.7-1.7H11Z" fill="currentColor" />
+      </svg>
+    );
+  }
+
+  const IconComponent = icons[type] || HelpCircle;
+  return <IconComponent size={size} strokeWidth={strokeWidth} style={style} />;
 };
 
 const ContactPage = () => {

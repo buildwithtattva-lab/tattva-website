@@ -1,5 +1,17 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  School,
+  Users,
+  GraduationCap,
+  Award,
+  Target,
+  Lightbulb,
+  Handshake,
+  ShieldCheck,
+  Rocket,
+  HelpCircle
+} from 'lucide-react';
 import heroImage from '../assets/bento/m6.png';
 import missionImage from '../assets/bento/m1.png';
 import storyImage from '../assets/bento/t4.png';
@@ -56,26 +68,30 @@ const team = [
   { name: 'Hari' }
 ];
 
-const Icon = ({ type }) => {
+const Icon = ({ type, size = 24, strokeWidth = 2, style }) => {
   const icons = {
-    school: <path d="M6 25h20M8 25V12l8-5 8 5v13M13 25v-7h6v7M11 15h3M18 15h3M15 11h2" />,
-    students: <path d="M11 14a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM21 15a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM4 26c1-5 4-8 7-8s6 3 7 8M16 25c.8-4 3-6 5-6 2.5 0 5 2.5 6 7" />,
-    cap: <path d="m4 12 12-6 12 6-12 6-12-6ZM9 15v6c2 2 4.5 3 7 3s5-1 7-3v-6M27 13v7" />,
-    badge: <path d="M16 4a8 8 0 0 1 8 8c0 5-8 16-8 16S8 17 8 12a8 8 0 0 1 8-8ZM13 12l2 2 4-5" />,
-    medal: <path d="M11 5h10l-3 7h-4L11 5ZM16 13a6 6 0 1 0 0 12 6 6 0 0 0 0-12ZM16 16l1.2 2.4 2.6.4-1.9 1.9.5 2.6-2.4-1.3-2.4 1.3.5-2.6-1.9-1.9 2.6-.4L16 16Z" />,
-    target: <path d="M16 27a11 11 0 1 1 11-11M16 22a6 6 0 1 1 6-6M16 17a1 1 0 1 1 1-1M20 12l6-6M22 6h4v4" />,
-    bulb: <path d="M11 20c-2-1.6-3-3.8-3-6a8 8 0 1 1 16 0c0 2.2-1 4.4-3 6M12 24h8M13 28h6M14 20h4M14 11l2-3 2 3" />,
-    hands: <path d="M8 17l5 5c1.2 1.2 3 1.2 4.2 0l6.8-6.8a3 3 0 0 0-4.2-4.2l-4.7 4.7M14 16l-2-2a3 3 0 0 0-4.2 0L5 16.8M20 22l2 2M15 23l2 2M10 22l2 2" />,
-    shield: <path d="M16 4 26 8v7c0 6-4 10-10 13C10 25 6 21 6 15V8l10-4ZM12 16l3 3 6-7" />,
-    rocket: <path d="M12 20 6 26l2-7M20 12l7-7c-7 0-13 3-16 9l-4 1 5 5 5 5 1-4c6-3 9-9 9-16M18 10a2 2 0 1 0 4 0 2 2 0 0 0-4 0Z" />,
-    whatsapp: <path d="M16 4a12 12 0 0 0-10.3 18.1L4 28l6-1.6A12 12 0 1 0 16 4ZM11 10c.4 0 1 .1 1.2.8l.8 2c.2.5 0 .8-.3 1.1l-.6.7c.9 1.7 2.2 3 4 3.9l.8-.9c.3-.4.7-.5 1.2-.3l2 .9c.6.3.8.8.7 1.3-.2 1.2-1.2 2-2.5 2-4.2 0-9.7-5.3-9.7-9.8 0-1 .9-1.7 1.7-1.7H11Z" />
+    school: School,
+    students: Users,
+    cap: GraduationCap,
+    badge: Award,
+    medal: Award,
+    target: Target,
+    bulb: Lightbulb,
+    hands: Handshake,
+    shield: ShieldCheck,
+    rocket: Rocket
   };
 
-  return (
-    <svg viewBox="0 0 32 32" aria-hidden="true">
-      {icons[type]}
-    </svg>
-  );
+  if (type === 'whatsapp') {
+    return (
+      <svg viewBox="0 0 32 32" aria-hidden="true" width={size} height={size} style={style}>
+        <path d="M16 4a12 12 0 0 0-10.3 18.1L4 28l6-1.6A12 12 0 1 0 16 4ZM11 10c.4 0 1 .1 1.2.8l.8 2c.2.5 0 .8-.3 1.1l-.6.7c.9 1.7 2.2 3 4 3.9l.8-.9c.3-.4.7-.5 1.2-.3l2 .9c.6.3.8.8.7 1.3-.2 1.2-1.2 2-2.5 2-4.2 0-9.7-5.3-9.7-9.8 0-1 .9-1.7 1.7-1.7H11Z" fill="currentColor" />
+      </svg>
+    );
+  }
+
+  const IconComponent = icons[type] || HelpCircle;
+  return <IconComponent size={size} strokeWidth={strokeWidth} style={style} />;
 };
 
 const AboutPage = () => {
