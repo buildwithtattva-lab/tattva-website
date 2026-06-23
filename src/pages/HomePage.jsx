@@ -23,7 +23,9 @@ import {
   Presentation,
   Target,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Menu,
+  X
 } from 'lucide-react';
 import heroImage from '../assets/bento/herosection.png';
 import summerCampImg from '../assets/bento/v2.png';
@@ -45,6 +47,7 @@ const whatsappUrl = 'https://wa.me/918886945890';
 const homeGalleryFolder = import.meta.env.VITE_CLOUDINARY_HOME_GALLERY_FOLDER || 'Main Gallery';
 const aiWorkshopsFolder = import.meta.env.VITE_CLOUDINARY_AI_WORKSHOPS_FOLDER || 'AI Workshops';
 const aiWorkshopsFolderAliases = [aiWorkshopsFolder, 'workshops'];
+const heroImagesFolder = import.meta.env.VITE_CLOUDINARY_HERO_IMAGES_FOLDER || 'hero section images';
 
 const normalizeGallerySegment = (value = '') => String(value)
   .toLowerCase()
@@ -112,6 +115,16 @@ const sortNumberedImagesFirst = (images, maxPriority) => [...images].sort((a, b)
 
 const sortRecentWorkshops = (images) => sortNumberedImagesFirst(images, 7);
 const sortAiWorkshops = (images) => sortNumberedImagesFirst(images, 5);
+
+const navItems = [
+  { label: 'Home', to: '/' },
+  { label: 'For Schools', to: '/for-schools' },
+  { label: 'Student Programs', to: '/for-students' },
+  { label: 'International Students', to: '/international-students' },
+  { label: 'Faculty Training', to: '/faculty-training' },
+  { label: 'Gallery', to: '/projects' },
+  { label: 'About', to: '/about' }
+];
 
 const stats = [
   {
@@ -355,8 +368,11 @@ const AnimatedStatValue = ({ value, suffix }) => {
 
 const HomePage = () => {
   const [showWhatsApp, setShowWhatsApp] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [homeGalleryImages, setHomeGalleryImages] = useState([]);
   const [aiWorkshopImages, setAiWorkshopImages] = useState([]);
+  const [heroGalleryImages, setHeroGalleryImages] = useState([]);
+  const [activeHeroIndex, setActiveHeroIndex] = useState(0);
   const [homeGalleryStatus, setHomeGalleryStatus] = useState('loading');
   const [homeGalleryError, setHomeGalleryError] = useState('');
   const recentWorkshopsRef = useRef(null);
@@ -414,9 +430,13 @@ const HomePage = () => {
         const workshopImages = sortAiWorkshops(
           images.filter((image) => matchesAnyGalleryFolder(image, aiWorkshopsFolderAliases))
         );
+        const heroImages = images
+          .filter((image) => !image.isVideo && matchesGalleryFolder(image, heroImagesFolder))
+          .sort((a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime());
 
         setHomeGalleryImages(mainGalleryImages);
         setAiWorkshopImages(workshopImages);
+        setHeroGalleryImages(heroImages);
         setHomeGalleryStatus(mainGalleryImages.length ? 'ready' : 'empty');
       } catch (galleryError) {
         if (!isMounted) return;
@@ -431,6 +451,29 @@ const HomePage = () => {
       isMounted = false;
     };
   }, []);
+
+  useEffect(() => {
+    if (heroGalleryImages.length < 2) {
+      setActiveHeroIndex(0);
+      return undefined;
+    }
+
+    const intervalId = window.setInterval(() => {
+      setActiveHeroIndex((currentIndex) => (currentIndex + 1) % heroGalleryImages.length);
+    }, 5000);
+
+    return () => window.clearInterval(intervalId);
+  }, [heroGalleryImages.length]);
+
+  const heroSlides = heroGalleryImages.length
+    ? heroGalleryImages.map((image) => ({
+      src: image.full || image.thumb,
+      alt: image.alt || 'Students learning AI'
+    }))
+    : [{
+      src: heroImage,
+      alt: 'Students learning AI with a laptop and robotics kit'
+    }];
 
   const orderedRecentWorkshopImages = sortRecentWorkshops(homeGalleryImages);
 
@@ -470,11 +513,15 @@ const HomePage = () => {
   return (
     <div className={styles.homePage}>
       <header className={styles.hero}>
-        <img
-          src={heroImage}
-          alt="Students learning AI with a laptop and robotics kit"
-          className={styles.heroImage}
-        />
+        {heroSlides.map((image, index) => (
+          <img
+            src={image.src}
+            alt={index === activeHeroIndex ? image.alt : ''}
+            className={`${styles.heroImage} ${index === activeHeroIndex ? styles.heroImageActive : ''}`}
+            aria-hidden={index === activeHeroIndex ? undefined : 'true'}
+            key={`${image.src}-${index}`}
+          />
+        ))}
         <div className={styles.heroShade} />
 
         <nav className={styles.nav} aria-label="Primary navigation">
@@ -484,13 +531,11 @@ const HomePage = () => {
           </Link>
 
           <div className={styles.navLinks}>
-            <Link to="/" className={styles.activeNav}>Home</Link>
-            <Link to="/for-schools">For Schools</Link>
-            <Link to="/for-students">Student Programs</Link>
-            <Link to="/international-students">International Students</Link>
-            <Link to="/faculty-training">Faculty Training</Link>
-            <Link to="/projects">Gallery</Link>
-            <Link to="/about">About</Link>
+            {navItems.map((item) => (
+              <Link to={item.to} className={item.to === '/' ? styles.activeNav : ''} key={item.to}>
+                {item.label}
+              </Link>
+            ))}
           </div>
 
           <div className={styles.navActions}>
@@ -501,6 +546,35 @@ const HomePage = () => {
               <svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-hidden="true">
                 <path d="M27.281 4.65C24.281 1.65 20.281 0 16.031 0C7.281 0 0.156 7.125 0.156 15.875C0.156 18.656 0.906 21.375 2.281 23.75L0 32L8.5 29.75C10.781 31 13.375 31.656 16.031 31.656C24.781 31.656 32 24.531 32 15.781C32 11.531 30.281 7.65 27.281 4.65ZM16.031 29C13.656 29 11.344 28.375 9.344 27.219L8.875 26.938L3.844 28.219L5.156 23.344L4.844 22.844C3.563 20.75 2.875 18.344 2.875 15.875C2.875 8.625 8.781 2.719 16.031 2.719C19.531 2.719 22.813 4.094 25.281 6.594C27.75 9.094 29.156 12.375 29.156 15.875C29.281 23.125 23.281 29 16.031 29ZM23.25 19.125C22.844 18.938 20.844 17.969 20.469 17.813C20.094 17.688 19.813 17.625 19.531 18C19.25 18.406 18.5 19.313 18.25 19.563C18 19.844 17.719 19.875 17.313 19.656C16.906 19.469 15.563 19.031 13.969 17.594C12.719 16.469 11.906 15.094 11.625 14.688C11.375 14.281 11.594 14.063 11.781 13.875C11.938 13.719 12.156 13.438 12.344 13.188C12.531 13 12.594 12.844 12.719 12.563C12.844 12.281 12.781 12.031 12.688 11.844C12.594 11.656 11.906 9.656 11.531 8.844C11.188 8.063 10.813 8.156 10.563 8.156H9.781C9.5 8.156 9.063 8.25 8.688 8.656C8.313 9.063 7.25 10.031 7.25 12.031C7.25 14.031 8.719 15.969 8.906 16.219C9.094 16.5 11.906 20.813 16.156 22.531C17.219 22.969 18.063 23.219 18.719 23.406C19.781 23.75 20.75 23.688 21.5 23.594C22.344 23.469 24 22.625 24.375 21.688C24.781 20.75 24.781 19.938 24.656 19.75C24.531 19.563 24.25 19.469 23.844 19.281L23.25 19.125Z" fill="currentColor" />
               </svg>
+            </a>
+            <button
+              type="button"
+              className={styles.mobileMenuButton}
+              onClick={() => setMobileMenuOpen((isOpen) => !isOpen)}
+              aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="home-mobile-navigation"
+            >
+              {mobileMenuOpen ? <X size={22} strokeWidth={2.4} /> : <Menu size={22} strokeWidth={2.4} />}
+            </button>
+          </div>
+
+          <div
+            className={`${styles.mobileNavPanel} ${mobileMenuOpen ? styles.mobileNavPanelOpen : ''}`}
+            id="home-mobile-navigation"
+          >
+            {navItems.map((item) => (
+              <Link
+                to={item.to}
+                className={item.to === '/' ? styles.activeMobileNav : ''}
+                onClick={() => setMobileMenuOpen(false)}
+                key={item.to}
+              >
+                {item.label}
+              </Link>
+            ))}
+            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)}>
+              Book a Demo
             </a>
           </div>
         </nav>
