@@ -64,10 +64,10 @@ const parseCloudinaryUrl = (cloudinaryUrl = '') => {
 
 const normalizePrefix = (prefix = '') => prefix.trim().replace(/^\/+/, '').replace(/\/?$/, '/');
 
-const buildCloudinaryUrl = ({ cloudName, tag, nextCursor }) => {
+const buildCloudinaryUrl = ({ cloudName, tag, nextCursor, resourceType }) => {
   const url = tag
-    ? new URL(`https://api.cloudinary.com/v1_1/${cloudName}/resources/image/tags/${encodeURIComponent(tag)}`)
-    : new URL(`https://api.cloudinary.com/v1_1/${cloudName}/resources/image/upload`);
+    ? new URL(`https://api.cloudinary.com/v1_1/${cloudName}/resources/${resourceType}/tags/${encodeURIComponent(tag)}`)
+    : new URL(`https://api.cloudinary.com/v1_1/${cloudName}/resources/${resourceType}/upload`);
 
   url.searchParams.set('max_results', '100');
   url.searchParams.set('context', 'true');
@@ -81,7 +81,7 @@ const buildCloudinaryUrl = ({ cloudName, tag, nextCursor }) => {
   return url;
 };
 
-const fetchResources = async ({ cloudName, apiKey, apiSecret, tag, prefix }) => {
+const fetchResourcesByType = async ({ cloudName, apiKey, apiSecret, tag, prefix, resourceType }) => {
   const auth = Buffer.from(`${apiKey}:${apiSecret}`).toString('base64');
   const resources = [];
   let nextCursor = '';
@@ -95,7 +95,7 @@ const fetchResources = async ({ cloudName, apiKey, apiSecret, tag, prefix }) => 
   };
 
   do {
-    const response = await fetch(buildCloudinaryUrl({ cloudName, tag, nextCursor }), {
+    const response = await fetch(buildCloudinaryUrl({ cloudName, tag, nextCursor, resourceType }), {
       headers: {
         Authorization: `Basic ${auth}`
       }
@@ -107,11 +107,26 @@ const fetchResources = async ({ cloudName, apiKey, apiSecret, tag, prefix }) => 
     }
 
     const data = await response.json();
-    resources.push(...(data.resources || []).filter(matchesPrefix));
+    resources.push(...(data.resources || [])
+      .map((resource) => ({ ...resource, resource_type: resource.resource_type || resourceType }))
+      .filter(matchesPrefix));
     nextCursor = data.next_cursor || '';
   } while (nextCursor);
 
   return resources;
+};
+
+const fetchResources = async (options) => {
+  const [images, videos] = await Promise.all([
+    fetchResourcesByType({ ...options, resourceType: 'image' }),
+    fetchResourcesByType({ ...options, resourceType: 'video' })
+  ]);
+
+  return [...images, ...videos].sort((a, b) => {
+    const aTime = new Date(a.created_at || 0).getTime();
+    const bTime = new Date(b.created_at || 0).getTime();
+    return bTime - aTime;
+  });
 };
 
 const main = async () => {
@@ -147,7 +162,7 @@ const main = async () => {
   await mkdir(path.dirname(outputPath), { recursive: true });
   await writeFile(outputPath, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
 
-  console.log(`Synced ${resources.length} Cloudinary images to ${path.relative(rootDir, outputPath)}.`);
+  console.log(`Synced ${resources.length} Cloudinary media resources to ${path.relative(rootDir, outputPath)}.`);
 };
 
 main().catch((error) => {

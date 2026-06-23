@@ -53,7 +53,7 @@ const ProjectsPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [sortOrder, setSortOrder] = useState('newest');
   const [visibleCount, setVisibleCount] = useState(16);
-  const [images, setImages] = useState([]);
+  const [mediaItems, setMediaItems] = useState([]);
   const [status, setStatus] = useState('loading');
   const [error, setError] = useState('');
 
@@ -63,9 +63,9 @@ const ProjectsPage = () => {
     const loadImages = async () => {
       try {
         setStatus('loading');
-        const galleryImages = await fetchGalleryResources();
+        const galleryItems = await fetchGalleryResources();
         if (!isMounted) return;
-        setImages(galleryImages);
+        setMediaItems(galleryItems);
         setStatus('ready');
       } catch (galleryError) {
         if (!isMounted) return;
@@ -87,15 +87,15 @@ const ProjectsPage = () => {
 
   const filteredImages = useMemo(() => {
     const byCategory = selectedCategory === 'All'
-      ? images
-      : images.filter((image) => image.category === selectedCategory);
+      ? mediaItems
+      : mediaItems.filter((item) => item.category === selectedCategory);
 
     return [...byCategory].sort((a, b) => {
       const aTime = new Date(a.created_at || 0).getTime();
       const bTime = new Date(b.created_at || 0).getTime();
       return sortOrder === 'newest' ? bTime - aTime : aTime - bTime;
     });
-  }, [images, selectedCategory, sortOrder]);
+  }, [mediaItems, selectedCategory, sortOrder]);
 
   const visibleImages = filteredImages.slice(0, visibleCount);
   const canLoadMore = visibleCount < filteredImages.length;
@@ -195,10 +195,23 @@ const ProjectsPage = () => {
         {status === 'ready' && (
           <>
             <section className={styles.galleryGrid} aria-label="Tattva-AI gallery">
-              {visibleImages.map((image) => (
-                <a className={styles.galleryItem} href={image.full} target="_blank" rel="noopener noreferrer" key={image.id}>
-                  <img src={image.thumb} alt={image.alt} loading="lazy" />
-                </a>
+              {visibleImages.map((item) => (
+                item.isVideo ? (
+                  <article className={`${styles.galleryItem} ${styles.videoItem}`} key={item.id}>
+                    <video
+                      src={item.full}
+                      poster={item.thumb}
+                      controls
+                      preload="metadata"
+                      playsInline
+                      aria-label={item.alt}
+                    />
+                  </article>
+                ) : (
+                  <a className={styles.galleryItem} href={item.full} target="_blank" rel="noopener noreferrer" key={item.id}>
+                    <img src={item.thumb} alt={item.alt} loading="lazy" />
+                  </a>
+                )
               ))}
             </section>
 
@@ -221,7 +234,7 @@ const ProjectsPage = () => {
 
         <p className={styles.cloudNote}>
           <Icon type="cloud" />
-          All images are securely delivered by Cloudinary.
+          All images and videos are securely delivered by Cloudinary.
         </p>
       </main>
 

@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import {
   School,
@@ -22,7 +21,9 @@ import {
   Scale,
   Smile,
   Presentation,
-  Target
+  Target,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import heroImage from '../assets/bento/herosection.png';
 import summerCampImg from '../assets/bento/v2.png';
@@ -42,6 +43,8 @@ import styles from './HomePage.module.css';
 
 const whatsappUrl = 'https://wa.me/918886945890';
 const homeGalleryFolder = import.meta.env.VITE_CLOUDINARY_HOME_GALLERY_FOLDER || 'Main Gallery';
+const aiWorkshopsFolder = import.meta.env.VITE_CLOUDINARY_AI_WORKSHOPS_FOLDER || 'AI Workshops';
+const aiWorkshopsFolderAliases = [aiWorkshopsFolder, 'workshops'];
 
 const normalizeGallerySegment = (value = '') => String(value)
   .toLowerCase()
@@ -59,6 +62,9 @@ const matchesGalleryFolder = (image, folderName) => {
     .some((segment) => normalizeGallerySegment(segment) === expectedFolder);
 };
 
+const matchesAnyGalleryFolder = (image, folderNames) => folderNames
+  .some((folderName) => matchesGalleryFolder(image, folderName));
+
 const isPopupFriendlyImage = (image) => {
   const searchableText = [
     image.public_id,
@@ -72,6 +78,40 @@ const isPopupFriendlyImage = (image) => {
 
   return !searchableText.includes('screenshot');
 };
+
+const getNumberedImagePriority = (image, maxPriority) => {
+  const candidates = [
+    image.display_name,
+    image.title,
+    image.alt,
+    image.public_id
+  ].filter(Boolean);
+
+  for (const candidate of candidates) {
+    const fileName = String(candidate).split('/').pop().replace(/\.[^/.]+$/, '').trim();
+    const priorityMatch = fileName.match(/^(\d+)(?:[_-][a-z0-9]+)?$/i);
+    if (priorityMatch) {
+      const priority = Number(priorityMatch[1]);
+      if (priority >= 1 && priority <= maxPriority) {
+        return priority;
+      }
+    }
+  }
+
+  return Number.POSITIVE_INFINITY;
+};
+
+const sortNumberedImagesFirst = (images, maxPriority) => [...images].sort((a, b) => {
+  const priorityA = getNumberedImagePriority(a, maxPriority);
+  const priorityB = getNumberedImagePriority(b, maxPriority);
+
+  if (priorityA !== priorityB) return priorityA - priorityB;
+
+  return new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime();
+});
+
+const sortRecentWorkshops = (images) => sortNumberedImagesFirst(images, 7);
+const sortAiWorkshops = (images) => sortNumberedImagesFirst(images, 5);
 
 const stats = [
   {
@@ -169,7 +209,7 @@ const campFeatures = [
   { label: 'Fun & Exploration', icon: Sparkles }
 ];
 
-const campGallery = [
+const fallbackCampGallery = [
   {
     title: 'Building AI Robots',
     subtitle: 'Robotics Workshop',
@@ -213,15 +253,15 @@ const outcomes = [
 
 const testimonials = [
   ['The AI program by Tattva AI has transformed the way our students learn. The hands-on projects and workshops are exceptional!', 'Principal Tanusree', 'Sloka The School'],
-  ['The faculty training was practical, easy to apply, and extremely useful for our daily classroom teaching.', 'Teacher', 'Ryan International School'],
-  ['My son loved the AI workshop. He built his own app and came home excited every day.', 'Parent', 'Bangalore']
+  ['The faculty training was practical, easy to apply, and extremely useful for our daily classroom teaching.', 'Dean', 'Steps The School'],
+  ['My son loved the AI workshop. He built his own app and came home excited every day.', 'Parent', 'Hyderabad']
 ];
 
 const institutions = [
-  { name: 'Sloka School', logo: slokaLogo },
+  { name: 'Sloka The School', logo: slokaLogo },
   { name: 'FBHIS', logo: fbhisLogo },
   { name: 'St. Martins', logo: stMartinsLogo },
-  { name: 'Steps School', logo: stepsLogo }
+  { name: 'Steps The School', logo: stepsLogo }
 ];
 
 const faqsLeft = [
@@ -316,10 +356,10 @@ const AnimatedStatValue = ({ value, suffix }) => {
 const HomePage = () => {
   const [showWhatsApp, setShowWhatsApp] = useState(false);
   const [homeGalleryImages, setHomeGalleryImages] = useState([]);
+  const [aiWorkshopImages, setAiWorkshopImages] = useState([]);
   const [homeGalleryStatus, setHomeGalleryStatus] = useState('loading');
   const [homeGalleryError, setHomeGalleryError] = useState('');
-  const [isGalleryModalOpen, setIsGalleryModalOpen] = useState(false);
-  const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
+  const recentWorkshopsRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -371,13 +411,13 @@ const HomePage = () => {
         const curatedImages = folderImages.filter(isPopupFriendlyImage);
         const mainGalleryImages = (curatedImages.length ? curatedImages : folderImages)
           .sort((a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime());
+        const workshopImages = sortAiWorkshops(
+          images.filter((image) => matchesAnyGalleryFolder(image, aiWorkshopsFolderAliases))
+        );
 
         setHomeGalleryImages(mainGalleryImages);
+        setAiWorkshopImages(workshopImages);
         setHomeGalleryStatus(mainGalleryImages.length ? 'ready' : 'empty');
-
-        if (mainGalleryImages.length) {
-          setIsGalleryModalOpen(true);
-        }
       } catch (galleryError) {
         if (!isMounted) return;
         setHomeGalleryError(galleryError.message);
@@ -392,153 +432,40 @@ const HomePage = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (!homeGalleryImages.length) {
-      setActiveGalleryIndex(0);
-      return;
-    }
+  const orderedRecentWorkshopImages = sortRecentWorkshops(homeGalleryImages);
 
-    setActiveGalleryIndex((currentIndex) => Math.min(currentIndex, homeGalleryImages.length - 1));
-  }, [homeGalleryImages]);
+  const recentWorkshopGallery = orderedRecentWorkshopImages.slice(0, 8).map((image, index) => ({
+    title: image.title || `Workshop Moment ${index + 1}`,
+    image: image.thumb,
+    alt: image.alt
+  }));
 
-  useEffect(() => {
-    if (!isGalleryModalOpen) return undefined;
+  const cloudinaryWorkshopGallery = aiWorkshopImages.slice(0, 5).map((image, index) => ({
+    title: image.title || `Workshop Moment ${index + 1}`,
+    subtitle: image.category || 'Recent Workshop',
+    image: image.thumb,
+    alt: image.alt,
+    className: index === 0 ? 'campLarge' : ''
+  }));
 
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+  const campGallery = cloudinaryWorkshopGallery.length ? cloudinaryWorkshopGallery : fallbackCampGallery;
+  const recentWorkshops = recentWorkshopGallery.length
+    ? recentWorkshopGallery
+    : fallbackCampGallery.map((item) => ({
+      title: item.title,
+      image: item.image,
+      alt: item.title
+    }));
 
-    const handleKeyDown = (event) => {
-      if (event.key === 'Escape') {
-        setIsGalleryModalOpen(false);
-      }
+  const scrollRecentWorkshops = (direction) => {
+    const rail = recentWorkshopsRef.current;
+    if (!rail) return;
 
-      if (homeGalleryImages.length < 2) return;
-
-      if (event.key === 'ArrowRight') {
-        setActiveGalleryIndex((currentIndex) => (currentIndex + 1) % homeGalleryImages.length);
-      }
-
-      if (event.key === 'ArrowLeft') {
-        setActiveGalleryIndex((currentIndex) => (currentIndex - 1 + homeGalleryImages.length) % homeGalleryImages.length);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isGalleryModalOpen, homeGalleryImages.length]);
-
-  const activeGalleryImage = homeGalleryImages[activeGalleryIndex] || null;
-
-  const closeGalleryModal = () => {
-    setIsGalleryModalOpen(false);
+    rail.scrollBy({
+      left: direction * Math.min(rail.clientWidth * 0.85, 760),
+      behavior: 'smooth'
+    });
   };
-
-  const openGalleryModal = () => {
-    if (!homeGalleryImages.length) return;
-    setIsGalleryModalOpen(true);
-  };
-
-  const showPreviousGalleryImage = () => {
-    setActiveGalleryIndex((currentIndex) => (currentIndex - 1 + homeGalleryImages.length) % homeGalleryImages.length);
-  };
-
-  const showNextGalleryImage = () => {
-    setActiveGalleryIndex((currentIndex) => (currentIndex + 1) % homeGalleryImages.length);
-  };
-
-  const galleryModal = isGalleryModalOpen && activeGalleryImage && typeof document !== 'undefined'
-    ? createPortal(
-      <div
-        className={styles.galleryModalOverlay}
-        onClick={(event) => {
-          if (event.target === event.currentTarget) {
-            closeGalleryModal();
-          }
-        }}
-      >
-        <section
-          className={styles.galleryModal}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Main gallery highlights"
-        >
-          <div className={styles.galleryModalHeader}>
-            <div>
-              <p className={styles.galleryModalEyebrow}>Our Achievements & Moments</p>
-              <h2>Main Gallery</h2>
-            </div>
-          </div>
-
-          <button
-            type="button"
-            className={styles.galleryModalClose}
-            onClick={closeGalleryModal}
-            aria-label="Close gallery popup"
-          >
-            ×
-          </button>
-
-          <div className={styles.galleryModalFrame}>
-            {homeGalleryImages.length > 1 && (
-              <button
-                type="button"
-                className={`${styles.galleryArrow} ${styles.galleryArrowLeft}`}
-                onClick={showPreviousGalleryImage}
-                aria-label="Previous image"
-              >
-                ‹
-              </button>
-            )}
-
-            <img
-              src={activeGalleryImage.full}
-              alt={activeGalleryImage.alt}
-              className={styles.galleryModalImage}
-            />
-
-            {homeGalleryImages.length > 1 && (
-              <button
-                type="button"
-                className={`${styles.galleryArrow} ${styles.galleryArrowRight}`}
-                onClick={showNextGalleryImage}
-                aria-label="Next image"
-              >
-                ›
-              </button>
-            )}
-          </div>
-
-          {homeGalleryImages.length > 1 && (
-            <div className={styles.galleryThumbRail} aria-label="Gallery image thumbnails">
-              {homeGalleryImages.map((image, index) => (
-                <button
-                  type="button"
-                  key={image.id}
-                  className={`${styles.galleryThumb} ${index === activeGalleryIndex ? styles.galleryThumbActive : ''}`}
-                  onClick={() => setActiveGalleryIndex(index)}
-                  aria-label={`Show gallery image ${index + 1}`}
-                >
-                  <img src={image.thumb} alt="" loading="lazy" />
-                </button>
-              ))}
-            </div>
-          )}
-
-          <div className={styles.galleryModalFooter}>
-            <span>{activeGalleryIndex + 1} / {homeGalleryImages.length}</span>
-            <Link to="/projects" className={styles.galleryModalLink} onClick={closeGalleryModal}>
-              View Full Gallery
-            </Link>
-          </div>
-        </section>
-      </div>,
-      document.body
-    )
-    : null;
 
   return (
     <div className={styles.homePage}>
@@ -617,6 +544,54 @@ const HomePage = () => {
               </div>
             ))}
           </div>
+        </section>
+
+        <section className={`${styles.recentWorkshopsSection} ${styles.reveal}`} data-reveal aria-label="Recent workshops and success stories">
+          <div className={styles.recentWorkshopsHeader}>
+            <p className={styles.sectionKicker}>RECENT WORKSHOPS & SUCCESS STORIES</p>
+            <h2>Real Experiences. Real Impact.</h2>
+            <p>A glimpse of our workshops, camps, and school collaborations.</p>
+          </div>
+
+          <div className={styles.recentWorkshopsFrame}>
+            <button
+              type="button"
+              className={`${styles.workshopRailButton} ${styles.workshopRailButtonLeft}`}
+              onClick={() => scrollRecentWorkshops(-1)}
+              aria-label="Show previous workshop photos"
+            >
+              <ChevronLeft size={24} strokeWidth={2.4} />
+            </button>
+
+            <div className={styles.recentWorkshopsRail} ref={recentWorkshopsRef}>
+              {recentWorkshops.map((image, index) => (
+                <article
+                  className={styles.recentWorkshopCard}
+                  key={`${image.title}-${index}`}
+                >
+                  <img src={image.image} alt={image.alt || image.title} loading={index < 3 ? 'eager' : 'lazy'} />
+                </article>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              className={`${styles.workshopRailButton} ${styles.workshopRailButtonRight}`}
+              onClick={() => scrollRecentWorkshops(1)}
+              aria-label="Show next workshop photos"
+            >
+              <ChevronRight size={24} strokeWidth={2.4} />
+            </button>
+          </div>
+
+          {homeGalleryStatus === 'error' && (
+            <p className={styles.recentWorkshopsNote}>{homeGalleryError}</p>
+          )}
+          {homeGalleryStatus === 'empty' && (
+            <p className={styles.recentWorkshopsNote}>
+              Add images to the Cloudinary folder `{homeGalleryFolder}` and resync the gallery manifest.
+            </p>
+          )}
         </section>
 
         <section className={`${styles.overviewSection} ${styles.reveal}`} data-reveal>
@@ -735,16 +710,10 @@ const HomePage = () => {
           <div className={styles.campGrid}>
             {campGallery.map((item, index) => (
               <article
-                className={`${styles.campCard} ${styles.reveal} ${item.className ? styles[item.className] : ''}`}
-                style={{ '--reveal-delay': `${index * 95}ms` }}
-                data-reveal
-                key={item.title}
+                className={`${styles.campCard} ${item.className ? styles[item.className] : ''}`}
+                key={`${item.title}-${index}`}
               >
-                <img src={item.image} alt="" />
-                <div>
-                  <h3>{item.title}</h3>
-                  <p>{item.subtitle}</p>
-                </div>
+                <img src={item.image} alt={item.alt || ''} loading={index === 0 ? 'eager' : 'lazy'} />
               </article>
             ))}
           </div>
@@ -803,7 +772,7 @@ const HomePage = () => {
           </div>
 
           <div className={`${styles.testimonialsPanel} ${styles.reveal}`} data-reveal>
-            <p className={styles.sectionKicker}>WHAT THEY SAY</p>
+            <p className={styles.sectionKicker}>SUCCESS STORIES</p>
             <div className={styles.testimonialGrid}>
               {testimonials.map(([quote, role, school], index) => (
                 <article
@@ -847,7 +816,7 @@ const HomePage = () => {
             <img src={sudhaPortraitImg} alt="Vamgipuram Sudha Harikishan" />
           </div>
           <div className={`${styles.leaderCopy} ${styles.reveal}`} data-reveal>
-            <p className={styles.darkKicker}>LED BY EXPERIENCED EDUCATORS & AI PROGRAM DESIGNERS</p>
+            <p className={styles.darkKicker}>Guided by Experienced Education Leaders</p>
             <h2>Vamgipuram Sudha Harikishan</h2>
             <ul>
               <li>33+ years of experience in educational leadership</li>
@@ -903,8 +872,6 @@ const HomePage = () => {
           </aside>
         </section>
       </main>
-
-      {galleryModal}
 
       <footer className={styles.siteFooter}>
         <div className={styles.footerBrand}>

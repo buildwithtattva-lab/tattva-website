@@ -35,7 +35,9 @@ const normalizeCategory = (resource) => {
   return matched || 'Classroom';
 };
 
-const cloudinaryImageUrl = (resource, transform = 'f_auto,q_auto,c_fill,w_720,h_540') => {
+const getResourceType = (resource) => resource.resource_type || resource.resourceType || 'image';
+
+const cloudinaryMediaUrl = (resource, transform = 'f_auto,q_auto,c_fill,w_720,h_540', resourceType = getResourceType(resource)) => {
   if (resource.secure_url && resource.secure_url.includes('/upload/')) {
     return resource.secure_url.replace('/upload/', `/upload/${transform}/`);
   }
@@ -44,16 +46,35 @@ const cloudinaryImageUrl = (resource, transform = 'f_auto,q_auto,c_fill,w_720,h_
 
   const version = resource.version ? `v${resource.version}/` : '';
   const extension = resource.format ? `.${resource.format}` : '';
-  return `https://res.cloudinary.com/${cloudName}/image/upload/${transform}/${version}${resource.public_id}${extension}`;
+  return `https://res.cloudinary.com/${cloudName}/${resourceType}/upload/${transform}/${version}${resource.public_id}${extension}`;
+};
+
+const cloudinaryImageUrl = (resource, transform = 'f_auto,q_auto,c_fill,w_720,h_540') => {
+  const resourceType = getResourceType(resource);
+  const mediaTransform = resourceType === 'video'
+    ? transform.replace(/^f_auto,?/, 'f_jpg,so_auto,')
+    : transform;
+
+  return cloudinaryMediaUrl(resource, mediaTransform, resourceType);
+};
+
+const cloudinaryFullUrl = (resource) => {
+  const resourceType = getResourceType(resource);
+  const transform = resourceType === 'video' ? 'f_auto,q_auto' : 'f_auto,q_auto,w_1800';
+
+  return cloudinaryMediaUrl(resource, transform, resourceType);
 };
 
 const normalizeResource = (resource, index) => {
   const custom = resource.context?.custom || resource.context || {};
   const publicId = resource.public_id || resource.publicId || resource.id || `gallery-${index}`;
   const folder = resource.asset_folder || resource.assetFolder || resource.folder || '';
+  const resourceType = getResourceType(resource);
 
   return {
     id: `${publicId}-${resource.version || index}`,
+    type: resourceType,
+    isVideo: resourceType === 'video',
     public_id: publicId,
     display_name: resource.display_name || resource.displayName || '',
     version: resource.version,
@@ -67,7 +88,7 @@ const normalizeResource = (resource, index) => {
     category: normalizeCategory(resource),
     folder,
     thumb: cloudinaryImageUrl(resource),
-    full: cloudinaryImageUrl(resource, 'f_auto,q_auto,w_1800')
+    full: cloudinaryFullUrl(resource)
   };
 };
 
