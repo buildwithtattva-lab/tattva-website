@@ -87,6 +87,7 @@
 }
 
 .heroImageActive {
+  z-index: -2;
   opacity: 1;
   transform: scale(1.01);
 }
@@ -94,7 +95,7 @@
 .heroShade {
   position: absolute;
   inset: 0;
-  z-index: -2;
+  z-index: -1;
   background:
     linear-gradient(90deg, rgba(2, 13, 14, 0.95) 0%, rgba(2, 13, 14, 0.88) 22%, rgba(2, 13, 14, 0.32) 48%, rgba(2, 13, 14, 0.05) 72%),
     linear-gradient(180deg, rgba(0, 0, 0, 0.44) 0%, rgba(0, 0, 0, 0.06) 42%, rgba(0, 0, 0, 0.35) 100%);

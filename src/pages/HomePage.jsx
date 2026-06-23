@@ -373,6 +373,7 @@ const HomePage = () => {
   const [aiWorkshopImages, setAiWorkshopImages] = useState([]);
   const [heroGalleryImages, setHeroGalleryImages] = useState([]);
   const [activeHeroIndex, setActiveHeroIndex] = useState(0);
+  const [previousHeroIndex, setPreviousHeroIndex] = useState(0);
   const [homeGalleryStatus, setHomeGalleryStatus] = useState('loading');
   const [homeGalleryError, setHomeGalleryError] = useState('');
   const recentWorkshopsRef = useRef(null);
@@ -455,11 +456,15 @@ const HomePage = () => {
   useEffect(() => {
     if (heroGalleryImages.length < 2) {
       setActiveHeroIndex(0);
+      setPreviousHeroIndex(0);
       return undefined;
     }
 
     const intervalId = window.setInterval(() => {
-      setActiveHeroIndex((currentIndex) => (currentIndex + 1) % heroGalleryImages.length);
+      setActiveHeroIndex((currentIndex) => {
+        setPreviousHeroIndex(currentIndex);
+        return (currentIndex + 1) % heroGalleryImages.length;
+      });
     }, 5000);
 
     return () => window.clearInterval(intervalId);
@@ -467,13 +472,21 @@ const HomePage = () => {
 
   const heroSlides = heroGalleryImages.length
     ? heroGalleryImages.map((image) => ({
-      src: image.full || image.thumb,
+      src: image.hero || image.thumb,
       alt: image.alt || 'Students learning AI'
     }))
     : [{
       src: heroImage,
       alt: 'Students learning AI with a laptop and robotics kit'
     }];
+  const nextHeroIndex = heroSlides.length > 1 ? (activeHeroIndex + 1) % heroSlides.length : activeHeroIndex;
+  const visibleHeroSlides = heroSlides
+    .map((image, index) => ({ ...image, index }))
+    .filter((image) => (
+      image.index === activeHeroIndex
+      || image.index === previousHeroIndex
+      || image.index === nextHeroIndex
+    ));
 
   const orderedRecentWorkshopImages = sortRecentWorkshops(homeGalleryImages);
 
@@ -513,13 +526,15 @@ const HomePage = () => {
   return (
     <div className={styles.homePage}>
       <header className={styles.hero}>
-        {heroSlides.map((image, index) => (
+        {visibleHeroSlides.map((image) => (
           <img
             src={image.src}
-            alt={index === activeHeroIndex ? image.alt : ''}
-            className={`${styles.heroImage} ${index === activeHeroIndex ? styles.heroImageActive : ''}`}
-            aria-hidden={index === activeHeroIndex ? undefined : 'true'}
-            key={`${image.src}-${index}`}
+            alt={image.index === activeHeroIndex ? image.alt : ''}
+            className={`${styles.heroImage} ${image.index === activeHeroIndex ? styles.heroImageActive : ''}`}
+            aria-hidden={image.index === activeHeroIndex ? undefined : 'true'}
+            fetchPriority={image.index === activeHeroIndex ? 'high' : 'low'}
+            loading={image.index === activeHeroIndex || image.index === nextHeroIndex ? 'eager' : 'lazy'}
+            key={`${image.src}-${image.index}`}
           />
         ))}
         <div className={styles.heroShade} />

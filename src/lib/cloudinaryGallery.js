@@ -88,6 +88,7 @@ const normalizeResource = (resource, index) => {
     category: normalizeCategory(resource),
     folder,
     thumb: cloudinaryImageUrl(resource),
+    hero: resourceType === 'video' ? '' : cloudinaryImageUrl(resource, 'f_auto,q_auto,c_fill,w_1800,h_960'),
     full: cloudinaryFullUrl(resource)
   };
 };
