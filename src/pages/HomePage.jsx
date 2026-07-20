@@ -607,7 +607,7 @@ const HomePage = () => {
           </p>
           <div className={styles.heroActions}>
             <a href={whatsappUrl} className={styles.primaryCta} target="_blank" rel="noopener noreferrer">
-              Book a School Demo
+              Book a Demo
               <span aria-hidden="true">→</span>
             </a>
             <Link to="/for-students" className={styles.secondaryCta}>Explore Programs</Link>
