@@ -597,7 +597,7 @@ const HomePage = () => {
         <div className={styles.heroContent}>
           <p className={styles.heroEyebrow}>AI EDUCATION FOR THE NEXT GENERATION</p>
           <h1>
-            Make Your School
+            Make Your Institution
             <span>AI-Ready</span>
           </h1>
           <p className={styles.heroLead}>Practical AI programs for students, teachers, and institutions.</p>
