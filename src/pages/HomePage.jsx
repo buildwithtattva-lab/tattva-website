@@ -602,7 +602,7 @@ const HomePage = () => {
           </h1>
           <p className={styles.heroLead}>Practical AI programs for students, teachers, and institutions.</p>
           <p className={styles.heroCopy}>
-            We help schools introduce responsible and hands-on AI learning through student programs,
+            We help Institutions introduce responsible and hands-on AI learning through student programs,
             faculty training, and implementation support.
           </p>
           <div className={styles.heroActions}>
