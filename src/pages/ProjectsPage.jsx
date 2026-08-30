@@ -11,7 +11,7 @@ import {
   ChevronDown,
   HelpCircle
 } from 'lucide-react';
-import galleryHeroImage from '../assets/bento/m6.png';
+import galleryHeroImage from '../assets/images/m6.png';
 import { fetchGalleryResources } from '../lib/cloudinaryGallery';
 import styles from './ProjectsPage.module.css';
 
@@ -113,7 +113,6 @@ const ProjectsPage = () => {
             <Link to="/">Home</Link>
             <Link to="/for-schools">For Schools</Link>
             <Link to="/for-students">Student Programs</Link>
-            <Link to="/international-students">International Students</Link>
             <Link to="/faculty-training">Faculty Training</Link>
             <Link to="/projects" className={styles.activeNav}>Gallery</Link>
             <Link to="/about">About</Link>
@@ -277,7 +276,7 @@ const ProjectsPage = () => {
           </div>
           <div>
             <h3>Get in Touch</h3>
-            <a href="mailto:buildwithtattva@gmail.com">buildwithtattva@gmail.com</a>
+            <a href="mailto:team@tattva-ai.in">team@tattva-ai.in</a>
             <a href="tel:+919652796537">+91 9652796537</a>
             <span>Hyderabad, India</span>
           </div>

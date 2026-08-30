@@ -12,11 +12,12 @@ import {
   Rocket,
   HelpCircle
 } from 'lucide-react';
-import heroImage from '../assets/bento/m6.png';
-import missionImage from '../assets/bento/m1.png';
-import storyImage from '../assets/bento/t4.png';
+import heroImage from '../assets/images/m6.png';
+import missionImage from '../assets/images/m1.png';
+import storyImage from '../assets/images/t4.png';
 import nagaprasadImage from '../assets/team/nagaprasad.png';
 import sudhaImage from '../assets/team/sudha mam.png';
+import swapnaImage from '../assets/team/swapna mam.png';
 import styles from './AboutPage.module.css';
 
 const whatsappUrl = 'https://wa.me/918886945890';
@@ -64,6 +65,7 @@ const team = [
   { name: 'Tejaswini' },
   { name: 'Manoj' },
   { name: 'Sudha Harikishan', image: sudhaImage },
+  { name: 'M. Swapna', image: swapnaImage },
   { name: 'Navtej' },
   { name: 'Hari' }
 ];
@@ -171,7 +173,6 @@ const AboutPage = () => {
           <Link to="/">Home</Link>
           <Link to="/for-schools">For Schools</Link>
           <Link to="/for-students">Student Programs</Link>
-          <Link to="/international-students">International Students</Link>
           <Link to="/faculty-training">Faculty Training</Link>
           <Link to="/projects">Gallery</Link>
           <Link to="/about" className={styles.activeNav}>About</Link>
@@ -359,7 +360,7 @@ const AboutPage = () => {
         </div>
         <div>
           <h3>Get in Touch</h3>
-          <a href="mailto:buildwithtattva@gmail.com">buildwithtattva@gmail.com</a>
+          <a href="mailto:team@tattva-ai.in">team@tattva-ai.in</a>
           <a href="tel:+919652796537">+91 9652796537</a>
           <span>Hyderabad, India</span>
         </div>

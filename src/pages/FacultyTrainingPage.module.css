@@ -12,6 +12,14 @@
   overflow-x: hidden;
 }
 
+/* Dark-green text accents for visual consistency. */
+.demoButton,
+.whatsappButton,
+.heroContent h1 span,
+.sectionKicker {
+  color: #003d34;
+}
+
 .hero {
   min-height: 430px;
   position: relative;
@@ -991,3 +999,8 @@
     height: 164px;
   }
 }
+
+.demoButton, .whatsappButton, .heroContent h1 span, .sectionKicker { color: #003d34; }
+
+/* Bright accent is retained on the dark hero for accessible contrast. */
+.heroContent h1 span { color: var(--faculty-accent); }

@@ -18,11 +18,11 @@ import {
   ShieldCheck,
   HelpCircle
 } from 'lucide-react';
-import heroImage from '../assets/bento/m6.png';
-import explorersImage from '../assets/bento/m5.png';
-import creatorsImage from '../assets/bento/m4.png';
-import innovatorsImage from '../assets/bento/m3.png';
-import researchImage from '../assets/bento/m2.png';
+import heroImage from '../assets/images/m6.png';
+import explorersImage from '../assets/images/m5.png';
+import creatorsImage from '../assets/images/m4.png';
+import innovatorsImage from '../assets/images/m3.png';
+import researchImage from '../assets/images/m2.png';
 import styles from './ForStudentsPage.module.css';
 
 const whatsappUrl = 'https://wa.me/918886945890';
@@ -149,7 +149,6 @@ const ForStudentsPage = () => {
           <Link to="/">Home</Link>
           <Link to="/for-schools">For Schools</Link>
           <Link to="/for-students" className={styles.activeNav}>Student Programs</Link>
-          <Link to="/international-students">International Students</Link>
           <Link to="/faculty-training">Faculty Training</Link>
           <Link to="/projects">Gallery</Link>
           <Link to="/about">About</Link>
@@ -319,7 +318,7 @@ const ForStudentsPage = () => {
         </div>
         <div>
           <h3>Get in Touch</h3>
-          <a href="mailto:buildwithtattva@gmail.com">buildwithtattva@gmail.com</a>
+          <a href="mailto:team@tattva-ai.in">team@tattva-ai.in</a>
           <a href="tel:+919652796537">+91 9652796537</a>
           <span>Hyderabad, India</span>
         </div>

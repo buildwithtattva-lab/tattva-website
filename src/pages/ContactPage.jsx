@@ -9,7 +9,7 @@ import {
 import styles from './ContactPage.module.css';
 
 const whatsappUrl = 'https://wa.me/918886945890';
-const emailUrl = 'mailto:buildwithtattva@gmail.com';
+const emailUrl = 'mailto:team@tattva-ai.in';
 
 const Icon = ({ type, size = 24, strokeWidth = 2, style }) => {
   const icons = {
@@ -45,7 +45,6 @@ const ContactPage = () => {
             <Link to="/">Home</Link>
             <Link to="/for-schools">For Schools</Link>
             <Link to="/for-students">Student Programs</Link>
-            <Link to="/international-students">International Students</Link>
             <Link to="/faculty-training">Faculty Training</Link>
             <Link to="/projects">Gallery</Link>
             <Link to="/about">About</Link>
@@ -131,7 +130,7 @@ const ContactPage = () => {
               Send proposals, school details, or collaboration requirements.
             </p>
             <a href={emailUrl}>
-              buildwithtattva@gmail.com
+              team@tattva-ai.in
             </a>
           </article>
 
@@ -202,7 +201,7 @@ const ContactPage = () => {
           </div>
           <div>
             <h3>Get in Touch</h3>
-            <a href={emailUrl}>buildwithtattva@gmail.com</a>
+            <a href={emailUrl}>team@tattva-ai.in</a>
             <a href="tel:+919652796537">+91 9652796537</a>
             <span>Hyderabad, India</span>
           </div>

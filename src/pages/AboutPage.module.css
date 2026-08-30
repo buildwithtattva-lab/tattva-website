@@ -10,6 +10,14 @@
   overflow-x: hidden;
 }
 
+/* Dark-green text accents for visual consistency. */
+.demoButton,
+.whatsappButton,
+.heroCopy h1 span,
+.storyCta {
+  color: #003d34;
+}
+
 @keyframes aboutFadeDown {
   from {
     opacity: 0;
@@ -993,3 +1001,5 @@
     animation: none;
   }
 }
+
+.demoButton, .whatsappButton, .heroCopy h1 span, .storyCta { color: #003d34; }

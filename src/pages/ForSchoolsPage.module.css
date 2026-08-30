@@ -12,6 +12,16 @@
   overflow-x: hidden;
 }
 
+/* Dark-green text accents for visual consistency. */
+.navLinks a:hover,
+.navLinks .activeNav,
+.heroContent h1 span,
+.quoteMark,
+.socials a,
+.sectionKicker {
+  color: #003d34;
+}
+
 @keyframes schoolHeroDrift {
   0% {
     transform: scale(1.02) translate3d(0, 0, 0);
@@ -1069,7 +1079,7 @@
 
 .quoteMark {
   color: var(--school-accent);
-  font-family: Georgia, serif;
+  font-family: var(--font-sans);
   font-size: clamp(6rem, 11vw, 10rem);
   line-height: 0.7;
 }
@@ -1595,3 +1605,12 @@
     transition: none;
   }
 }
+
+.navLinks a:hover, .navLinks .activeNav, .heroContent h1 span, .quoteMark, .socials a, .sectionKicker { color: #003d34; }
+
+/* Bright accent is retained on the dark hero for accessible contrast. */
+.heroContent h1 span,
+.navLinks a:hover,
+.navLinks .activeNav,
+.quoteMark,
+.socials a { color: var(--school-accent); }

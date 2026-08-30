@@ -18,12 +18,12 @@ import {
   ShieldCheck,
   HelpCircle
 } from 'lucide-react';
-import heroImage from '../assets/bento/t8.png';
-import foundationsImage from '../assets/bento/t4.png';
-import toolsImage from '../assets/bento/t7.png';
-import designImage from '../assets/bento/t6.png';
-import leadershipImage from '../assets/bento/t5.png';
-import benefitsImage from '../assets/bento/t1.png';
+import heroImage from '../assets/images/t8.png';
+import foundationsImage from '../assets/images/t4.png';
+import toolsImage from '../assets/images/t7.png';
+import designImage from '../assets/images/t6.png';
+import leadershipImage from '../assets/images/t5.png';
+import benefitsImage from '../assets/images/t1.png';
 import styles from './FacultyTrainingPage.module.css';
 
 const whatsappUrl = 'https://wa.me/918886945890';
@@ -151,7 +151,6 @@ const FacultyTrainingPage = () => {
             <Link to="/">Home</Link>
             <Link to="/for-schools">For Schools</Link>
             <Link to="/for-students">Student Programs</Link>
-            <Link to="/international-students">International Students</Link>
             <Link to="/faculty-training" className={styles.activeNav}>Faculty Training</Link>
             <Link to="/projects">Gallery</Link>
             <Link to="/about">About</Link>
@@ -343,7 +342,7 @@ const FacultyTrainingPage = () => {
           </div>
           <div>
             <h3>Get in Touch</h3>
-            <a href="mailto:buildwithtattva@gmail.com">buildwithtattva@gmail.com</a>
+            <a href="mailto:team@tattva-ai.in">team@tattva-ai.in</a>
             <a href="tel:+919652796537">+91 9652796537</a>
             <span>Hyderabad, India</span>
           </div>

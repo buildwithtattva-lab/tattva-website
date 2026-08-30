@@ -21,25 +21,25 @@ import {
   Scale,
   Smile,
   Presentation,
-  Target,
   ChevronLeft,
   ChevronRight,
   Menu,
   X
 } from 'lucide-react';
-import heroImage from '../assets/bento/herosection.png';
-import summerCampImg from '../assets/bento/v2.png';
-import facultyTrainingImg from '../assets/bento/v3.png';
-import certificatesImg from '../assets/bento/v4.png';
-import consultingImg from '../assets/bento/v5.png';
-import projectLabImg from '../assets/bento/v6.png';
-import studentProgramImg from '../assets/bento/v7.png';
-import roboticsImg from '../assets/bento/v8.png';
-import slokaLogo from '../assets/bento/sloka-the-school-manikonda-logo.png';
-import fbhisLogo from '../assets/bento/FBHIS-logo.png';
-import stMartinsLogo from '../assets/bento/st martins no bg.png';
-import stepsLogo from '../assets/bento/steps-the-school-miyapur-hyderabad-playgroups-11x0h1k7f1.avif';
+import heroImage from '../assets/images/school.png';
+import summerCampImg from '../assets/images/v2.png';
+import facultyTrainingImg from '../assets/images/v3.png';
+import certificatesImg from '../assets/images/v4.png';
+import consultingImg from '../assets/images/v5.png';
+import projectLabImg from '../assets/images/v6.png';
+import studentProgramImg from '../assets/images/v7.png';
+import roboticsImg from '../assets/images/v8.png';
+import slokaLogo from '../assets/schools/sloka-the-school-manikonda-logo.png';
+import fbhisLogo from '../assets/schools/FBHIS-logo.png';
+import stMartinsLogo from '../assets/schools/st martins no bg.png';
+import stepsLogo from '../assets/schools/steps-the-school-miyapur-hyderabad-playgroups-11x0h1k7f1.avif';
 import sudhaPortraitImg from '../assets/team/sudha mam.png';
+import swapnaPortraitImg from '../assets/team/swapna mam.png';
 import { fetchGalleryResources } from '../lib/cloudinaryGallery';
 import styles from './HomePage.module.css';
 
@@ -120,7 +120,6 @@ const navItems = [
   { label: 'Home', to: '/' },
   { label: 'For Schools', to: '/for-schools' },
   { label: 'Student Programs', to: '/for-students' },
-  { label: 'International Students', to: '/international-students' },
   { label: 'Faculty Training', to: '/faculty-training' },
   { label: 'Gallery', to: '/projects' },
   { label: 'About', to: '/about' }
@@ -315,6 +314,8 @@ const faqsRight = [
   }
 ];
 
+const faqItems = [...faqsLeft, ...faqsRight];
+
 const formatStatValue = (value, suffix = '') => `${new Intl.NumberFormat('en-IN').format(value)}${suffix}`;
 
 const AnimatedStatValue = ({ value, suffix }) => {
@@ -374,8 +375,35 @@ const HomePage = () => {
   const [heroGalleryImages, setHeroGalleryImages] = useState([]);
   const [activeHeroIndex, setActiveHeroIndex] = useState(0);
   const [previousHeroIndex, setPreviousHeroIndex] = useState(0);
+  const [activeTestimonialIndex, setActiveTestimonialIndex] = useState(0);
   const [homeGalleryStatus, setHomeGalleryStatus] = useState('loading');
   const [homeGalleryError, setHomeGalleryError] = useState('');
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveTestimonialIndex((index) => (index + 1) % testimonials.length);
+    }, 6000);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const processEmbeds = () => window.instgrm?.Embeds?.process?.();
+    const existingScript = document.querySelector('script[src="https://www.instagram.com/embed.js"]');
+
+    if (existingScript) {
+      processEmbeds();
+      return undefined;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://www.instagram.com/embed.js';
+    script.async = true;
+    script.onload = processEmbeds;
+    document.body.appendChild(script);
+
+    return undefined;
+  }, []);
   const recentWorkshopsRef = useRef(null);
 
   useEffect(() => {
@@ -472,7 +500,7 @@ const HomePage = () => {
 
   const heroSlides = heroGalleryImages.length
     ? heroGalleryImages.map((image) => ({
-      src: image.hero || image.thumb,
+      src: image.full || image.hero || image.thumb,
       alt: image.alt || 'Students learning AI'
     }))
     : [{
@@ -512,6 +540,13 @@ const HomePage = () => {
       image: item.image,
       alt: item.title
     }));
+
+  const instagramReels = [
+    { type: 'Reel', url: 'https://www.instagram.com/reel/DbFky8ShB2Q/', embedUrl: 'https://www.instagram.com/reel/DbFky8ShB2Q/embed/captioned/' },
+    { type: 'Reel', url: 'https://www.instagram.com/reel/DYPxs7tOgZY/', embedUrl: 'https://www.instagram.com/reel/DYPxs7tOgZY/embed/captioned/' },
+    { type: 'Post', url: 'https://www.instagram.com/p/DbpcgBlBY6L/', embedUrl: 'https://www.instagram.com/p/DbpcgBlBY6L/embed/captioned/' },
+    { type: 'Post', url: 'https://www.instagram.com/p/Dajwud1jLMI/', embedUrl: 'https://www.instagram.com/p/Dajwud1jLMI/embed/captioned/' }
+  ];
 
   const scrollRecentWorkshops = (direction) => {
     const rail = recentWorkshopsRef.current;
@@ -595,15 +630,11 @@ const HomePage = () => {
         </nav>
 
         <div className={styles.heroContent}>
-          <p className={styles.heroEyebrow}>AI EDUCATION FOR THE NEXT GENERATION</p>
-          <h1>
-            Make Your Institution
-            <span>AI-Ready</span>
-          </h1>
-          <p className={styles.heroLead}>Practical AI programs for students, teachers, and institutions.</p>
+          <h1>Ready to bring AI education to your institution?</h1>
+          <p className={styles.heroLead}>Practical AI learning for students, educators, schools and colleges.</p>
           <p className={styles.heroCopy}>
-            We help Institutions introduce responsible and hands-on AI learning through student programs,
-            faculty training, and implementation support.
+            Whether you&apos;re introducing AI in a school or preparing college students for an AI-first workforce,
+            we&apos;ll help you build the right program.
           </p>
           <div className={styles.heroActions}>
             <a href={whatsappUrl} className={styles.primaryCta} target="_blank" rel="noopener noreferrer">
@@ -632,6 +663,19 @@ const HomePage = () => {
                 </span>
               </div>
             ))}
+          </div>
+        </section>
+
+        <section className={`${styles.institutionsStrip} ${styles.reveal}`} data-reveal>
+          <p>TRUSTED BY LEADING INSTITUTIONS</p>
+          <div className={styles.logoMarquee}>
+            <div className={styles.logoTrack}>
+              {[...institutions, ...institutions].map((institution, index) => (
+                <span key={`${institution.name}-${index}`} aria-hidden={index >= institutions.length ? 'true' : undefined}>
+                  <img src={institution.logo} alt={institution.name} />
+                </span>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -737,7 +781,9 @@ const HomePage = () => {
         <section className={`${styles.learningPath} ${styles.reveal}`} data-reveal>
           <div className={`${styles.pathIntro} ${styles.reveal}`} data-reveal>
             <p className={styles.darkKicker}>LEARNING PATH</p>
-            <h2>A Structured Journey From Curiosity to Creation</h2>
+            <h2>
+              A structured journey from <span>curiosity</span> to <span>creation.</span>
+            </h2>
             <p>
               Our progressive learning path ensures students gain conceptual understanding,
               hands-on experience, and the confidence to build real-world AI solutions.
@@ -819,6 +865,10 @@ const HomePage = () => {
               We empower educators with practical AI tools and strategies to enhance teaching,
               save time, and create better learning experiences for students.
             </p>
+            <Link to="/faculty-training" className={styles.teacherCta}>
+              Explore Faculty Training
+              <span aria-hidden="true">→</span>
+            </Link>
             <div className={styles.teacherFeatureGrid}>
               {teacherFeatures.map(({ label, icon: IconComponent }, index) => (
                 <span
@@ -861,104 +911,99 @@ const HomePage = () => {
           </div>
 
           <div className={`${styles.testimonialsPanel} ${styles.reveal}`} data-reveal>
-            <p className={styles.sectionKicker}>SUCCESS STORIES</p>
-            <div className={styles.testimonialGrid}>
-              {testimonials.map(([quote, role, school], index) => (
-                <article
-                  className={`${styles.testimonialCard} ${styles.reveal}`}
-                  style={{ '--reveal-delay': `${index * 100}ms` }}
-                  data-reveal
-                  key={quote}
-                >
-                  <span className={styles.quoteMark}>“</span>
-                  <p>{quote}</p>
-                  <div>
-                    <span className={styles.avatarDot} />
-                    <strong>{role}</strong>
-                    <small>{school}</small>
-                  </div>
-                </article>
-              ))}
+            <p className={styles.sectionKicker}>TESTIMONIALS</p>
+            <div className={styles.testimonialControls}>
+              <div className={styles.testimonialDots} aria-label="Testimonial selector">
+                {testimonials.map(([, role], index) => (
+                  <button
+                    type="button"
+                    key={role}
+                    onClick={() => setActiveTestimonialIndex(index)}
+                    className={index === activeTestimonialIndex ? styles.activeTestimonialDot : ''}
+                    aria-label={`Show testimonial ${index + 1}`}
+                  />
+                ))}
+              </div>
+              <div>
+                <button type="button" onClick={() => setActiveTestimonialIndex((index) => (index - 1 + testimonials.length) % testimonials.length)} aria-label="Previous testimonial"><ChevronLeft size={20} /></button>
+                <button type="button" onClick={() => setActiveTestimonialIndex((index) => (index + 1) % testimonials.length)} aria-label="Next testimonial"><ChevronRight size={20} /></button>
+              </div>
             </div>
-          </div>
-        </section>
-
-        <section className={`${styles.institutionsStrip} ${styles.reveal}`} data-reveal>
-          <p>TRUSTED BY LEADING INSTITUTIONS</p>
-          <div>
-            {institutions.map((institution, index) => (
-              <span
-                className={styles.reveal}
-                style={{ '--reveal-delay': `${index * 80}ms` }}
-                data-reveal
-                key={institution.name}
-              >
-                <img src={institution.logo} alt="" />
-                {institution.name}
-              </span>
-            ))}
+            <article className={styles.testimonialFeature}>
+              <div className={styles.testimonialAuthor}>
+                <span className={styles.authorMonogram}>{testimonials[activeTestimonialIndex][1].slice(0, 1)}</span>
+                <strong>{testimonials[activeTestimonialIndex][1]}</strong>
+                <small>{testimonials[activeTestimonialIndex][2]}</small>
+              </div>
+              <p><span aria-hidden="true">“</span>{testimonials[activeTestimonialIndex][0]}</p>
+            </article>
           </div>
         </section>
 
         <section className={`${styles.leadershipBand} ${styles.reveal}`} data-reveal>
-          <div className={`${styles.leaderPortrait} ${styles.reveal}`} data-reveal>
-            <img src={sudhaPortraitImg} alt="Vamgipuram Sudha Harikishan" />
+          <div className={styles.leadershipHeader}>
+            <div>
+              <p className={styles.leadershipEyebrow}>Guided by Experienced Education Leaders</p>
+              <h2>The people behind Tattva.</h2>
+            </div>
           </div>
-          <div className={`${styles.leaderCopy} ${styles.reveal}`} data-reveal>
-            <p className={styles.darkKicker}>Guided by Experienced Education Leaders</p>
-            <h2>Vamgipuram Sudha Harikishan</h2>
-            <ul>
-              <li>33+ years of experience in educational leadership</li>
-              <li>Expertise in hiring, evaluation & academic quality</li>
-              <li>Passionate about empowering schools and educators</li>
-              <li>Ensuring every program is effective, practical & future-ready</li>
-            </ul>
-            <Link to="/about" className={styles.darkOutlineButton}>
-              Know More About Our Leadership
-              <span aria-hidden="true">→</span>
-            </Link>
+          <div className={styles.leaderCarousel}>
+            <article className={styles.leaderProfile}>
+              <img src={sudhaPortraitImg} alt="Vamgipuram Sudha Harikishan" />
+              <div>
+                <h3>Vamgipuram Sudha Harikishan</h3>
+                <p>Education Leader · 33+ years of experience</p>
+              </div>
+            </article>
+            <article className={styles.leaderProfile}>
+              <img src={swapnaPortraitImg} alt="Ms. M. Swapna" />
+              <div>
+                <h3>Ms. M. Swapna</h3>
+                <p>Educator · M.Sc, B.Ed, PGDCA · 19 years of experience</p>
+              </div>
+            </article>
           </div>
-          <div className={`${styles.missionCard} ${styles.reveal}`} data-reveal>
-            <span>
-              <Target size={28} strokeWidth={1.8} />
-            </span>
-            <p>
-              <strong>Our mission is simple:</strong>
-              Bring practical, responsible, and future-ready AI learning to every school.
-            </p>
+        </section>
+
+        <section className={`${styles.reelsSection} ${styles.reveal}`} data-reveal>
+          <div className={styles.reelsHeader}>
+            <div>
+              <p className={styles.sectionKicker}>FROM INSTAGRAM</p>
+              <h2>Tattva on Camera</h2>
+            </div>
+            <a href="https://www.instagram.com/tattvahq/reels/" target="_blank" rel="noreferrer">View all reels <span aria-hidden="true">↗</span></a>
+          </div>
+          <div className={styles.reelsGrid}>
+            {instagramReels.map((reel) => (
+              <article className={styles.reelCard} key={reel.url}>
+                <blockquote className="instagram-media" data-instgrm-permalink={reel.url} data-instgrm-version="14">
+                  <a href={reel.url} target="_blank" rel="noreferrer">View this {reel.type} on Instagram</a>
+                </blockquote>
+              </article>
+            ))}
           </div>
         </section>
 
         <section className={`${styles.faqSection} ${styles.reveal}`} data-reveal>
+          <div className={styles.faqHeading}>
+            <h2>FAQs</h2>
+          </div>
           <div className={`${styles.faqLists} ${styles.reveal}`} data-reveal>
-            <p className={styles.sectionKicker}>FREQUENTLY ASKED QUESTIONS</p>
             <div className={styles.faqColumns}>
-              {[faqsLeft, faqsRight].map((items, index) => (
-                <div className={styles.faqColumn} key={index}>
-                  {items.map((item) => (
-                    <details key={item.question}>
-                      <summary>{item.question}</summary>
-                      <p>{item.answer}</p>
-                    </details>
-                  ))}
-                </div>
-              ))}
+              <div className={styles.faqColumn}>
+                {faqItems.map((item, index) => (
+                  <details key={item.question}>
+                    <summary>
+                      <span className={styles.faqNumber}>{index + 1}</span>
+                      <span>{item.question}</span>
+                    </summary>
+                    <p>{item.answer}</p>
+                  </details>
+                ))}
+              </div>
             </div>
           </div>
 
-          <aside className={`${styles.finalCta} ${styles.reveal}`} data-reveal>
-            <p className={styles.darkKicker}>READY TO GET STARTED?</p>
-            <h2>Bring Practical AI Learning to Your Institution</h2>
-            <div>
-              <a href={whatsappUrl} className={styles.limeSmallButton} target="_blank" rel="noopener noreferrer">
-                Book a Demo
-                <span aria-hidden="true">→</span>
-              </a>
-              <a href={whatsappUrl} className={styles.whatsappCta} target="_blank" rel="noopener noreferrer">
-                Talk on WhatsApp
-              </a>
-            </div>
-          </aside>
         </section>
       </main>
 
@@ -999,7 +1044,7 @@ const HomePage = () => {
           </div>
           <div>
             <h3>Get in Touch</h3>
-            <a href="mailto:buildwithtattva@gmail.com">buildwithtattva@gmail.com</a>
+            <a href="mailto:team@tattva-ai.in">team@tattva-ai.in</a>
             <a href="tel:+919652796537">+91 9652796537</a>
             <span>Hyderabad, India</span>
           </div>

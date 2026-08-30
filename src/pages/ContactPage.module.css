@@ -9,6 +9,14 @@
   font-family: var(--font-sans);
 }
 
+/* Dark-green text accents for visual consistency. */
+.demoButton,
+.whatsappButton,
+.demoSection .kicker,
+.contactHero h1 span {
+  color: #003d34;
+}
+
 @keyframes fadeDown {
   from {
     opacity: 0;
@@ -562,3 +570,5 @@
     animation: none;
   }
 }
+
+.demoButton, .whatsappButton, .demoSection .kicker, .contactHero h1 span { color: #003d34; }
