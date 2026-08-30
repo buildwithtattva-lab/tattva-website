@@ -9,6 +9,7 @@ import ContactPage from './pages/ContactPage';
 import ProjectsPage from './pages/ProjectsPage';
 import Footer from './components/Footer';
 import SiteHeader from './components/SiteHeader';
+import Seo from './components/Seo';
 import './styles/globals.css';
 
 const ScrollToTop = () => {
@@ -42,6 +43,7 @@ const AppRoutes = () => {
 function App() {
   return (
     <Router>
+      <Seo />
       <ScrollToTop />
       <SiteHeader />
       <AppRoutes />
